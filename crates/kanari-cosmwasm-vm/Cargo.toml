@@ -1,0 +1,25 @@
+[package]
+name = "kanari-cosmwasm-vm"
+
+# Workspace inherited keys
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+cosmwasm-vm = { workspace = true }
+cosmwasm-std = { workspace = true }
+
+move-core-types = { workspace = true }
+move-vm-types = { workspace = true }
+
+moveos-types = { workspace = true }
+moveos-object-runtime = { workspace = true }
+

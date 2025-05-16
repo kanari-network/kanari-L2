@@ -1,0 +1,27 @@
+[package]
+name = "kanari-proposer"
+
+# Workspace inherited keys
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+coerce = { workspace = true }
+prometheus = { workspace = true }
+tracing = { workspace = true }
+
+moveos-store = { workspace = true }
+moveos-types = { workspace = true }
+metrics = { workspace = true }
+
+kanari-config = { workspace = true }
+kanari-types = { workspace = true }
+kanari-store = { workspace = true }

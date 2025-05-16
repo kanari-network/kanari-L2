@@ -1,0 +1,21 @@
+[package]
+name = "simple_blog"
+version = "0.0.1"
+
+[dependencies]
+#MoveStdlib = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/move-stdlib", rev = "main" }
+#MoveosStdlib = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/moveos-stdlib", rev = "main" }
+#RoochFramework = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/rooch-framework", rev = "main" }
+
+MoveStdlib = { local = "../../frameworks/move-stdlib" }
+MoveosStdlib = { local = "../../frameworks/moveos-stdlib" }
+RoochFramework = { local = "../../frameworks/rooch-framework" }
+
+[addresses]
+std = "0x1"
+moveos_std = "0x2"
+rooch_framework = "0x3"
+simple_blog = "_"
+
+[dev-addresses]
+simple_blog = "0x42"

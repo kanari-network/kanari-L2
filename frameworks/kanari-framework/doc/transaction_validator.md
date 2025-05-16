@@ -1,0 +1,77 @@
+
+<a name="0x3_transaction_validator"></a>
+
+# Module `0x3::transaction_validator`
+
+
+
+-  [Struct `TransactionValidatorPlaceholder`](#0x3_transaction_validator_TransactionValidatorPlaceholder)
+-  [Constants](#@Constants_0)
+-  [Function `validate`](#0x3_transaction_validator_validate)
+
+
+<pre><code><b>use</b> <a href="">0x1::option</a>;
+<b>use</b> <a href="">0x2::account</a>;
+<b>use</b> <a href="">0x2::gas_schedule</a>;
+<b>use</b> <a href="">0x2::signer</a>;
+<b>use</b> <a href="">0x2::timestamp</a>;
+<b>use</b> <a href="">0x2::tx_context</a>;
+<b>use</b> <a href="">0x2::tx_meta</a>;
+<b>use</b> <a href="">0x2::tx_result</a>;
+<b>use</b> <a href="account.md#0x3_account">0x3::account</a>;
+<b>use</b> <a href="account_authentication.md#0x3_account_authentication">0x3::account_authentication</a>;
+<b>use</b> <a href="account_coin_store.md#0x3_account_coin_store">0x3::account_coin_store</a>;
+<b>use</b> <a href="address_mapping.md#0x3_address_mapping">0x3::address_mapping</a>;
+<b>use</b> <a href="auth_validator.md#0x3_auth_validator">0x3::auth_validator</a>;
+<b>use</b> <a href="auth_validator_registry.md#0x3_auth_validator_registry">0x3::auth_validator_registry</a>;
+<b>use</b> <a href="bitcoin_address.md#0x3_bitcoin_address">0x3::bitcoin_address</a>;
+<b>use</b> <a href="bitcoin_validator.md#0x3_bitcoin_validator">0x3::bitcoin_validator</a>;
+<b>use</b> <a href="builtin_validators.md#0x3_builtin_validators">0x3::builtin_validators</a>;
+<b>use</b> <a href="chain_id.md#0x3_chain_id">0x3::chain_id</a>;
+<b>use</b> <a href="coin.md#0x3_coin">0x3::coin</a>;
+<b>use</b> <a href="kari.md#0x3_kari">0x3::kari</a>;
+<b>use</b> <a href="onchain_config.md#0x3_onchain_config">0x3::onchain_config</a>;
+<b>use</b> <a href="session_key.md#0x3_session_key">0x3::session_key</a>;
+<b>use</b> <a href="session_validator.md#0x3_session_validator">0x3::session_validator</a>;
+<b>use</b> <a href="transaction.md#0x3_transaction">0x3::transaction</a>;
+<b>use</b> <a href="transaction_fee.md#0x3_transaction_fee">0x3::transaction_fee</a>;
+</code></pre>
+
+
+
+<a name="0x3_transaction_validator_TransactionValidatorPlaceholder"></a>
+
+## Struct `TransactionValidatorPlaceholder`
+
+Just using to get module signer
+
+
+<pre><code><b>struct</b> <a href="transaction_validator.md#0x3_transaction_validator_TransactionValidatorPlaceholder">TransactionValidatorPlaceholder</a>
+</code></pre>
+
+
+
+<a name="@Constants_0"></a>
+
+## Constants
+
+
+<a name="0x3_transaction_validator_MAX_U64"></a>
+
+
+
+<pre><code><b>const</b> <a href="transaction_validator.md#0x3_transaction_validator_MAX_U64">MAX_U64</a>: u128 = 18446744073709551615;
+</code></pre>
+
+
+
+<a name="0x3_transaction_validator_validate"></a>
+
+## Function `validate`
+
+This function is for Kanari to validate the transaction sender's authenticator.
+If the authenticator is invalid, abort this function.
+
+
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="transaction_validator.md#0x3_transaction_validator_validate">validate</a>(<a href="chain_id.md#0x3_chain_id">chain_id</a>: u64, auth_validator_id: u64, authenticator_payload: <a href="">vector</a>&lt;u8&gt;): <a href="auth_validator.md#0x3_auth_validator_TxValidateResult">auth_validator::TxValidateResult</a>
+</code></pre>

@@ -1,0 +1,36 @@
+[package]
+name = "kanari-pipeline-processor"
+
+# Workspace inherited keys
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+bcs = { workspace = true }
+bitcoin = { workspace = true }
+coerce = { workspace = true }
+function_name = { workspace = true }
+hex = { workspace = true }
+tracing = { workspace = true }
+prometheus = { workspace = true }
+
+moveos = { workspace = true }
+metrics = { workspace = true }
+moveos-types = { workspace = true }
+
+bitcoin-client = { workspace = true }
+kanari-da = { workspace = true }
+kanari-db = { workspace = true }
+kanari-executor = { workspace = true }
+kanari-notify = { workspace = true }
+kanari-indexer = { workspace = true }
+kanari-sequencer = { workspace = true }
+kanari-types = { workspace = true }

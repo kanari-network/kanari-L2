@@ -1,0 +1,15 @@
+processed 2 tasks
+
+task 1 'publish'. lines 3-21:
+Error: error: The type argument 0x42::test1::DisallowedStruct of #[data_struct] for function test1::f2 in the module 0x42::test1 is not allowed.
+   ┌─ /tmp/tempfile:11:5
+   │  
+11 │ ╭     public fun f2() {
+12 │ │         let disallowed_struct = DisallowedStruct {
+13 │ │             f_u8: 123,
+14 │ │         };
+15 │ │         f1(disallowed_struct);
+16 │ │     }
+   │ ╰─────^
+
+

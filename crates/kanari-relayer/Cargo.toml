@@ -1,0 +1,38 @@
+[package]
+name = "kanari-relayer"
+
+# Workspace inherited keys
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+chrono = { workspace = true }
+coerce = { workspace = true }
+ethers = { workspace = true }
+tracing = { workspace = true }
+bitcoin = { workspace = true }
+bitcoincore-rpc = { workspace = true }
+hex = { workspace = true }
+indexmap = { workspace = true }
+prometheus = { workspace = true }
+
+move-core-types = { workspace = true }
+
+moveos-types = { workspace = true }
+moveos-eventbus = { workspace = true }
+metrics = { workspace = true }
+
+kanari-types = { workspace = true }
+bitcoin-client = { workspace = true }
+kanari-config = { workspace = true }
+kanari-executor = { workspace = true }
+kanari-pipeline-processor = { workspace = true }
+kanari-notify = { workspace = true }

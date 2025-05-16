@@ -1,0 +1,121 @@
+# The First Rooch dApp
+
+This tutorial primarily introduces how to use the front-end template provided by Rooch to implement a simple counter dApp.
+
+![](/docs/first-dapp/dapp-main.png)
+
+[Teplate Repo](https://github.com/rooch-network/my-first-rooch-dapp)
+
+## Clone the source code of the template.
+
+```bash copy
+git clone https://github.com/rooch-network/my-first-rooch-dapp.git
+```
+
+## Initialize the project.
+
+Install the dependencies required for the dApp:
+
+```bash copy
+cd my-first-rooch-dapp
+bun install
+## if you are using yarn
+yarn install
+```
+
+Run dApp：
+```bash copy
+bun dev
+```
+
+Once everything is successfully completed, access the local preview link in the browser and you will see the following interface:
+
+![](/docs/first-dapp/dapp-counter.png)
+
+Congratulations! After completing the above steps, it indicates that your dApp is running successfully. To complete the full on-chain interaction, we still need to deploy the contract.
+
+## Confirm the Current Network in Rooch CLI
+
+We use the Testnet to deploy the Counter dApp, and use `rooch env switch` to switch the network:
+
+```bash
+rooch env switch --alias test
+
+The active environment was successfully switched to `test`
+```
+
+## Publish the contract.
+
+In the `counter_contract` directory, you can see the contract source code of the Counter dApp.
+
+Navigate to the `counter_contract` directory and use the following command to deploy the contract.
+
+Please note, before deployment, ensure that you have sufficient Gas Fee in your account. We can use the following command to check:
+
+```bash
+rooch account balance
+
+## output
+
+      Coin Type        |      Symbol      | Decimals |  Balance              
+--------------------------------------------------------------------
+0x3::gas_coin::RGas |       RGAS        |     8    | 1939625968
+```
+
+[Get Rooch Gas Coin](./get-gas-coin.en-US)
+
+After confirming that there is enough Gas Fee, you can publish the contract using the following command.
+
+```bash copy
+## in counter_contract directory
+rooch move publish --named-addresses quick_start_counter=default
+```
+
+After the deployment is completed, we can see the output in the command line:
+
+```bash
+BUILDING quick_start_counter
+Publish modules to address: rooch1e7qm7jqangukl37qs49ckv7j4w47zyu5cr2gd9tmzal89q9sudqqzhy92t
+(0xcf81bf481d9a396fc7c0854b8b33d2ababe11394c0d486957b177e7280b0e340)
+...
+```
+
+As the output of the command line above, the Counter has been published to the address `0xcf81bf481d9a396fc7c0854b8b33d2ababe11394c0d486957b177e7280b0e340`.
+
+
+## Modify the front-end configuration.
+
+Find the `src/App.tsx` file in the front-end project and modify the constant `counterAddress`:
+
+```tsx
+// Publish address of the counter contract
+const counterAddress = "YOUR_COUNTER_ADDRESS";
+```
+
+Replace with the Counter contract address published in the previous step:
+
+```bash
+const counterAddress = "0xcf81bf481d9a396fc7c0854b8b33d2ababe11394c0d486957b177e7280b0e340"
+```
+
+> Note: The contract address here will be related to the publisher's address, please confirm.
+
+## Contract Interaction
+
+Connect the wallet, and we can click the `Create` button in the Session Key area to create a session key:
+
+[About Session Key](../../../archives/session-key)
+
+After the creation is complete, you can see the relevant information of the Session Key:
+
+![](/docs/first-dapp/dapp-integration.png)
+
+After replacing the contract address, you can also see the count of `Counter Value` in the dApp Integration area.
+
+![](/docs/first-dapp/dapp-counter-value.png)
+
+After completing the above steps, you can click the `Increase Counter Value` button in the dApp Integration area to call the contract and increase the counter value.
+
+## Summary
+
+After completing the above steps, you have mastered the skills of **creating a dApp**, **deploying contracts**, and performing **basic interactions between the front-end and the contract**.

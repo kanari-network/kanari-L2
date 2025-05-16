@@ -1,0 +1,19 @@
+processed 3 tasks
+
+task 1 'publish'. lines 3-21:
+status EXECUTED
+
+task 2 'run'. lines 22-34:
+Error: error: resource type "TestStruct" in function "0x2::object::new" not defined in current module or not allowed
+   ┌─ /tmp/tempfile:28:23
+   │
+28 │         let obj_ref = object::new<TestStruct>(object);
+   │                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: resource type "TestStruct" in function "0x2::object::remove" not defined in current module or not allowed
+   ┌─ /tmp/tempfile:29:27
+   │
+29 │         let test_struct = object::remove(obj_ref);
+   │                           ^^^^^^^^^^^^^^^^^^^^^^^
+
+

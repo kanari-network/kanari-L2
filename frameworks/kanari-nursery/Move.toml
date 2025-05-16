@@ -1,0 +1,16 @@
+[package]
+name = "KanariNursery"
+version = "0.0.1"
+
+[addresses]
+std = "0x1"
+moveos_std = "0x2"
+kanari_framework = "0x3"
+vm_reserved = "0x0"
+kanari_nursery = "0xa"
+
+[dependencies]
+MoveStdlib = { local = "../../frameworks/move-stdlib" }
+MoveosStdlib = { local = "../../frameworks/moveos-stdlib" }
+KanariFramework = { local = "../../frameworks/kanari-framework" }
+BitcoinMove = { local = "../../frameworks/bitcoin-move" }

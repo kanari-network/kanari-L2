@@ -1,0 +1,19 @@
+processed 2 tasks
+
+task 1 'publish'. lines 3-7:
+Error: error: type name "T2" not defined in function "0x42::test::create_box"
+  ┌─ /tmp/tempfile:6:5
+  │
+6 │     public fun create_box<T1>() {}
+  │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: some type name in private_generics may not have been handled
+  ┌─ /tmp/tempfile:4:1
+  │  
+4 │ ╭ module creator::test {
+5 │ │     #[private_generics(T2)]
+6 │ │     public fun create_box<T1>() {}
+7 │ │ }
+  │ ╰─^
+
+

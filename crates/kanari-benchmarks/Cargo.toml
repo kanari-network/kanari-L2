@@ -1,0 +1,99 @@
+[package]
+name = "kanari-benchmarks"
+
+# Workspace inherited keys
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+anyhow-old = { git = "https://github.com/dtolnay/anyhow", tag = "1.0.76", package = "anyhow" }
+anyhow-new = { git = "https://github.com/dtolnay/anyhow", tag = "1.0.93", package = "anyhow" }
+bcs = { workspace = true }
+clap = { workspace = true }
+ethers = { workspace = true }
+serde = { workspace = true }
+tracing = { workspace = true }
+rand = { workspace = true }
+lazy_static = { workspace = true }
+criterion = { workspace = true }
+pprof = { workspace = true, features = ["flamegraph", "criterion", "cpp", "frame-pointer", "protobuf-codec"] }
+bitcoincore-rpc-json = { workspace = true }
+bitcoincore-rpc = { workspace = true }
+bitcoin = { workspace = true }
+toml = { workspace = true }
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+tikv-jemallocator = { workspace = true }
+prometheus = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+
+move-core-types = { workspace = true }
+move-resource-viewer = { workspace = true }
+move-binary-format = { workspace = true }
+move-vm-runtime = { workspace = true }
+move-vm-types = { workspace = true }
+
+moveos = { workspace = true }
+moveos-store = { workspace = true }
+moveos-types = { workspace = true }
+move-bytecode-utils = { workspace = true }
+raw-store = { workspace = true }
+moveos-config = { workspace = true }
+smt = { workspace = true }
+metrics = { workspace = true }
+
+kanari-config = { workspace = true }
+kanari-types = { workspace = true }
+kanari-executor = { workspace = true }
+kanari-sequencer = { workspace = true }
+kanari-proposer = { workspace = true }
+kanari-key = { workspace = true }
+kanari-store = { workspace = true }
+kanari-rpc-api = { workspace = true }
+kanari-relayer = { workspace = true }
+kanari-indexer = { workspace = true }
+kanari-pipeline-processor = { workspace = true }
+kanari-da = { workspace = true }
+kanari-rpc-server = { workspace = true }
+kanari-test-transaction-builder = { workspace = true }
+kanari-framework = { workspace = true }
+kanari-framework-tests = { workspace = true }
+kanari-genesis = { workspace = true }
+
+[dev-dependencies]
+
+[lib]
+bench = false
+
+[[bench]]
+harness = false
+name = "bench_utils"
+
+[[bench]]
+harness = false
+name = "bench_tx_validate"
+
+[[bench]]
+harness = false
+name = "bench_tx_sequence"
+
+[[bench]]
+harness = false
+name = "bench_tx_exec"
+
+[[bench]]
+harness = false
+name = "bench_smt"
+
+[[bench]]
+harness = false
+name = "bench_indexer"

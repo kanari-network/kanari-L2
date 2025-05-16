@@ -1,0 +1,165 @@
+# 通过 Bitcoin 的 UTXO 和 Inscription 编程
+
+import { Callout, FileTree } from 'nextra/components'
+
+Bitcoin 的 UTXO 和 Inscription 在 Rooch 中会被解析成 Move 的 [Object](https://rooch.network/learn/core-concepts/objects/object)，开发者可以通过 Object 相关的 API 来操作 Bitcoin 的 UTXO 和 Inscription。
+
+## 原子化状态绑定
+
+Rooch 通过 Move 的 Object 嵌套特效，实现 Bitcoin 状态和 Rooch L2 状态之间的原子化绑定。
+
+![Atomic-binding UTXO](/blog/stackable-l2/rooch-atomic-binding-utxo.svg)
+
+比如上图中的 UTXO X 在 Move 中表达为一种 Object，它内置一个 Temporary 区域，嵌套放置在该区域的状态，在该 UTXO 被消费的时候会被清理掉。它类似于 RGB 的“一次性密封”，利用了 UTXO 只能被消费一次的特性。比如有个应用提供一种持有 Bitcoin 挖矿的特性，将用户的 Stake 信息存在该区域，一旦用户消费掉该 UTXO，则自动丢失 Stake 信息。而如果是支持 UTXO 映射追踪的协议的状态，则可以提供 Permanent Area，实现 L1 与 L2 的状态的原子化转让。
+
+![Atomic-binding Inscription](/blog/stackable-l2/rooch-atomic-binding-ord.svg)
+
+比如上图中，是通过 Move 表达的一种 Bitcoin 链上状态，比如 Ordinals Inscription（RGB 同理）。它里面的 Permanent Area 可以保存永久的状态，比如 Coin 或者 NFT。一旦该 Inscription 在 L1 被转让，Temporary Area 中的状态会被清空，而 Permanent Area 的状态会被保留，一并转让给新的所有者。 
+
+## 用 UTXO 编程
+
+### 1. UTXO 的字段说明
+
+UTXO（Unspent Transaction Output）是比特币系统中的一个核心概念，代表未花费的交易输出。在 Rooch Bitcoin framework 中，`UTXO` 结构体定义了 UTXO 的几个关键字段：
+
+- `txid`: `address`, 表示产生该 UTXO 的交易的哈希值。
+- `vout`: `u32`, 表示该 UTXO 在其交易中的位置索引。
+- `value`: `u64`, 表示该 UTXO 的价值，即它包含的比特币数量。
+- `seals`: 表示与该 UTXO 相关联的协议铭文，使用 `SimpleMultiMap` 结构体存储，映射了协议名称（`String` 类型）到对象 ID（`ObjectID` 类型）。
+
+### 2. 如何通过方法参数接受 UTXO
+
+在 Rooch 中，UTXO 作为 Object 储存在全局状态中。开发者可以通过 `ObjectID` 获取到 `Object<UTXO>` 的（可变）引用。可以通过将 `Object<UTXO>` 的（可变）引用作为参数传递给函数。以下是一些示例：
+
+- 借用不可变引用传递：`fun some_function(utxo: &UTXO)`
+- 借用可变引用传递：`fun some_function(utxo: &mut UTXO)`
+
+`UTXO` 对象是 MoveVM 在实时解析 Bitcoin 交易时创建和销毁，开发者无法获取其所有权，只能通过引用读取 `UTXO` 的状态，或者通过可变引用在 `UTXO` 的临时状态区储存状态。
+
+### 3. 如何在 UTXO 的临时区域中存储数据
+
+临时区域是 `Object<UTXO>` 的一个字段，可以用于存放一些状态。一旦 `UTXO` 在 Bitcoin 上被花费，MoveVM 会及时销毁 Rooch 上的`UTXO` 对象，其临时状态区的状态也会被清空。
+
+代码中的 `Temporary Area` 是用来存储与 `UTXO` 相关的临时状态数据的。以下是如何在 `UTXO` 的临时区域中添加、修改、删除状态的接口：
+
+- 使用 `add_temp_state` 函数将状态数据添加到 `UTXO` 的临时区域。该函数接受一个 `UTXO` 对象和一个要存储的状态数据。
+- 使用 `contains_temp_state` 函数检查 `UTXO` 的临时区域是否包含特定类型的状态数据。
+- 使用 `borrow_temp_state` 函数借用临时区域中的特定类型的状态数据的不可变引用。
+- 使用 `borrow_mut_temp_state` 函数借用临时区域中的特定类型的状态数据的可变引用，以便修改它。
+- 使用 `remove_temp_state` 函数从 `UTXO` 的临时区域中移除特定类型的状态数据，并获取其值。
+
+以下是一些示例代码：
+
+```rust
+struct TempState has store, copy, drop {
+    value: u64,
+}
+
+// 添加临时状态数据
+add_temp_state(&mut utxo, TempState{value: 10});
+
+// 检查临时状态数据是否存在
+if contains_temp_state::<TempState>(&utxo) {
+    // ...
+}
+
+// 借用临时状态数据的不可变引用
+let state_ref = borrow_temp_state::<TempState>(&utxo);
+
+// 借用临时状态数据的可变引用并修改它
+{
+    let state_mut = borrow_mut_temp_state::<TempState>(&mut utxo);
+    state_mut.value = 20;
+};
+
+// 移除临时状态数据并获取其值
+let removed_state = remove_temp_state::<TempState>(&mut utxo);
+```
+
+在上述代码中，`TempState` 是一个示例状态结构体，实际使用时应替换为具体的数据类型。
+
+### 示例
+
+1. [btc_holder_coin](https://github.com/rooch-network/rooch/blob/main/examples/btc_holder_coin)：一个简单的 UTXO 示例，实现了给 Bitcoin 持有者按持有时间发放代币的功能。
+2. [grow_bitcoin](https://github.com/rooch-network/rooch/blob/main/apps/grow_bitcoin)：一个更复杂的 UTXO 示例，实现了给 Bitcoin 持有者通过 DeFi farmer 模式发放代币奖励的功能。
+
+## 用 Inscription 编程
+
+### 1. Inscription 的字段说明
+
+Inscription 结构在 `ord.move` 文件中定义，它代表了一个在 Rooch 网络上的有序记录（Ordered Record）。
+
+Inscription 结构体包含了以下字段：
+
+- `txid`: 交易ID，类型为 `address`。
+- `index`: 索引，类型为 `u32`。
+- `input`: 交易输入索引，类型为 `u32`。
+- `offset`: 偏移量，类型为 `u64`。
+- `body`: 内容主体，类型为 `vector<u8>`。
+- `content_encoding`: 内容编码，类型为 `Option<String>`。
+- `content_type`: 内容类型，类型为 `Option<String>`。
+- `metadata`: 元数据，类型为 `vector<u8>`。
+- `metaprotocol`: 元协议，类型为 `Option<String>`。
+- `parent`: 父对象ID，类型为 `Option<ObjectID>`。
+- `pointer`: 指针，类型为 `Option<u64>`。
+
+<Callout>
+TODO: 这部分文档需要改进
+
+1. 更详细的描述 Inscription 字段。
+</Callout>
+
+### 2. 如何通过方法参数接受 Inscription
+
+在 Rooch 中 `Inscription` 以对象 `Object<Inscription>` 的形式储存在全局状态中。 开发者可以通过引用（`&`）或可变引用（`&mut`）的方式接受结构体作为参数，读取 Inscription 包含的数据或者在 Inscription 对象中保存临时状态或者永久状态。
+
+例如，你可以这样定义一个方法来接受一个 `Inscription` 的可变引用
+
+```move
+public entry fun plant(seed: &mut Object<Inscription>) {
+    // ...
+}
+```
+
+### 3. 如何在 Inscription 的临时区域和永久区域中存储数据
+
+类似于 `UTXO` 的临时区域，`Object<Inscription>` 对象也有临时区域，一旦 `Object<Inscription>` 被转移，其临时区域会被清空。同时 `Object<Inscription>` 还有永久区域，可以永久存放状态，随着 `Object<Inscription>` 的转移，永久区域的状态会跟着被转移。
+
+在 `plants.move` 示例中，展示了如何在 Inscription 的永久区域和临时区域中存储数据：
+
+- **永久区域**：使用 `ord::add_permanent_state` 函数来存储数据。这些数据将一直保留在 Inscription 中，直到被显式移除。例如，种植信息和植物状态被存储在永久区域：
+
+```move
+ord::add_permanent_state(seed, plant);
+```
+
+- **临时区域**：使用 `ord::add_temp_state` 函数来存储数据。这些数据是暂时的，并且可以在某些操作后被清理。例如，种植行为被存储在临时区域：
+
+```move
+ord::add_temp_state(seed, actions);
+```
+
+此外，还有对应的函数用于从这些区域中读取和移除数据：
+
+- `ord::borrow_mut_permanent_state<T>` 用于获取永久区域中存储的特定类型数据的可变引用。
+- `ord::borrow_mut_temp_state<T>` 用于获取临时区域中存储的特定类型数据的可变引用。
+- `ord::remove_permanent_state<T>` 用于从永久区域中移除特定类型的数据。
+
+临时区域中添加、修改、删除状态的接口：
+
+- 使用 `add_temp_state` 函数将状态数据添加到 `Inscription` 的临时区域。该函数接受一个 `Inscription` 对象和一个要存储的状态数据。
+- 使用 `contains_temp_state` 函数检查 `Inscription` 的临时区域是否包含特定类型的状态数据。
+- 使用 `borrow_temp_state` 函数借用临时区域中的特定类型的状态数据的不可变引用。
+- 使用 `borrow_mut_temp_state` 函数借用临时区域中的特定类型的状态数据的可变引用，以便修改它。
+- 使用 `remove_temp_state` 函数从 `Inscription` 的临时区域中移除特定类型的状态数据，并获取其值。
+
+永久区域中添加、修改、删除状态的接口：
+
+- 使用 `add_permanent_state` 函数将状态数据添加到 `Inscription` 的永久区域。该函数接受一个 `Inscription` 对象和一个要存储的状态数据。
+- 使用 `contains_permanent_state` 函数检查 `Inscription` 的永久区域是否包含特定类型的状态数据。
+- 使用 `borrow_permanent_state` 函数借用永久区域中的特定类型的状态数据的不可变引用。
+- 使用 `borrow_mut_permanent_state` 函数借用永久区域中的特定类型的状态数据的可变引用，以便修改它。
+- 使用 `remove_permanent_state` 函数从 `Inscription` 的永久区域中移除特定类型的状态数据，并获取其值。
+
+### 示例
+1. [bitcoin_plants](https://github.com/rooch-network/rooch/blob/main/examples/bitcoin_plants)：一个简单的 Inscription 示例，实现了将 Bitcoin Inscription 作为种子，在 Layer2 上种植植物的游戏。这个植物的所有权会随着 Inscription 一起转移。

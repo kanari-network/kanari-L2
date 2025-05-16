@@ -1,0 +1,440 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "moveos/metrics",
+    "moveos/moveos",
+    "moveos/moveos-commons/accumulator",
+    "moveos/moveos-commons/bcs_ext",
+    "moveos/moveos-commons/moveos-common",
+    "moveos/moveos-commons/timeout-join-handler",
+    "moveos/moveos-commons/moveos-common",
+    "moveos/moveos-compiler",
+    "moveos/moveos-config",
+    "moveos/moveos-object-runtime",
+    "moveos/moveos-store",
+    "moveos/moveos-types",
+    "moveos/moveos-verifier",
+    "moveos/moveos-wasm",
+    "moveos/raw-store",
+    "moveos/smt",
+    "moveos/moveos-eventbus",
+    "moveos/moveos-gas-profiling",
+    "crates/bitcoin-client",
+    "crates/data_verify",
+    "crates/kanari",
+    "crates/kanari-anomalies",
+    "crates/kanari-benchmarks",
+    "crates/kanari-common",
+    "crates/kanari-config",
+    "crates/kanari-da",
+    "crates/kanari-db",
+    "crates/kanari-executor",
+    "crates/kanari-faucet",
+    "crates/kanari-framework-tests",
+    "crates/kanari-genesis",
+    "crates/kanari-indexer",
+    "crates/kanari-integration-test-runner",
+    "crates/kanari-key",
+    "crates/kanari-open-rpc",
+    "crates/kanari-open-rpc-macros",
+    "crates/kanari-open-rpc-spec",
+    "crates/kanari-open-rpc-spec-builder",
+    "crates/kanari-oracle",
+    "crates/kanari-pipeline-processor",
+    "crates/kanari-proposer",
+    "crates/kanari-relayer",
+    "crates/kanari-rpc-api",
+    "crates/kanari-rpc-client",
+    "crates/kanari-rpc-server",
+    "crates/kanari-sequencer",
+    "crates/kanari-store",
+    "crates/kanari-test-transaction-builder",
+    "crates/kanari-types",
+    "crates/kanari-notify",
+    "crates/kanari-cosmwasm-vm",
+    "crates/testsuite",
+    "crates/kanari-ord",
+    "frameworks/bitcoin-move",
+    "frameworks/framework-builder",
+    "frameworks/framework-release",
+    "frameworks/framework-types",
+    "frameworks/moveos-stdlib",
+    "frameworks/kanari-framework",
+    "frameworks/kanari-nursery",
+    "crates/bitcoin-client",
+    "third_party/move/language/move-compiler-v2",
+]
+
+default-members = [
+    "moveos/moveos",
+    "frameworks/framework-release",
+    "crates/kanari",
+    "crates/kanari-faucet",
+    "crates/kanari-oracle",
+]
+
+exclude = ["generator/rust"]
+
+# All workspace members should inherit these keys
+# for package declarations.
+[workspace.package]
+authors = ["Kanari Contributors <opensource@kanari.site>"]
+edition = "2021"
+homepage = "https://kanari.site"
+license = "Apache-2.0"
+publish = false
+repository = "https://github.com/kanari-network/kanari"
+rust-version = "1.82.0"
+version = "0.9.4"
+
+[workspace.dependencies]
+# Internal crate dependencies.
+# Please do not add any test features here: they should be declared by the individual crate.
+# crates for MoveOS
+smt = { path = "moveos/smt" }
+moveos-types = { path = "moveos/moveos-types" }
+moveos-store = { path = "moveos/moveos-store" }
+moveos = { path = "moveos/moveos" }
+moveos-common = { path = "moveos/moveos-commons/moveos-common" }
+timeout-join-handler = { path = "moveos/moveos-commons/timeout-join-handler" }
+moveos-verifier = { path = "moveos/moveos-verifier" }
+raw-store = { path = "moveos/raw-store" }
+metrics = { path = "moveos/metrics" }
+moveos-config = { path = "moveos/moveos-config" }
+moveos-wasm = { path = "moveos/moveos-wasm" }
+moveos-object-runtime = { path = "moveos/moveos-object-runtime" }
+moveos-compiler = { path = "moveos/moveos-compiler" }
+moveos-eventbus = { path = "moveos/moveos-eventbus" }
+accumulator = { path = "moveos/moveos-commons/accumulator" }
+moveos-gas-profiling = { path = "moveos/moveos-gas-profiling" }
+
+# crates for Kanari
+bitcoin-client = { path = "crates/bitcoin-client" }
+data-verify = { path = "crates/data_verify" }
+kanari = { path = "crates/kanari" }
+kanari-anomalies = { path = "crates/kanari-anomalies" }
+kanari-common = { path = "crates/kanari-common" }
+kanari-key = { path = "crates/kanari-key" }
+kanari-types = { path = "crates/kanari-types" }
+kanari-framework-tests = { path = "crates/kanari-framework-tests" }
+kanari-integration-test-runner = { path = "crates/kanari-integration-test-runner" }
+kanari-genesis = { path = "crates/kanari-genesis" }
+kanari-relayer = { path = "crates/kanari-relayer" }
+kanari-rpc-server = { path = "crates/kanari-rpc-server" }
+kanari-rpc-client = { path = "crates/kanari-rpc-client" }
+kanari-rpc-api = { path = "crates/kanari-rpc-api" }
+kanari-testsuite = { path = "crates/kanari-testsuite" }
+kanari-config = { path = "crates/kanari-config" }
+kanari-sequencer = { path = "crates/kanari-sequencer" }
+kanari-executor = { path = "crates/kanari-executor" }
+kanari-proposer = { path = "crates/kanari-proposer" }
+kanari-pipeline-processor = { path = "crates/kanari-pipeline-processor" }
+kanari-open-rpc = { path = "crates/kanari-open-rpc" }
+kanari-open-rpc-spec = { path = "crates/kanari-open-rpc-spec" }
+kanari-open-rpc-spec-builder = { path = "crates/kanari-open-rpc-spec-builder" }
+kanari-open-rpc-macros = { path = "crates/kanari-open-rpc-macros" }
+kanari-store = { path = "crates/kanari-store" }
+kanari-indexer = { path = "crates/kanari-indexer" }
+kanari-da = { path = "crates/kanari-da" }
+kanari-benchmarks = { path = "crates/kanari-benchmarks" }
+kanari-faucet = { path = "crates/kanari-faucet" }
+kanari-test-transaction-builder = { path = "crates/kanari-test-transaction-builder" }
+kanari-db = { path = "crates/kanari-db" }
+kanari-notify = { path = "crates/kanari-notify" }
+kanari-ord = { path = "crates/kanari-ord" }
+kanari-cosmwasm-vm = { path = "crates/kanari-cosmwasm-vm" }
+kanari-oracle = { path = "crates/kanari-oracle" }
+
+# frameworks
+framework-types = { path = "frameworks/framework-types" }
+framework-builder = { path = "frameworks/framework-builder" }
+framework-release = { path = "frameworks/framework-release" }
+moveos-stdlib = { path = "frameworks/moveos-stdlib" }
+kanari-framework = { path = "frameworks/kanari-framework" }
+bitcoin-move = { path = "frameworks/bitcoin-move" }
+kanari-nursery = { path = "frameworks/kanari-nursery" }
+
+# External crate dependencies.
+# Please do not add any test features here: they should be declared by the individual crate.
+anyhow = "1.0.76"
+async-trait = "0"
+backtrace = "0.3"
+bcs = "0.1.3"
+bytes = "1.10.1"
+bech32 = "0.11.0"
+better_any = "0.1.1"
+bitcoin = { version = "0.32.5", features = ["rand-std", "bitcoinconsensus"] }
+#bitcoin-io = "0.2.0"
+bitcoin_hashes = { version = "0.14.0", features = ["serde"] }
+bitcoincore-rpc = "0.19.0"
+bitcoincore-rpc-json = "0.19.0"
+bip32 = "0.4.0"
+byteorder = "1.4.3"
+clap = { version = "4.5.13", features = ["derive", "env"] }
+brotli = "3.4.0"
+chrono = "0.4.40"
+coerce = "0.8"
+datatest-stable = "0.1.3"
+derive_more = { version = "1.0.0", features = ["as_ref", "from"] }
+dirs = "5.0.1"
+enum_dispatch = "^0.3"
+ethers = { version = "2.0.7", features = ["legacy"] }
+eyre = "0.6.8"
+fastcrypto = { git = "https://github.com/rooch-network/fastcrypto.git", rev = "863a6b9194787ad366f2d980ebe9c26b1649e25e" }
+fastcrypto-zkp = { git = "https://github.com/rooch-network/fastcrypto.git", rev = "863a6b9194787ad366f2d980ebe9c26b1649e25e" }
+futures = "0.3.31"
+futures-util = "0.3.31"
+futures-core = "0.3.21"
+hdrhistogram = "7.5.4"
+hex = "0.4.3"
+heed = "0.21.0"
+itertools = "0.13.0"
+#jsonrpsee = { version = "0.23.2", features = ["full"] }
+jsonrpsee = { version = "0.24.7", features = [
+    "server",
+    "macros",
+    "ws-client",
+    "http-client",
+    "jsonrpsee-core",
+] }
+jpst = "0.1.1"
+lazy_static = "1.5.0"
+more-asserts = "0.3.0"
+num-derive = "0.3.3"
+num-traits = "0.2.15"
+once_cell = "1.21.3"
+ordinals = "0.0.9"
+parking_lot = "0.12.3"
+petgraph = "0.6.5"
+primitive-types = { version = "0.12.1", features = ["serde", "arbitrary"] }
+proptest = "1.6.0"
+proptest-derive = "0.3.0"
+rayon = "1.5.2"
+rand = "0.8.5"
+rand_core = { version = "0.9.3", default-features = false }
+reqwest = { version = "0.12", features = ["json", "stream"] }
+schemars = { version = "0.8.22", features = ["either"] }
+serde_bytes = "0.11.17"
+serde = { version = "1.0.219", features = ["derive", "rc"] }
+serde_json = { version = "1.0.140", features = ["preserve_order"] }
+serde_yaml = "0.9"
+serde_with = { version = "2.1.0", features = ["hex", "base64"] }
+signature = "2.2.0"
+strum = "^0.26"
+strum_macros = "^0.26"
+sha2 = "0.10.2"
+sha3 = "0.10.8"
+smallvec = "1.15.0"
+thiserror = "1.0.69"
+tiny-keccak = { version = "2", features = ["keccak", "sha3"] }
+tiny-bip39 = "2.0.0"
+tokio = { version = "1.44.2", features = ["full"] }
+tokio-tungstenite = { version = "0.24.0", features = ["native-tls"] }
+tokio-stream = "0.1.17"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19" }
+codespan-reporting = "0.11.1"
+codespan = "0.11.1"
+termcolor = "1.1.2"
+versions = "4.1.0"
+pretty_assertions = "1.4.1"
+syn = { version = "1.0.104", features = ["full", "extra-traits"] }
+quote = "1.0"
+proc-macro2 = "1.0.95"
+derive-syn-parse = "0.1.5"
+unescape = "0.1.0"
+tempfile = "3.19.1"
+regex = "1.11.1"
+walkdir = "2.3.3"
+prometheus = "0.13.3"
+hyper = { version = "1.0.0", features = ["full"] }
+libc = "^0.2"
+include_dir = { version = "0.6.2" }
+serde-reflection = "0.3.6"
+bcs-ext = { path = "moveos/moveos-commons/bcs_ext" }
+http = "1.0.0"
+tower = { version = "0.5.2", features = [
+    "full",
+    "log",
+    "util",
+    "timeout",
+    "load-shed",
+    "limit",
+] }
+tower-http = { version = "0.5.2", features = [
+    "cors",
+    "full",
+    "trace",
+    "set-header",
+    "propagate-header",
+] }
+tower_governor = { version = "0.4.3", features = ["tracing"] }
+pin-project = "1.1.10"
+mirai-annotations = "1.12.0"
+lru = "0.11.0"
+quick_cache = "0.6.13"
+bs58 = "0.5.1"
+dirs-next = "2.0.0"
+chacha20poly1305 = "0.10.1"
+argon2 = "0.5.2"
+rpassword = "7.2.0"
+uint = "0.9.5"
+rlp = "0.5.2"
+diesel = { version = "2.2.10", features = [
+    "chrono",
+    "sqlite",
+    "r2d2",
+    "serde_json",
+    "64-column-tables",
+] }
+diesel_migrations = { version = "2.2.0" }
+axum = { version = "0.7.9", default-features = false, features = [
+    "tokio",
+    "http1",
+    "http2",
+    "json",
+    "matched-path",
+    "original-uri",
+    "form",
+    "query",
+    "ws",
+] }
+axum-server = { version = "0.6.0", default-features = false, features = [
+    "tls-rustls",
+] }
+serenity = { version = "0.12.4", default-features = false, features = [
+    "client",
+    "gateway",
+    "cache",
+    "rustls_backend",
+    "model",
+] }
+tap = "1.0.1"
+dashmap = "6.0.1"
+criterion = { version = "0.5.1", features = [
+    "async",
+    "async_tokio",
+    "html_reports",
+] }
+xxhash-rust = { version = "0.8.15", features = ["std", "xxh3"] }
+base64 = "0.22.1"
+wasmer = "4.2.5"
+wasmer-types = "4.2.5"
+wasmer-compiler-singlepass = "4.2.2"
+cosmwasm-vm = { git = "https://github.com/rooch-network/cosmwasm", rev = "597d3e8437d8c4d1afce07e5a676c29c751a8a81" }
+cosmwasm-std = { git = "https://github.com/rooch-network/cosmwasm", rev = "597d3e8437d8c4d1afce07e5a676c29c751a8a81" }
+ciborium = "0.2.1"
+pprof = { version = "0.13.0", features = [
+    "flamegraph",
+    "criterion",
+    "cpp",
+    "frame-pointer",
+    "protobuf-codec",
+] }
+celestia-rpc = { git = "https://github.com/eigerco/celestia-node-rs.git", rev = "129272e8d926b4c7badf27a26dea915323dd6489" }
+celestia-types = { git = "https://github.com/eigerco/celestia-node-rs.git", rev = "129272e8d926b4c7badf27a26dea915323dd6489" }
+opendal = { version = "0.50.2", features = ["services-fs", "services-gcs"] }
+toml = "0.8.20"
+tabled = "0.16.0"
+csv = "1.3.1"
+revm-precompile = "16.2.0"
+revm-primitives = "15.2.0"
+scopeguard = "1.1"
+uuid = { version = "1.16.0", features = ["v4", "fast-rng"] }
+protobuf = { version = "2.28", features = ["with-bytes"] }
+# windows no longer supports jemalloc, so we need to use tikv-jemallocator
+rocksdb = { version = "0.23.0", features = ["lz4", "mt_static"] }
+# Use jemalloc for Linux and MacOS
+# rocksdb = { version = "0.23.0", features = ["lz4", "mt_static", "jemalloc"] }
+
+# we need to use the bundled version of libsqlite3-sys for Windows
+libsqlite3-sys = { version = "0.33.0", features = ["bundled"] }
+
+lz4 = { version = "1.28.1" }
+ripemd = { version = "0.1.3" }
+function_name = { version = "0.3.0" }
+rustc-hash = { version = "2.1.1" }
+xorf = { version = "0.11.0" }
+vergen-git2 = { version = "1.0.0", features = ["build", "cargo", "rustc"] }
+vergen-pretty = "0.3.9"
+crossbeam-channel = "0.5.15"
+inferno = "0.11.21"
+handlebars = "4.2.2"
+indexmap = "2.9.0"
+tikv-jemallocator = { git = "https://github.com/jamesatomc/jemallocator.git", features = [
+    "unprefixed_malloc_on_supported_platforms",
+    "profiling",
+] }
+mimalloc = { version = "0.1.46" }
+
+# Note: the BEGIN and END comments below are required for external tooling. Do not remove.
+# BEGIN MOVE DEPENDENCIES
+move-abigen = { path = "third_party/move/language/move-prover/move-abigen" }
+move-binary-format = { path = "third_party/move/language/move-binary-format" }
+move-bytecode-verifier = { path = "third_party/move/language/move-bytecode-verifier" }
+move-bytecode-utils = { path = "third_party/move/language/tools/move-bytecode-utils" }
+move-cli = { path = "third_party/move/language/tools/move-cli" }
+move-command-line-common = { path = "third_party/move/language/move-command-line-common" }
+move-compiler = { path = "third_party/move/language/move-compiler" }
+move-core-types = { path = "third_party/move/language/move-core/types" }
+move-coverage = { path = "third_party/move/language/tools/move-coverage" }
+move-disassembler = { path = "third_party/move/language/tools/move-disassembler" }
+move-docgen = { path = "third_party/move/language/move-prover/move-docgen" }
+move-errmapgen = { path = "third_party/move/language/move-prover/move-errmapgen" }
+move-ir-compiler = { path = "third_party/move/language/move-ir-compiler" }
+move-model = { path = "third_party/move/language/move-model" }
+move-package = { path = "third_party/move/language/tools/move-package" }
+move-prover = { path = "third_party/move/language/move-prover" }
+move-prover-boogie-backend = { path = "third_party/move/language/move-prover/boogie-backend" }
+move-stackless-bytecode = { path = "third_party/move/language/move-prover/bytecode" }
+move-prover-test-utils = { path = "third_party/move/language/move-prover/test-utils" }
+move-resource-viewer = { path = "third_party/move/language/tools/move-resource-viewer" }
+move-stdlib = { path = "third_party/move/language/move-stdlib", features = [
+    "testing",
+] }
+move-symbol-pool = { path = "third_party/move/language/move-symbol-pool" }
+move-transactional-test-runner = { path = "third_party/move/language/testing-infra/transactional-test-runner" }
+move-unit-test = { path = "third_party/move/language/tools/move-unit-test", features = [
+    "table-extension",
+] }
+move-vm-runtime = { path = "third_party/move/language/move-vm/runtime", features = [
+    "stacktrace",
+    "debugging",
+    "testing",
+] }
+move-vm-test-utils = { path = "third_party/move/language/move-vm/test-utils", features = [
+    "table-extension",
+] }
+move-vm-types = { path = "third_party/move/language/move-vm/types" }
+move-bytecode-source-map = { path = "third_party/move/language/move-ir-compiler/move-bytecode-source-map" }
+move-ir-types = { path = "third_party/move/language/move-ir/types" } # END MOVE DEPENDENCIES
+
+
+[profile.release]
+# enable overflow checks won't affect performance much, branch prediction will handle it well
+overflow-checks = true
+# enable link-time optimization, which can significantly improve perf but won't increase compile time much
+# thin LTO is enough for us:
+# (https://blog.llvm.org/2016/06/thinlto-scalable-and-incremental-lto.html)
+lto = "thin"
+codegen-units = 1 # Help to achieve a better result with lto
+
+[profile.bench]
+inherits = "release"
+#debug = true
+
+[profile.optdev]
+inherits = "release"
+lto = "off"
+codegen-units = 16
+
+# This profile is used for CI
+[profile.optci]
+inherits = "optdev"
+# actually, incremental compilation is disabled already for release profile,
+# but we want to make it explicit.
+incremental = false
+
+[workspace.metadata.cargo-machete]
+ignored = ["libsqlite3-sys"]

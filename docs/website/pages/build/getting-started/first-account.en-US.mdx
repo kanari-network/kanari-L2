@@ -1,0 +1,46 @@
+# First account
+
+This tutorial mainly introduces how to obtain a Rooch account.
+
+## Get a Rooch account using the CLI
+
+There are two ways to obtain Rooch using the command line: automatically create a default account during default initialization, and manually call the account creation command to generate a new account.
+
+1. Default account
+
+```bash
+[joe@mx sources]$ rooch init
+Rooch server config file generated at /home/joe/.rooch/rooch_config/server.yaml
+Creating client config file ["/home/joe/.rooch/rooch_config/rooch.yaml"].
+Enter a password to encrypt the keys. Press enter to leave it an empty password:
+Generated new keypair for address [rooch1hs6dmxs5p2exlz85vmy75l4pg5rmcfu4mn75kmr6c62d60pwrjxsl39uea]
+Secret Recovery Phrase : [eagle warm pull merit hunt visual top pig arctic derive observe village]
+Rooch client config file generated at /home/joe/.rooch/rooch_config/rooch.yaml
+null
+```
+
+Here a `rooch1hs6dmxs5p2exlz85vmy75l4pg5rmcfu4mn75kmr6c62d60pwrjxsl39uea` account is generated, the address is in `bech32` format, and its recovery phrase (mnemonic).
+
+This is the account generated when `rooch init` is used to initialize the Rooch configuration. The account is stored in `$HOME/.rooch/rooch_config/rooch.keystore`.
+
+You can use `rooch account list` to view the corresponding hex type address.
+
+> Tip: Currently, Rooch uses bech32 format addresses uniformly, and the hex address will only be used when writing the Move contract.
+
+## Create manually
+
+```bash
+[joe@mx sources]$ rooch account create
+Generated new keypair for address with key pair type [rooch1p0ng4kpllwsahrd69ywpv9sfdgpgajtt777vq6f9c9sdu4t2e2es6txz5d]
+Secret Recovery Phrase : [eagle warm pull merit hunt visual top pig arctic derive observe village]
+```
+
+A new account is manually created here, `rooch1p0ng4kpllwsahrd69ywpv9sfdgpgajtt777vq6f9c9sdu4t2e2es6txz5d`.
+
+This account address is derived from the same set of mnemonic words, so it can also be recovered using the same mnemonic word.
+
+## Create an account with Rooch Portal
+
+When connecting to the Rooch Portal using UniSat, a Rooch account is automatically created and linked to the Bitcoin account.
+
+Please refer to [Rooch Portal](../../learn/miscellaneous/portal) for detailed usage.

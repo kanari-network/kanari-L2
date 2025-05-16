@@ -1,0 +1,23 @@
+processed 2 tasks
+
+task 1 'publish'. lines 3-25:
+Error: error: The struct test1::DisallowedStruct must have the 'copy' and 'drop' ability
+   ┌─ /tmp/tempfile:8:5
+   │  
+ 8 │ ╭     struct DisallowedStruct has drop{
+ 9 │ │         value: NonDataStruct,
+10 │ │     }
+   │ ╰─────^
+
+error: The type argument 0x42::test1::DisallowedStruct of #[data_struct] for function test1::f2 in the module 0x42::test1 is not allowed.
+   ┌─ /tmp/tempfile:14:5
+   │  
+14 │ ╭     public fun f2() {
+15 │ │         let disallowed_struct = DisallowedStruct {
+16 │ │             value: NonDataStruct {},
+17 │ │         };
+18 │ │         f1<DisallowedStruct>(disallowed_struct);
+19 │ │     }
+   │ ╰─────^
+
+

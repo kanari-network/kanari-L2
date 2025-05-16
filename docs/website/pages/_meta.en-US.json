@@ -1,0 +1,111 @@
+{
+  "index": {
+    "title": "Homepage",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "timestamp": false,
+      "layout": "raw"
+    }
+  },
+  "learn": {
+    "title": "Learn",
+    "type": "page"
+  },
+  "build": {
+    "title": "Build",
+    "type": "page"
+  },
+  "blog": {
+    "title": "Blog",
+    "type": "page",
+    "theme": {
+      "sidebar": false,
+      "timestamp": false,
+      "typesetting": "article"
+    }
+  },
+  "grow": {
+    "title": "Grow",
+    "type": "page",
+    "newWindow": true,
+    "href": "https://grow.rooch.network/"
+  },
+  "explorer": {
+    "title": "Explorer",
+    "type": "page",
+    "newWindow": true,
+    "href": "https://roochscan.io/"
+  },
+  "portal": {
+    "title": "Portal",
+    "type": "menu",
+    "items": {
+      "apps": {
+        "title": "Apps",
+        "type": "page",
+        "newWindow": true,
+        "href": "https://portal.rooch.network/apps"
+      },
+      "account": {
+        "title": "Account",
+        "type": "page",
+        "newWindow": true,
+        "href": "https://portal.rooch.network/account"
+      },
+      "faucet": {
+        "title": "Faucet",
+        "type": "page",
+        "newWindow": true,
+        "href": "https://portal.rooch.network/faucet"
+      },
+      "purchase_gas": {
+        "title": "Purchase Gas",
+        "type": "page",
+        "newWindow": true,
+        "href": "https://portal.rooch.network/gas-swap"
+      },
+      "marketplace": {
+        "title": "Marketplace",
+        "type": "page",
+        "newWindow": true,
+        "href": "https://portal.rooch.network/trade/market"
+      }
+    }
+  },
+  "404": {
+    "type": "page",
+    "theme": {
+      "sidebar": false,
+      "typesetting": "article"
+    }
+  },
+  "brand": {
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "sidebar": false,
+      "timestamp": false,
+      "typesetting": "article"
+    }
+  },
+  "about": {
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "sidebar": false,
+      "timestamp": false,
+      "typesetting": "article"
+    }
+  },
+  "archives": {
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "sidebar": false,
+      "timestamp": false,
+      "typesetting": "article"
+    },
+    "title": "Archives"
+  }
+}

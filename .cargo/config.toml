@@ -1,0 +1,46 @@
+[build]
+rustflags = ["--cfg", "tokio_unstable", "-C", "force-frame-pointers=yes", "-C", "force-unwind-tables=yes"]
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["--cfg", "tokio_unstable", "-C", "link-arg=-fuse-ld=lld", "-C", "force-frame-pointers=yes", "-C", "force-unwind-tables=yes", "-C", "target-cpu=skylake"]
+
+# 64 bit MSVC
+[target.x86_64-pc-windows-msvc]
+rustflags = [
+    "--cfg",
+    "tokio_unstable",
+    "-C",
+    "force-frame-pointers=yes",
+    "-C",
+    "force-unwind-tables=yes",
+    "-C",
+    "link-arg=/STACK:8000000", # Set stack to 8 MB
+    # force static linking for the rocksdb and bitcoinconsensus crates
+    "-Ctarget-feature=+crt-static",
+    "-Clink-args=/DEFAULTLIB:libcmt.lib",
+    "-Clink-args=/DEFAULTLIB:libvcruntime.lib",
+    "-Clink-args=/DEFAULTLIB:libucrt.lib",
+    "-Clink-args=/DEFAULTLIB:oldnames.lib",
+    "-Clink-args=/DEFAULTLIB:legacy_stdio_definitions.lib",
+    "-Clink-args=/NODEFAULTLIB:msvcrt.lib",
+    "-Clink-args=/NODEFAULTLIB:msvcrtd.lib",
+    "-Clink-args=/NODEFAULTLIB:libcmtd.lib",
+    "-Clink-args=/NODEFAULTLIB:vcruntime.lib",
+    "-Clink-args=/NODEFAULTLIB:vcruntimed.lib"
+]
+
+[alias]
+a = "add"
+au = "audit"
+b = "build"
+br = "build --release"
+c = "check"
+cl = "clean"
+d = "doc --open"
+r = "run"
+rr = "run --release"
+up = "update"
+
+
+wasm = "build --target wasm32-unknown-unknown --release"
+wasm-debug = "build --target wasm32-unknown-unknown"

@@ -1,0 +1,214 @@
+name: Build and Release SDK
+
+on:
+  push:
+    branches: [ "kanari-network" ]
+    tags: "v*"
+  pull_request:
+    branches: [ "kanari-network" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            binary_names: ['kari']
+            artifact_names: ['kari-linux-x64']
+          - os: windows-latest 
+            target: x86_64-pc-windows-msvc
+            binary_names: ['kari.exe']
+            artifact_names: ['kari-windows-x64']
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            binary_names: ['kari']
+            artifact_names: ['kari-macos-arm64']
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'  # Add this to fetch submodules
+        
+    - name: Cache Rust dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+    - name: Install Linux dependencies
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          cmake \
+          gcc \
+          libssl-dev \
+          pkg-config \
+          libclang-dev \
+          protobuf-compiler
+
+    - name: Install Windows dependencies
+      if: matrix.os == 'windows-latest'
+      run: |
+        choco install visualstudio2019buildtools
+        choco install visualstudio2019-workload-vctools
+        choco install protoc
+        rustup default nightly-x86_64-pc-windows-msvc
+        
+    - name: Setup Windows environment
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        $ReleasePath = "target\${{ matrix.target }}\release"
+        New-Item -ItemType Directory -Force -Path $ReleasePath
+        $env:Path += ";C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Redist\MSVC\14.29.30133\x64"
+        
+        # Copy DLLs after build completes
+        if (Test-Path "C:\Windows\System32\vcruntime140.dll") {
+            Copy-Item "C:\Windows\System32\vcruntime140.dll" -Destination $ReleasePath
+        }
+        if (Test-Path "C:\Windows\System32\msvcp140.dll") {
+            Copy-Item "C:\Windows\System32\msvcp140.dll" -Destination $ReleasePath
+        }
+        
+        # Verify protoc exists and is in PATH
+        $protoc_path = (Get-Command protoc -ErrorAction SilentlyContinue).Path
+        if ($protoc_path) {
+            Write-Host "Found protoc at $protoc_path"
+        } else {
+            Write-Host "Warning: protoc not found in PATH"
+        }
+
+    - name: Install macOS dependencies
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install openssl@3
+        brew install pkg-config
+        brew install protobuf
+        which protoc
+        protoc --version
+
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        target: ${{ matrix.target }}
+        override: true
+        
+    - name: Set Protoc Environment Variables
+      run: |
+        if [ "${{ matrix.os }}" = "macos-latest" ]; then
+          echo "PROTOC=$(which protoc)" >> $GITHUB_ENV
+        elif [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+          echo "PROTOC=$(which protoc)" >> $GITHUB_ENV
+        elif [ "${{ matrix.os }}" = "windows-latest" ]; then
+          echo "PROTOC=C:\ProgramData\chocolatey\bin\protoc.exe" >> $GITHUB_ENV
+        fi
+      shell: bash
+
+    - name: Build (non-Windows)
+      if: matrix.os != 'windows-latest'
+      run: cargo build --release --target ${{ matrix.target }} --verbose
+      env:
+        OPENSSL_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3' || '/usr' }}
+        OPENSSL_LIB_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/lib' || '/usr/lib/x86_64-linux-gnu' }}
+        OPENSSL_INCLUDE_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/include' || '/usr/include' }}
+
+    - name: Build (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        $env:RUSTFLAGS="-C link-arg=/STACK:33554432"
+        # Set a higher stack size for build scripts specifically
+        $env:CARGO_BUILD_RUSTFLAGS="-C link-arg=/STACK:33554432"
+        # Enable trace for debugging
+        $env:RUST_BACKTRACE=1
+        
+        cargo build --release --target ${{ matrix.target }} --verbose
+      env:
+        OPENSSL_DIR: '/usr'
+        OPENSSL_LIB_DIR: '/usr/lib/x86_64-linux-gnu'
+        OPENSSL_INCLUDE_DIR: '/usr/include'
+
+    # - name: Test
+    #   run: cargo test --target ${{ matrix.target }} --verbose
+    #   env:
+    #     OPENSSL_DIR: /usr/local/opt/openssl@3
+
+    - name: Debug binary location
+      if: matrix.os == 'windows-latest'
+      run: |
+        dir target\${{ matrix.target }}\release\
+      shell: cmd
+
+    - name: Debug binary location
+      if: matrix.os != 'windows-latest'
+      run: ls -la target/${{ matrix.target }}/release/
+
+    - name: Compress artifacts (Linux/MacOS)
+      if: matrix.os != 'windows-latest'
+      run: |
+        cd target/${{ matrix.target }}/release
+        tar -czf ${{ matrix.artifact_names[0] }}.tar.gz ${{ matrix.binary_names[0] }}
+
+    - name: Compress artifacts (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        $ReleasePath = "target\${{ matrix.target }}\release"
+        Set-Location $ReleasePath
+        
+        # Compress kari
+        $Files = @()
+        if (Test-Path "${{ matrix.binary_names[0] }}") { 
+            $Files += "${{ matrix.binary_names[0] }}" 
+        }
+        if (Test-Path "vcruntime140.dll") { 
+            $Files += "vcruntime140.dll" 
+        }
+        if (Test-Path "msvcp140.dll") { 
+            $Files += "msvcp140.dll" 
+        }
+        Compress-Archive -Path $Files -DestinationPath "${{ matrix.artifact_names[0] }}.zip" -Force
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.artifact_names[0] }}
+        path: target/${{ matrix.target }}/release/${{ matrix.artifact_names[0] }}.*
+        retention-days: 5
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: kari-*
+          merge-multiple: true
+  
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/kari-linux-x64.tar.gz
+            artifacts/kari-windows-x64.zip
+            artifacts/kari-macos-arm64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

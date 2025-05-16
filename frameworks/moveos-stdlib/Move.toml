@@ -1,0 +1,11 @@
+[package]
+name = "MoveosStdlib"
+version = "1.0.0"
+
+[addresses]
+std = "0x1"
+moveos_std = "0x2"
+vm_reserved = "0x0"
+
+[dependencies]
+MoveStdlib = { local = "../move-stdlib" }

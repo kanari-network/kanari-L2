@@ -1,0 +1,69 @@
+# Connect testnet
+
+After developers initialize through `rooch init`, the `dev` environment is activated by default.
+
+You can view the environment list in the configuration through the command `rooch env list`:
+
+```bash
+rooch env list
+```
+
+```bash
+       Env Alias         |                     RPC URL                      |                  Websocket URL                   |  Active Env
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+         local           |               http://0.0.0.0:6767                |                       Null                       |
+          dev            |       https://dev-seed.rooch.network:443/        |                       Null                       |     True
+          test           |       https://test-seed.rooch.network:443/       |                       Null                       |
+```
+
+Activate the `test` network:
+
+```bash
+rooch env switch --alias test
+```
+
+Check that you have switched to the correct `test` network:
+
+```bash
+rooch env list
+```
+
+```bash
+       Env Alias         |                     RPC URL                      |                  Websocket URL                   |  Active Env
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+         local           |               http://0.0.0.0:6767                |                       Null                       |
+          dev            |       https://dev-seed.rooch.network:443/        |                       Null                       |
+          test           |       https://test-seed.rooch.network:443/       |                       Null                       |     True
+```
+
+## Testnet network information
+
+1. Name: test
+2. ChainID: 2
+3. RPC: https://test-seed.rooch.network/
+
+> Note: The current testnet is a pioneer network, and the data may be reset before the permanent incentive testnet is launched!
+
+## Call RPC via curl
+
+Query the ID information of the current chain and you can see that the returned JSON data is exactly the information of the `test` network:
+
+```bash
+curl -H "Content-Type: application/json" -X POST --data '{"jsonrpc":"2.0","method":"rooch_getChainID","params":[],"id":1}' https://test-seed.rooch.network
+```
+
+```json
+{"jsonrpc":"2.0","result":"2","id":1}
+```
+
+## Deploy the Example contract
+
+Refer to the document [Obtain Rooch Gas Coin](../get gas coin) to obtain the gas used for publishing contracts.
+
+After receiving the Gas, test the deployment contract on the `testnet` network:
+
+```bash
+git clone https://github.com/rooch-network/rooch.git
+cd rooch
+rooch move publish -p ./examples/quick_start_counter/ --sender-account default --named-addresses quick_start_counter=default
+```

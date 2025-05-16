@@ -1,0 +1,6 @@
+[toolchain]
+# channel = "1.82.0"
+
+channel = "stable"
+
+# channel = "nightly"

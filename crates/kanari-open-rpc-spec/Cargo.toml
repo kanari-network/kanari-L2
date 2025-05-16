@@ -1,0 +1,22 @@
+[package]
+name = "kanari-open-rpc-spec"
+
+# Workspace inherited keys
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+
+[dependencies]
+clap = { workspace = true, features = ["derive"] }
+tokio = { workspace = true, features = ["full"] }
+serde_json = { workspace = true }
+pretty_assertions = { workspace = true }
+kanari-open-rpc-spec-builder = { workspace = true }
+
+[build-dependencies]
+kanari-open-rpc-spec-builder = { workspace = true }

@@ -1,0 +1,15 @@
+[package]
+name = "BitcoinMove"
+version = "1.0.0"
+
+[addresses]
+vm_reserved = "0x0"
+std = "0x1"
+moveos_std = "0x2"
+kanari_framework = "0x3"
+bitcoin_move = "0x4"
+
+[dependencies]
+MoveStdlib = { local = "../../frameworks/move-stdlib" }
+MoveosStdlib = { local = "../../frameworks/moveos-stdlib" }
+KanariFramework = { local = "../../frameworks/kanari-framework" }

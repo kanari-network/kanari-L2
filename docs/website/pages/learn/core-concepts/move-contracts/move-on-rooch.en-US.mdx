@@ -1,0 +1,58 @@
+# Move on Rooch
+
+Rooch aims to enable developers to quickly build and deploy [VApps](../vapp) while ensuring that the application logic is verifiable through the smart contract language. Rooch has chosen the Move language for development, as we believe its features make it the most suitable smart contract language for building applications.
+
+1. **Platform Agnostic**: Move and its virtual machine are not tied to any specific blockchain platform. Different blockchain platforms can innovate based on Move to suit various application scenarios.
+2. **Security**: Move's built-in security features and support for resource scarcity make it ideal for blockchain applications where assets and application logic are closely linked.
+3. **Scalability**: Move's dependency management mechanism allows the platform to provide powerful built-in libraries while enabling developers to easily incorporate third-party libraries, making it suitable for building complex applications.
+
+## Features of Rooch Move
+
+For a detailed overview of the Move language features, refer to the resources at the end. Here, we will focus on the new features that Rooch brings to Move.
+
+### Built-in Standard Libraries
+
+Rooch currently includes four standard libraries: `MoveStdlib`, `MoveosStdlib`, `RoochFramework`, and `BitcoinMove`. For detailed information, see [Built-in Libraries](./built-in-library).
+
+### Private Generics
+
+`#[private_generics(T)]` is a function annotation that ensures functions with this annotation can only be called within the module where `T` is defined. This follows the same security model constraints as Move's storage instructions but opens this capability to developers. This feature is foundational for several other features. For more details, see [Private Generics](../../../build/rooch-framework/private-generics).
+
+### Data Structures
+
+`#[data_struct(T)]` is a struct and function annotation that marks the struct as a pure data structure, which can be directly deserialized in a contract. This feature is designed to facilitate developers in obtaining data from external data sources. For more details, see [Data Structures](../../../build/rooch-framework/data-struct).
+
+### Storage Abstraction
+
+The goal of storage abstraction is to allow developers to define their own state storage structures in smart contracts more flexibly, without being limited to the standardized solutions provided by the platform. Rooch implements Move's original storage instructions within contracts, as shown in the table below:
+
+| Move Storage Instruction                   | Corresponding Function in Rooch                                               | Description                                         |
+|--------------------------------------------|-------------------------------------------------------------------------------|-----------------------------------------------------|
+| `move_to<T:key>(&signer,T)`                | `account::move_resource_to<T:key>(&signer,T)`                                | Stores a resource of type `T` in the user's state space of the `signer`. |
+| `move_from<T:key>(address):T`              | `account::move_resource_from<T:key>(address): T`                             | Retrieves a resource of type `T` from the user's state space.             |
+| `borrow_global<T:key>(address):&T`         | `account::borrow_resource<T:key>(address): &T`                               | Reads an immutable reference of type `T` from the user space.             |
+| `borrow_global_mut<T:key>(address):&mut T` | `account::borrow_mut_resource<T:key>(address): &mut T`                       | Reads a mutable reference of type `T` from the user space.                |
+| `exists<T:key>(address):bool`              | `account::exists_resource<T:key>(address): bool`                             | Checks if a resource of type `T` exists in the user space.                |
+
+All the methods provided by `account` are constrained by the `private_generics(T)` annotation, ensuring the same level of security as Move's storage instructions.
+
+In addition to Account Resource, Rooch also provides Object storage. For more details on Rooch Object, see [Rooch Object](../objects/object).
+
+For more information on the design of storage abstraction, see [Storage Abstraction](../objects/storage-abstraction).
+
+### Getting the Current Module's `signer`
+
+The function `moveos_std::signer::module_signer<T>():signer` can be used to obtain the `signer` of the current module, allowing functions requiring `signer`, such as `context::move_resource_to`, to be called with the module's account identity.
+
+Here, `T` is constrained by `private_generics(T)`, ensuring safe invocation.
+
+### Crypto Algorithm Support
+
+1. [ed25519](https://github.com/rooch-network/rooch/blob/main/frameworks/rooch-framework/doc/ed25519.md)
+2. [ecdsa_k1](https://github.com/rooch-network/rooch/blob/main/frameworks/rooch-framework/doc/ecdsa_k1.md)
+
+## Additional Resources
+
+1. [MoveBook](https://move-language.github.io/move/): A basic tutorial on the Move language
+2. [Move on Aptos](https://aptos.dev/move/move-on-aptos/): Introduction to the Move language and its features on Aptos
+3. [Move on Sui](https://docs.sui.io/learn/why-move): Introduction to the Move language and its features on Sui

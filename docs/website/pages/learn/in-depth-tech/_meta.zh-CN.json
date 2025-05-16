@@ -1,0 +1,8 @@
+{
+  "client-side-validation": "客户端认证",
+  "dstp":"DSTP",
+  "pipeline-transaction-processing": "基于流水线的并行交易处理",
+  "decentralized-validator": "去中心化验证者",
+  "sequence-proof": "交易排序证明",
+  "security": "安全性"
+}
