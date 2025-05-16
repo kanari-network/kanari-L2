@@ -13,8 +13,8 @@ on:
   #     - completed
 
 jobs:
-  deploy-rooch-mainnet:
-    name: Deploy Rooch Mainnet
+  deploy-kanari-mainnet:
+    name: Deploy Kanari Mainnet
     runs-on: self-hosted
     if: |
       github.event_name == 'workflow_dispatch' ||
@@ -69,7 +69,7 @@ jobs:
           sudo apt install -y --no-install-recommends openssh-server
           BRANCH=$(basename ${{ github.ref }})
           ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST \
-            "cd /root/rooch && git fetch origin && git checkout -B $BRANCH origin/$BRANCH || git checkout $BRANCH && bash scripts/deploy_rooch_mainnet.sh \
+            "cd /root/kanari && git fetch origin && git checkout -B $BRANCH origin/$BRANCH || git checkout $BRANCH && bash scripts/deploy_kanari_mainnet.sh \
             '${{ env.REF }}' \
             '${{ secrets.BTC_MAIN_RPC_URL }}' \
             '${{ secrets.BTC_MAIN_RPC_PWD }}' \

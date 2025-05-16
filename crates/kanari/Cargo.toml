@@ -122,9 +122,9 @@ tikv-jemallocator = { workspace = true }
 [target.'cfg(target_env = "msvc")'.dependencies]
 mimalloc = { workspace = true }
 
-[[bin]]
-name = "kari"
-path = "src/main.rs"
+# [[bin]]
+# name = "kari"
+# path = "src/main.rs"
 
 [build-dependencies]
 anyhow = { workspace = true }

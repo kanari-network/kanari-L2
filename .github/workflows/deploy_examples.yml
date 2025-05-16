@@ -1,4 +1,4 @@
-name: Deploy Examples To Rooch Network
+name: Deploy Examples To Kanari Network
 
 on:
   workflow_dispatch:
@@ -18,4 +18,4 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "cd /root/rooch && git pull origin main && docker pull ghcr.io/rooch-network/rooch:main && bash scripts/deploy_examples.sh"
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "cd /root/kanari && git pull origin main && docker pull ghcr.io/jamesatomc/kanari-move:main && bash scripts/deploy_examples.sh"

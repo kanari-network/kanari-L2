@@ -54,11 +54,11 @@ jobs:
         run: echo "The ref is ${{ env.REF }}"
       - uses: mislav/bump-homebrew-formula-action@v2
         with:
-          formula-name: rooch
-          formula-path: Formula/rooch.rb
-          homebrew-tap: rooch-network/rooch
+          formula-name: kanari
+          formula-path: Formula/kanari.rb
+          homebrew-tap: jamesatomc/kanari-move
           base-branch: master
-          download-url: https://github.com/rooch-network/rooch/releases/download/${{ env.REF }}/rooch-macos-latest.zip
+          download-url: https://github.com/jamesatomc/kanari-move/releases/download/${{ env.REF }}/kanari-macos-latest.zip
           commit-message: |
             {{formulaName}} {{version}}
 
