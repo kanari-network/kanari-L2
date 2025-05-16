@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 #[macro_export]
 macro_rules! expand_get_impl_for_native_gas_params {

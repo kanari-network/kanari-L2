@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::moveos_std::account::Account;
 use crate::moveos_std::module_store::Package;

@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use std::cmp::max;
 use std::collections::BTreeMap;
@@ -428,7 +429,7 @@ where
     let metadata_opt = get_metadata_from_compiled_module(module);
     match metadata_opt {
         None => {
-            // If ROOCH_METADATA_KEY cannot be found in the metadata,
+            // If KANARI_METADATA_KEY cannot be found in the metadata,
             // it means that the user's code did not use #[private_generics(T)],
             // or the user intentionally deleted the data in the metadata.
             // In either case, we will skip the verification.
@@ -583,7 +584,7 @@ pub fn verify_gas_free_function(module: &CompiledModule) -> VMResult<bool> {
     let metadata_opt = get_metadata_from_compiled_module(module);
     match metadata_opt {
         None => {
-            // If ROOCH_METADATA_KEY cannot be found in the metadata,
+            // If KANARI_METADATA_KEY cannot be found in the metadata,
             // it means that the user's code did not use #[private_generics(T)],
             // or the user intentionally deleted the data in the metadata.
             // In either case, we will skip the verification.
@@ -794,7 +795,7 @@ where
     let metadata_opt = get_metadata_from_compiled_module(caller_module);
     match metadata_opt {
         None => {
-            // If ROOCH_METADATA_KEY cannot be found in the metadata,
+            // If KANARI_METADATA_KEY cannot be found in the metadata,
             // it means that the user's code did not use #[data_struct(T)],
             // or the user intentionally deleted the data in the metadata.
             // In either case, we will skip the verification.

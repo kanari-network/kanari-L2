@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use anyhow::Result;
 use move_binary_format::access::ModuleAccess;

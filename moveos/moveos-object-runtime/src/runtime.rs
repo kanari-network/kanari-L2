@@ -1,7 +1,6 @@
-// Copyright (c) RoochNetwork
-// Copyright (c) The Diem Core Contributors
-// Copyright (c) The Move Contributors
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::{
     resolved_arg::{ObjectArg, ResolvedArg},

@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use anyhow::Result;
 use moveos_types::h256::H256;

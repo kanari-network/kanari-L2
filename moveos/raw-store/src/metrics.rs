@@ -1,8 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-// Copyright (c) Mysten Labs, Inc.
-// SPDX-License-Identifier: Apache-2.0
 
 use metrics::metrics_util::LATENCY_SEC_BUCKETS;
 use once_cell::sync::OnceCell;

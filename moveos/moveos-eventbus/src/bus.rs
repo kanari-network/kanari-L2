@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use anyhow::{format_err, Error};
 use coerce::actor::message::{Handler, Message};

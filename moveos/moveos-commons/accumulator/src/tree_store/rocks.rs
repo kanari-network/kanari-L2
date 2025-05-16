@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::{AccumulatorNode, AccumulatorTreeStore};
 use moveos_types::h256::H256;

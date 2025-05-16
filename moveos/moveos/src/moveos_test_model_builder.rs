@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use move_command_line_common::address::NumericalAddress;
 use move_compiler::command_line::compiler::PASS_COMPILATION;

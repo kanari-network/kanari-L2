@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::vm::data_cache::{into_change_set, MoveosDataCache};
 #[cfg(test)]

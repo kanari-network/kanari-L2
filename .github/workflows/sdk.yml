@@ -2,10 +2,10 @@ name: Build and Release SDK
 
 on:
   push:
-    branches: [ "kanari-network" ]
+    branches: [ "main" ]
     tags: "v*"
   pull_request:
-    branches: [ "kanari-network" ]
+    branches: [ "main" ]
 
 env:
   CARGO_TERM_COLOR: always

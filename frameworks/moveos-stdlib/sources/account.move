@@ -292,7 +292,7 @@ module moveos_std::account {
 
 
    #[test_only]
-   /// Create signer for testing, independently of an Rooch-style `Account`.
+   /// Create signer for testing, independently of an Kanari-style `Account`.
    public fun create_signer_for_testing(addr: address): signer { create_signer(addr) }
 
    #[test_only]

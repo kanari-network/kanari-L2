@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::{CONFIG_GENESIS_COLUMN_FAMILY_NAME, CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME};
 use anyhow::Result;

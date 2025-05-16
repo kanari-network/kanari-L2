@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use anyhow::{anyhow, Result};
 use bech32::{Bech32m, Hrp};

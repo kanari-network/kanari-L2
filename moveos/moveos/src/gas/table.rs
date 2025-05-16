@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::gas::gas_member::{FromOnChainGasSchedule, InitialGasSchedule, ToOnChainGasSchedule};
 use crate::gas::r#abstract::{

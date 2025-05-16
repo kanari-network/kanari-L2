@@ -52,7 +52,7 @@ module moveos_std::core_addresses {
         addr == @0xa
     }
 
-    /// Return true if `addr` is either the VM address or an Rooch system address.
+    /// Return true if `addr` is either the VM address or an Kanari system address.
     public fun is_reserved_address(addr: address): bool {
         is_system_reserved_address(addr) || is_vm_address(addr)
     }

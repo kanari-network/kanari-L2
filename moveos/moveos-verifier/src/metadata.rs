@@ -1,10 +1,12 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
+// SPDX-License-Identifier: Apache-2.0
+
 // SPDX-License-Identifier: Apache-2.0
 
 #![allow(clippy::redundant_closure)]
 #![allow(clippy::map_clone)]
 
-use crate::build::ROOCH_METADATA_KEY;
+use crate::build::KANARI_METADATA_KEY;
 use crate::verifier::INIT_FN_NAME_IDENTIFIER;
 use itertools::Itertools;
 use move_binary_format::binary_views::BinaryIndexedView;
@@ -106,7 +108,7 @@ fn find_metadata<'a>(module: &'a CompiledModule, key: &[u8]) -> Option<&'a Metad
 pub fn get_metadata_from_compiled_module(
     module: &CompiledModule,
 ) -> Option<RuntimeModuleMetadataV1> {
-    if let Some(data) = find_metadata(module, ROOCH_METADATA_KEY) {
+    if let Some(data) = find_metadata(module, KANARI_METADATA_KEY) {
         bcs::from_bytes::<RuntimeModuleMetadataV1>(&data.value).ok()
     } else {
         Some(RuntimeModuleMetadataV1::default())
@@ -1626,13 +1628,13 @@ pub enum MalformedError {
 pub fn check_metadata_format(module: &CompiledModule) -> Result<(), MalformedError> {
     let mut exist = false;
     for data in module.metadata.iter() {
-        if data.key == ROOCH_METADATA_KEY {
+        if data.key == KANARI_METADATA_KEY {
             if exist {
                 return Err(MalformedError::DuplicateKey);
             }
             exist = true;
 
-            if data.key == *ROOCH_METADATA_KEY {
+            if data.key == *KANARI_METADATA_KEY {
                 bcs::from_bytes::<RuntimeModuleMetadataV1>(&data.value)
                     .map_err(|e| MalformedError::DeserializedError(data.key.clone(), e.clone()))?;
             }

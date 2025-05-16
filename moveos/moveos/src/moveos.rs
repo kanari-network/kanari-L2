@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::gas::table::{
     get_gas_schedule_entries, initial_cost_schedule, CostTable, MoveOSGasMeter,

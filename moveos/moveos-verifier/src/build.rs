@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::metadata::{
     run_extended_checks, RuntimeModuleMetadataV1, DATA_STRUCT_ATTRIBUTE,
@@ -245,8 +246,8 @@ pub const BYTECODE_VERSION: u32 = 6;
 
 /// The keys used to identify the metadata in the metadata section of the module bytecode.
 /// This is more or less arbitrary, besides we should use some unique key to identify
-/// Rooch specific metadata (`rooch::` here).
-pub static ROOCH_METADATA_KEY: &[u8] = "rooch::metadata_v0".as_bytes();
+/// Kanari specific metadata (`kanari::` here).
+pub static KANARI_METADATA_KEY: &[u8] = "kanari::metadata_v0".as_bytes();
 
 pub fn build_model(
     package_path: &Path,
@@ -367,7 +368,7 @@ pub fn inject_runtime_metadata<P: AsRef<Path>>(
                         let serialized_metadata =
                             bcs::to_bytes(&module_metadata).expect("BCS for RuntimeModuleMetadata");
                         named_module.module.metadata.push(Metadata {
-                            key: ROOCH_METADATA_KEY.to_vec(),
+                            key: KANARI_METADATA_KEY.to_vec(),
                             value: serialized_metadata,
                         });
 
@@ -397,7 +398,7 @@ pub fn compile_and_inject_metadata(
 ) -> CompiledModule {
     let mut module = compiled_module.clone();
 
-    let mut rooch_metadata = RuntimeModuleMetadataV1::default();
+    let mut kanari_metadata = RuntimeModuleMetadataV1::default();
     for (metadata_type, metadata_item) in ast_metadata.value {
         if metadata_type == PRIVATE_GENERICS_ATTRIBUTE {
             let mut private_generics_map: BTreeMap<String, Vec<usize>> = BTreeMap::new();
@@ -414,7 +415,7 @@ pub fn compile_and_inject_metadata(
                 private_generics_map.insert(metadata_key.clone(), generic_type_indices);
             }
 
-            rooch_metadata.private_generics_indices = private_generics_map;
+            kanari_metadata.private_generics_indices = private_generics_map;
         }
 
         if metadata_type == DATA_STRUCT_ATTRIBUTE {
@@ -430,7 +431,7 @@ pub fn compile_and_inject_metadata(
                 }
             }
 
-            rooch_metadata.data_struct_map = data_structs_map;
+            kanari_metadata.data_struct_map = data_structs_map;
         }
 
         if metadata_type == DATA_STRUCT_FUNC_ATTRIBUTE {
@@ -448,14 +449,14 @@ pub fn compile_and_inject_metadata(
                 data_struct_func_map.insert(metadata_key.clone(), generic_type_indices);
             }
 
-            rooch_metadata.data_struct_func_map = data_struct_func_map;
+            kanari_metadata.data_struct_func_map = data_struct_func_map;
         }
     }
 
     let serialized_metadata =
-        bcs::to_bytes(&rooch_metadata).expect("BCS for RuntimeModuleMetadata");
+        bcs::to_bytes(&kanari_metadata).expect("BCS for RuntimeModuleMetadata");
     module.metadata.push(Metadata {
-        key: ROOCH_METADATA_KEY.to_vec(),
+        key: KANARI_METADATA_KEY.to_vec(),
         value: serialized_metadata,
     });
 

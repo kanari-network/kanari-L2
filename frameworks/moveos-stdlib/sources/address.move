@@ -102,7 +102,7 @@ module moveos_std::address {
     /// Convert `a` to a bech32 string
     public fun to_bech32_string(addr: address): string::String {
         let addr_bytes = bcs::to_bytes(&addr);
-        let result = bech32::encode(bech32::bech32m_to_bip(), ROOCH_HRP, addr_bytes);
+        let result = bech32::encode(bech32::bech32m_to_bip(), KANARI_HRP, addr_bytes);
         string::utf8(result)
     }
 
@@ -111,11 +111,11 @@ module moveos_std::address {
         let encoded_bytes = string::bytes(str);
         assert!(!vector::is_empty(encoded_bytes), ErrorAddressParseError);
 
-        let decode_data = bech32::decode(ROOCH_HRP, *encoded_bytes);
+        let decode_data = bech32::decode(KANARI_HRP, *encoded_bytes);
         moveos_std::bcs::to_address(decode_data)
     }
 
-    /// Length of a Rooch address in bytes
+    /// Length of a Kanari address in bytes
     public fun length(): u64 {
         LENGTH
     }
@@ -202,13 +202,13 @@ module moveos_std::address {
     fun test_bech32_string() {
         let addr = @0x42;
         let addr_str = to_bech32_string(addr);
-        assert!(addr_str == string::utf8(b"rooch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqppq6exstd"), 1001);
+        assert!(addr_str == string::utf8(b"kanari1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqppq6exstd"), 1001);
         let addr_from = from_bech32_string(&addr_str);
         assert!(addr == addr_from, 1002);
 
         let addr2 = @0xa7afe75c4f3a7631191905601f4396b25dde044539807de65ed4fc7358dbd98e;
         let addr_str2 = to_bech32_string(addr2);
-        assert!(addr_str2 == string::utf8(b"rooch157h7whz08fmrzxgeq4sp7sukkfwaupz98xq8mej76n78xkxmmx8q9ujmg6"), 1003);
+        assert!(addr_str2 == string::utf8(b"kanari157h7whz08fmrzxgeq4sp7sukkfwaupz98xq8mej76n78xkxmmx8q9ujmg6"), 1003);
         let addr_from2 = from_bech32_string(&addr_str2);
         assert!(addr2 == addr_from2, 1004)
     }

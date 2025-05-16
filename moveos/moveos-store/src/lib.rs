@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
@@ -216,7 +217,7 @@ impl MoveOSStore {
             cf_name: TRANSACTION_EXECUTION_INFO_COLUMN_FAMILY_NAME.to_string(),
         });
         // use non-sync write here:
-        // 1. we could replay tx from rooch store(which has sync write after sequenced) at startup.
+        // 1. we could replay tx from kanari store(which has sync write after sequenced) at startup.
         // 2. output write sequentially
         inner_store.write_cf_batch(cf_batches, false)?;
 

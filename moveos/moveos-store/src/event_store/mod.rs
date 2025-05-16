@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::{EVENT_COLUMN_FAMILY_NAME, EVENT_HANDLE_COLUMN_FAMILY_NAME};
 use anyhow::Result;

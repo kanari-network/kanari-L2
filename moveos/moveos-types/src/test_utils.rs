@@ -1,5 +1,6 @@
-// Copyright (c) RoochNetwork
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
+
 
 use crate::{
     move_types::{random_identity, random_struct_tag, random_type_tag, FunctionId},
