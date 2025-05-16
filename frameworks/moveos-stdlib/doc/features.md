@@ -3,8 +3,8 @@
 
 # Module `0x2::features`
 
-Defines feature flags for Rooch frameworks. Those are used in implementations of features in
-the moveos-stdlib, rooch-framework and other frameworks.
+Defines feature flags for Kanari frameworks. Those are used in implementations of features in
+the moveos-stdlib, kanari-framework and other frameworks.
 
 ============================================================================================
 Feature Flag Definitions

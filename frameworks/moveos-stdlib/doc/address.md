@@ -57,6 +57,16 @@ Error from <code>from_u256</code> when
 
 
 
+<a name="0x2_address_KANARI_HRP"></a>
+
+HRP for Kanari addresses
+
+
+<pre><code><b>const</b> <a href="address.md#0x2_address_KANARI_HRP">KANARI_HRP</a>: <a href="">vector</a>&lt;u8&gt; = [107, 97, 110, 97, 114, 105];
+</code></pre>
+
+
+
 <a name="0x2_address_LENGTH"></a>
 
 The length of an address, in bytes
@@ -72,16 +82,6 @@ The length of an address, in bytes
 
 
 <pre><code><b>const</b> <a href="address.md#0x2_address_MAX">MAX</a>: <a href="">u256</a> = 115792089237316195423570985008687907853269984665640564039457584007913129639935;
-</code></pre>
-
-
-
-<a name="0x2_address_ROOCH_HRP"></a>
-
-HRP for Rooch addresses
-
-
-<pre><code><b>const</b> <a href="address.md#0x2_address_ROOCH_HRP">ROOCH_HRP</a>: <a href="">vector</a>&lt;u8&gt; = [114, 111, 111, 99, 104];
 </code></pre>
 
 
@@ -229,7 +229,7 @@ Convert a bech32 string to <code><b>address</b></code>
 
 ## Function `length`
 
-Length of a Rooch address in bytes
+Length of a Kanari address in bytes
 
 
 <pre><code><b>public</b> <b>fun</b> <a href="address.md#0x2_address_length">length</a>(): u64

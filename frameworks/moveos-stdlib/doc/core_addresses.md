@@ -28,7 +28,7 @@
 
 <a name="0x2_core_addresses_ErrorNotSystemReservedAddress"></a>
 
-The address is not rooch reserved address
+The address is not kanari reserved address
 
 
 <pre><code><b>const</b> <a href="core_addresses.md#0x2_core_addresses_ErrorNotSystemReservedAddress">ErrorNotSystemReservedAddress</a>: u64 = 2;
@@ -120,7 +120,7 @@ Return true if <code>addr</code> is 0x0 or under the on chain governance's contr
 
 ## Function `is_reserved_address`
 
-Return true if <code>addr</code> is either the VM address or an Rooch system address.
+Return true if <code>addr</code> is either the VM address or an Kanari system address.
 
 
 <pre><code><b>public</b> <b>fun</b> <a href="core_addresses.md#0x2_core_addresses_is_reserved_address">is_reserved_address</a>(addr: <b>address</b>): bool

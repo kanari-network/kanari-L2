@@ -20,16 +20,16 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            binary_names: ['kari']
-            artifact_names: ['kari-linux-x64']
+            binary_names: ['kanari']
+            artifact_names: ['kanari-linux-x64']
           - os: windows-latest 
             target: x86_64-pc-windows-msvc
-            binary_names: ['kari.exe']
-            artifact_names: ['kari-windows-x64']
+            binary_names: ['kanari.exe']
+            artifact_names: ['kanari-windows-x64']
           - os: macos-latest
             target: aarch64-apple-darwin
-            binary_names: ['kari']
-            artifact_names: ['kari-macos-arm64']
+            binary_names: ['kanari']
+            artifact_names: ['kanari-macos-arm64']
 
     runs-on: ${{ matrix.os }}
 
@@ -171,7 +171,7 @@ jobs:
         $ReleasePath = "target\${{ matrix.target }}\release"
         Set-Location $ReleasePath
         
-        # Compress kari
+        # Compress kanari
         $Files = @()
         if (Test-Path "${{ matrix.binary_names[0] }}") { 
             $Files += "${{ matrix.binary_names[0] }}" 
@@ -200,15 +200,15 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
-          pattern: kari-*
+          pattern: kanari-*
           merge-multiple: true
   
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/kari-linux-x64.tar.gz
-            artifacts/kari-windows-x64.zip
-            artifacts/kari-macos-arm64.tar.gz
+            artifacts/kanari-linux-x64.tar.gz
+            artifacts/kanari-windows-x64.zip
+            artifacts/kanari-macos-arm64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

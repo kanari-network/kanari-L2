@@ -3,7 +3,6 @@
 
 # Module `0x2::copyable_any`
 
-Source from https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/aptos-stdlib/sources/copyable_any.move
 
 
 -  [Struct `Any`](#0x2_copyable_any_Any)

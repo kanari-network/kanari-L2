@@ -3,7 +3,6 @@
 
 # Module `0x2::simple_map`
 
-Source from https://github.com/aptos-labs/aptos-core/blob/d50af4db34a6929642603c3896a0af17984b3054/aptos-move/framework/aptos-stdlib/sources/simple_map.move
 Do some refator because we do not support inline and lambda yet.
 This module provides a solution for unsorted maps, that is it has the properties that
 1) Keys point to Values
