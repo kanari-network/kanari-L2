@@ -157,14 +157,14 @@ kanari-nursery = { path = "frameworks/kanari-nursery" }
 
 # External crate dependencies.
 # Please do not add any test features here: they should be declared by the individual crate.
-anyhow = "1.0.76"
+anyhow = "1.0.98"
 async-trait = "0"
 backtrace = "0.3"
 bcs = "0.1.3"
 bytes = "1.10.1"
 bech32 = "0.11.0"
 better_any = "0.1.1"
-bitcoin = { version = "0.32.5", features = ["rand-std", "bitcoinconsensus"] }
+bitcoin = { version = "0.32.6", features = ["rand-std", "bitcoinconsensus"] }
 #bitcoin-io = "0.2.0"
 bitcoin_hashes = { version = "0.14.0", features = ["serde"] }
 bitcoincore-rpc = "0.19.0"
@@ -172,12 +172,12 @@ bitcoincore-rpc-json = "0.19.0"
 bip32 = "0.4.0"
 byteorder = "1.4.3"
 clap = { version = "4.5.13", features = ["derive", "env"] }
-brotli = "3.4.0"
+brotli = "8.0.1"
 chrono = "0.4.40"
 coerce = "0.8"
-datatest-stable = "0.1.3"
+datatest-stable = "0.3.2"
 derive_more = { version = "1.0.0", features = ["as_ref", "from"] }
-dirs = "5.0.1"
+dirs = "6.0.0"
 enum_dispatch = "^0.3"
 ethers = { version = "2.0.7", features = ["legacy"] }
 eyre = "0.6.8"
@@ -188,7 +188,7 @@ futures-util = "0.3.31"
 futures-core = "0.3.21"
 hdrhistogram = "7.5.4"
 hex = "0.4.3"
-heed = "0.21.0"
+heed = "0.22.0"
 itertools = "0.13.0"
 #jsonrpsee = { version = "0.23.2", features = ["full"] }
 jsonrpsee = { version = "0.24.7", features = [
@@ -200,16 +200,16 @@ jsonrpsee = { version = "0.24.7", features = [
 ] }
 jpst = "0.1.1"
 lazy_static = "1.5.0"
-more-asserts = "0.3.0"
-num-derive = "0.3.3"
-num-traits = "0.2.15"
+more-asserts = "0.3.1"
+num-derive = "0.4.2"
+num-traits = "0.2.19"
 once_cell = "1.21.3"
-ordinals = "0.0.9"
+ordinals = "0.0.15"
 parking_lot = "0.12.3"
 petgraph = "0.6.5"
 primitive-types = { version = "0.12.1", features = ["serde", "arbitrary"] }
 proptest = "1.6.0"
-proptest-derive = "0.3.0"
+proptest-derive = "0.5.1"
 rayon = "1.5.2"
 rand = "0.8.5"
 rand_core = { version = "0.9.3", default-features = false }
@@ -218,12 +218,12 @@ schemars = { version = "0.8.22", features = ["either"] }
 serde_bytes = "0.11.17"
 serde = { version = "1.0.219", features = ["derive", "rc"] }
 serde_json = { version = "1.0.140", features = ["preserve_order"] }
-serde_yaml = "0.9"
+serde_yaml = "0.9.34-deprecated"
 serde_with = { version = "2.1.0", features = ["hex", "base64"] }
 signature = "2.2.0"
-strum = "^0.26"
-strum_macros = "^0.26"
-sha2 = "0.10.2"
+strum = "0.27.1"
+strum_macros = "0.27.1"
+sha2 = "0.10.9"
 sha3 = "0.10.8"
 smallvec = "1.15.0"
 thiserror = "1.0.69"
@@ -246,14 +246,14 @@ derive-syn-parse = "0.1.5"
 unescape = "0.1.0"
 tempfile = "3.19.1"
 regex = "1.11.1"
-walkdir = "2.3.3"
+walkdir = "2.5.0"
 prometheus = "0.13.3"
-hyper = { version = "1.0.0", features = ["full"] }
-libc = "^0.2"
+hyper = { version = "1.6.0", features = ["full"] }
+libc = "0.2.172"
 include_dir = { version = "0.6.2" }
-serde-reflection = "0.3.6"
+serde-reflection = "0.5.0"
 bcs-ext = { path = "moveos/moveos-commons/bcs_ext" }
-http = "1.0.0"
+http = "1.3.1"
 tower = { version = "0.5.2", features = [
     "full",
     "log",
@@ -277,7 +277,7 @@ quick_cache = "0.6.13"
 bs58 = "0.5.1"
 dirs-next = "2.0.0"
 chacha20poly1305 = "0.10.1"
-argon2 = "0.5.2"
+argon2 = "0.5.3"
 rpassword = "7.2.0"
 uint = "0.9.5"
 rlp = "0.5.2"
@@ -311,7 +311,7 @@ serenity = { version = "0.12.4", default-features = false, features = [
     "model",
 ] }
 tap = "1.0.1"
-dashmap = "6.0.1"
+dashmap = "6.1.0"
 criterion = { version = "0.5.1", features = [
     "async",
     "async_tokio",
@@ -325,7 +325,7 @@ wasmer-compiler-singlepass = "4.2.2"
 cosmwasm-vm = { git = "https://github.com/rooch-network/cosmwasm", rev = "597d3e8437d8c4d1afce07e5a676c29c751a8a81" }
 cosmwasm-std = { git = "https://github.com/rooch-network/cosmwasm", rev = "597d3e8437d8c4d1afce07e5a676c29c751a8a81" }
 ciborium = "0.2.1"
-pprof = { version = "0.13.0", features = [
+pprof = { version = "0.14.0", features = [
     "flamegraph",
     "criterion",
     "cpp",
@@ -334,8 +334,8 @@ pprof = { version = "0.13.0", features = [
 ] }
 celestia-rpc = { git = "https://github.com/eigerco/celestia-node-rs.git", rev = "129272e8d926b4c7badf27a26dea915323dd6489" }
 celestia-types = { git = "https://github.com/eigerco/celestia-node-rs.git", rev = "129272e8d926b4c7badf27a26dea915323dd6489" }
-opendal = { version = "0.50.2", features = ["services-fs", "services-gcs"] }
-toml = "0.8.20"
+opendal = { version = "0.53.2", features = ["services-fs", "services-gcs"] }
+toml = "0.8.22"
 tabled = "0.16.0"
 csv = "1.3.1"
 revm-precompile = "16.2.0"
