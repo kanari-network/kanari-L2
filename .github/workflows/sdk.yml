@@ -131,11 +131,14 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: pwsh
       run: |
-        $env:RUSTFLAGS="-C link-arg=/STACK:33554432"
+        # Set much higher stack size for Windows builds to prevent stack overflows
+        $env:RUSTFLAGS="-C link-arg=/STACK:67108864"
         # Set a higher stack size for build scripts specifically
-        $env:CARGO_BUILD_RUSTFLAGS="-C link-arg=/STACK:33554432"
+        $env:CARGO_BUILD_RUSTFLAGS="-C link-arg=/STACK:67108864"
         # Enable trace for debugging
         $env:RUST_BACKTRACE=1
+        # Enable debug info for build dependencies
+        $env:CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
         
         cargo build --release --target ${{ matrix.target }} --verbose
       env:
