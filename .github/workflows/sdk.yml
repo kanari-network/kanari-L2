@@ -105,6 +105,9 @@ jobs:
         echo "OPENSSL_LIB_DIR=$opensslPath\lib" >> $env:GITHUB_ENV
         echo "OPENSSL_INCLUDE_DIR=$opensslPath\include" >> $env:GITHUB_ENV
         
+        # Set additional environment variables needed for Windows-specific libraries
+        echo "RUSTFLAGS=-C link-arg=advapi32.lib -C link-arg=userenv.lib" >> $env:GITHUB_ENV
+        
         # Verify protoc is available
         Get-Command protoc
         protoc --version
@@ -170,6 +173,7 @@ jobs:
         OPENSSL_LIB_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/lib' || (matrix.os == 'ubuntu-latest' && '/usr/lib/x86_64-linux-gnu' || '') }}
         OPENSSL_INCLUDE_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/include' || (matrix.os == 'ubuntu-latest' && '/usr/include' || '') }}
         RUSTFLAGS: ${{ env.RUSTFLAGS }}
+        LIBGIT2_SYS_USE_PKG_CONFIG: ${{ matrix.os != 'windows-latest' && '1' || '0' }}
 
     - name: Debug binary location
       run: ls -la target/${{ matrix.target }}/release/
