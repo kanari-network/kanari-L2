@@ -1,4 +1,4 @@
-// Copyright (c) Kanar Network
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::STATIC_FRAMEWORK_DIR;

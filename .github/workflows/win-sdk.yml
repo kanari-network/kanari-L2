@@ -97,20 +97,27 @@ jobs:
         # Add Scoop bins to PATH for this step
         $env:Path += ";$HOME\scoop\shims;$HOME\scoop\apps\llvm\current\bin;$HOME\scoop\apps\mingw\current\bin"
         
-        # Set much higher stack size for Windows builds to prevent stack overflows
-        $env:RUSTFLAGS="-C link-arg=/STACK:67108864"
+        # Set extremely high stack size for Windows builds to prevent stack overflows
+        # (134217728 = 128MB stack size)
+        $env:RUSTFLAGS="-C link-arg=/STACK:134217728"
         # Set a higher stack size for build scripts specifically
-        $env:CARGO_BUILD_RUSTFLAGS="-C link-arg=/STACK:67108864"
+        $env:CARGO_BUILD_RUSTFLAGS="-C link-arg=/STACK:134217728"
         # Enable trace for debugging
-        $env:RUSTBACKTRACE=1
+        $env:RUST_BACKTRACE=1 # Fix the typo in variable name
         # Enable debug info for build dependencies
         $env:CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
         
+        # Use fewer parallel jobs to reduce memory pressure
+        $env:CARGO_BUILD_JOBS=1
+        
+        # Build with release profile but allocate more memory
         cargo build --release --target x86_64-pc-windows-msvc --verbose
       env:
         OPENSSL_DIR: '/usr'
         OPENSSL_LIB_DIR: '/usr/lib/x86_64-linux-gnu'
         OPENSSL_INCLUDE_DIR: '/usr/include'
+        # Add explicit memory settings
+        MOVE_COMPILATION_POOL_SIZE: 1
 
     - name: Debug binary location
       run: |
