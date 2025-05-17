@@ -78,6 +78,7 @@ jobs:
             Write-Host "Found protoc at $protoc_path"
         } else {
             Write-Host "Warning: protoc not found in PATH"
+        }
 
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
