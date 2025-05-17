@@ -91,6 +91,13 @@ fn main() {
                 .display()
         );
 
+        // Skip the release process on Windows to avoid stack overflow
+        if cfg!(windows) {
+            println!("cargo:warning=Skipping framework release on Windows to avoid stack overflow");
+            println!("cargo:warning=The framework will be built on non-Windows platforms");
+            return;
+        }
+
         match framework_builder::releaser::release_latest() {
             Ok(msgs) => {
                 for msg in msgs {
