@@ -58,7 +58,9 @@ jobs:
           libssl-dev \
           pkg-config \
           libclang-dev \
-          protobuf-compiler
+          protobuf-compiler \
+          lld \
+          clang
 
     - name: Install macOS dependencies
       if: matrix.os == 'macos-latest'
@@ -110,6 +112,14 @@ jobs:
         target: ${{ matrix.target }}
         override: true
         
+    - name: Set Rust environment variables
+      shell: bash
+      run: |
+        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+          # Prevent using lld on Ubuntu if not properly configured
+          echo "RUSTFLAGS=-C link-arg=-fuse-ld=gold" >> $GITHUB_ENV
+        fi
+
     - name: Set Protoc Environment Variables
       run: |
         if [ "${{ matrix.os }}" = "macos-latest" ]; then
@@ -132,6 +142,7 @@ jobs:
         OPENSSL_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3' || (matrix.os == 'ubuntu-latest' && '/usr' || '') }}
         OPENSSL_LIB_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/lib' || (matrix.os == 'ubuntu-latest' && '/usr/lib/x86_64-linux-gnu' || '') }}
         OPENSSL_INCLUDE_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/include' || (matrix.os == 'ubuntu-latest' && '/usr/include' || '') }}
+        RUSTFLAGS: ${{ env.RUSTFLAGS }}
 
     - name: Debug binary location
       run: ls -la target/${{ matrix.target }}/release/
