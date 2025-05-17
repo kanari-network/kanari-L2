@@ -88,9 +88,13 @@ jobs:
         scoop install protobuf
         scoop install cmake
         
-        # Add protoc to path for the current session
+        # Add protoc to path for the current session and make it available for subsequent steps
         $env:PATH += ";$env:USERPROFILE\scoop\apps\protobuf\current\bin"
         echo "PATH=$env:PATH" >> $env:GITHUB_ENV
+        
+        # Explicitly set PROTOC environment variable
+        $protocPath = "$env:USERPROFILE\scoop\apps\protobuf\current\bin\protoc.exe"
+        echo "PROTOC=$protocPath" >> $env:GITHUB_ENV
         
         # Install OpenSSL
         scoop install openssl
@@ -102,7 +106,7 @@ jobs:
         echo "OPENSSL_INCLUDE_DIR=$opensslPath\include" >> $env:GITHUB_ENV
         
         # Verify protoc is available
-        which protoc
+        Get-Command protoc
         protoc --version
 
     - name: Install Rust toolchain
@@ -134,7 +138,30 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: powershell
       run: |
-        echo "PROTOC=$(which protoc)" >> $env:GITHUB_ENV
+        # Verify protoc path is correctly set
+        if (Test-Path $env:PROTOC) {
+          echo "PROTOC environment variable is correctly set to: $env:PROTOC"
+        } else {
+          echo "PROTOC environment variable is set but file not found at: $env:PROTOC"
+          echo "Looking for protoc in PATH..."
+          $protocInPath = Get-Command protoc -ErrorAction SilentlyContinue
+          if ($protocInPath) {
+            echo "Found protoc at: $($protocInPath.Source)"
+            echo "PROTOC=$($protocInPath.Source)" >> $env:GITHUB_ENV
+          } else {
+            echo "protoc not found in PATH, trying to locate it manually..."
+            $possiblePath = "$env:USERPROFILE\scoop\apps\protobuf\current\bin\protoc.exe"
+            if (Test-Path $possiblePath) {
+              echo "Found protoc at: $possiblePath"
+              echo "PROTOC=$possiblePath" >> $env:GITHUB_ENV
+            } else {
+              echo "Could not locate protoc, build may fail."
+            }
+          }
+        }
+        
+        # Display the full PATH for debugging
+        echo "Current PATH: $env:PATH"
 
     - name: Build
       run: cargo build --release --target ${{ matrix.target }} --verbose
