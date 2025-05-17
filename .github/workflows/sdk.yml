@@ -26,6 +26,10 @@ jobs:
             target: aarch64-apple-darwin
             binary_names: ['kanari']
             artifact_names: ['kanari-macos-arm64']
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            binary_names: ['kanari.exe']
+            artifact_names: ['kanari-windows-x64']
 
     runs-on: ${{ matrix.os }}
 
@@ -64,11 +68,36 @@ jobs:
         brew install protobuf
         which protoc
         protoc --version
+        
+    - name: Install Windows dependencies
+      if: matrix.os == 'windows-latest'
+      shell: powershell
+      run: |
+        # Install Scoop package manager
+        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        
+        # Add necessary buckets
+        scoop bucket add main
+        scoop bucket add extras
+        
+        # Install LLVM, MinGW, Protobuf, and CMake using Scoop
+        scoop install llvm
+        scoop install mingw
+        scoop install protobuf
+        scoop install cmake
+        
+        # Add protoc to path for the current session
+        $env:PATH += ";$env:USERPROFILE\scoop\apps\protobuf\current\bin"
+        echo "PATH=$env:PATH" >> $env:GITHUB_ENV
+        
+        # Verify protoc is available
+        which protoc
+        protoc --version
 
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
       with:
-        toolchain: nightly
+        toolchain: 1.82.0
         target: ${{ matrix.target }}
         override: true
         
@@ -80,6 +109,13 @@ jobs:
           echo "PROTOC=$(which protoc)" >> $GITHUB_ENV
         fi
       shell: bash
+      if: matrix.os != 'windows-latest'
+      
+    - name: Set Protoc Environment Variables (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: powershell
+      run: |
+        echo "PROTOC=$(which protoc)" >> $env:GITHUB_ENV
 
     - name: Build
       run: cargo build --release --target ${{ matrix.target }} --verbose
@@ -91,10 +127,18 @@ jobs:
     - name: Debug binary location
       run: ls -la target/${{ matrix.target }}/release/
 
-    - name: Compress artifacts
+    - name: Compress artifacts (Unix)
+      if: matrix.os != 'windows-latest'
       run: |
         cd target/${{ matrix.target }}/release
         tar -czf ${{ matrix.artifact_names[0] }}.tar.gz ${{ matrix.binary_names[0] }}
+        
+    - name: Compress artifacts (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: powershell
+      run: |
+        cd target\${{ matrix.target }}\release
+        Compress-Archive -Path ${{ matrix.binary_names[0] }} -DestinationPath "${{ matrix.artifact_names[0] }}.zip"
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -121,5 +165,6 @@ jobs:
           files: |
             artifacts/kanari-linux-x64.tar.gz
             artifacts/kanari-macos-arm64.tar.gz
+            artifacts/kanari-windows-x64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
