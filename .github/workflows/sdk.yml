@@ -90,6 +90,15 @@ jobs:
         $env:PATH += ";$env:USERPROFILE\scoop\apps\protobuf\current\bin"
         echo "PATH=$env:PATH" >> $env:GITHUB_ENV
         
+        # Install OpenSSL
+        scoop install openssl
+        
+        # Set environment variables for OpenSSL
+        $opensslPath = "$env:USERPROFILE\scoop\apps\openssl\current"
+        echo "OPENSSL_DIR=$opensslPath" >> $env:GITHUB_ENV
+        echo "OPENSSL_LIB_DIR=$opensslPath\lib" >> $env:GITHUB_ENV
+        echo "OPENSSL_INCLUDE_DIR=$opensslPath\include" >> $env:GITHUB_ENV
+        
         # Verify protoc is available
         which protoc
         protoc --version
@@ -120,9 +129,9 @@ jobs:
     - name: Build
       run: cargo build --release --target ${{ matrix.target }} --verbose
       env:
-        OPENSSL_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3' || '/usr' }}
-        OPENSSL_LIB_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/lib' || '/usr/lib/x86_64-linux-gnu' }}
-        OPENSSL_INCLUDE_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/include' || '/usr/include' }}
+        OPENSSL_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3' || (matrix.os == 'ubuntu-latest' && '/usr' || '') }}
+        OPENSSL_LIB_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/lib' || (matrix.os == 'ubuntu-latest' && '/usr/lib/x86_64-linux-gnu' || '') }}
+        OPENSSL_INCLUDE_DIR: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl@3/include' || (matrix.os == 'ubuntu-latest' && '/usr/include' || '') }}
 
     - name: Debug binary location
       run: ls -la target/${{ matrix.target }}/release/
