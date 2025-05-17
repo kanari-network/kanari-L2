@@ -32,25 +32,35 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - name: Install Windows dependencies
+      shell: pwsh
       run: |
-        choco install visualstudio2019buildtools
-        choco install visualstudio2019-workload-vctools
-        choco install protoc
+        # Install Scoop package manager
+        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        
+        # Add necessary buckets
+        scoop bucket add main
+        scoop bucket add extras
+        
+        # Install LLVM, MinGW, Protobuf, and CMake using Scoop
+        scoop install llvm
+        scoop install mingw
+        scoop install protobuf
+        scoop install cmake
+        
+        # Verify installations
+        llvm-config --version
+        gcc --version
+        protoc --version
+        cmake --version
         
     - name: Setup Windows environment
       shell: pwsh
       run: |
         $ReleasePath = "target\x86_64-pc-windows-msvc\release"
         New-Item -ItemType Directory -Force -Path $ReleasePath
-        $env:Path += ";C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Redist\MSVC\14.29.30133\x64"
         
-        # Copy DLLs after build completes
-        if (Test-Path "C:\Windows\System32\vcruntime140.dll") {
-            Copy-Item "C:\Windows\System32\vcruntime140.dll" -Destination $ReleasePath
-        }
-        if (Test-Path "C:\Windows\System32\msvcp140.dll") {
-            Copy-Item "C:\Windows\System32\msvcp140.dll" -Destination $ReleasePath
-        }
+        # Add Scoop installed tools to PATH
+        $env:Path += ";$HOME\scoop\shims"
         
         # Verify protoc exists and is in PATH
         $protoc_path = (Get-Command protoc -ErrorAction SilentlyContinue).Path
@@ -58,17 +68,16 @@ jobs:
             Write-Host "Found protoc at $protoc_path"
         } else {
             Write-Host "Warning: protoc not found in PATH"
-        }
 
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
       with:
-        toolchain: 1.82.0
+        toolchain: stable
         target: x86_64-pc-windows-msvc
         override: true
         
     - name: Set Protoc Environment Variables
-      run: echo "PROTOC=C:\ProgramData\chocolatey\bin\protoc.exe" >> $GITHUB_ENV
+      run: echo "PROTOC=$HOME/scoop/apps/protobuf/current/bin/protoc.exe" >> $GITHUB_ENV
       shell: bash
 
     - name: Build Windows
@@ -79,7 +88,7 @@ jobs:
         # Set a higher stack size for build scripts specifically
         $env:CARGO_BUILD_RUSTFLAGS="-C link-arg=/STACK:67108864"
         # Enable trace for debugging
-        $env:RUST_BACKTRACE=1
+        $env:RUSTBACKTRACE=1
         # Enable debug info for build dependencies
         $env:CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
         
