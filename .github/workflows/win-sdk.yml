@@ -47,10 +47,20 @@ jobs:
         scoop install protobuf
         scoop install cmake
         
-        # Verify installations
-        llvm-config --version
+        # Add Scoop bins to PATH for this step
+        $env:Path += ";$HOME\scoop\shims;$HOME\scoop\apps\llvm\current\bin;$HOME\scoop\apps\mingw\current\bin"
+        
+        # Verify installations with commands that actually exist
+        Write-Host "LLVM version:"
+        clang --version
+        
+        Write-Host "GCC version:"
         gcc --version
+        
+        Write-Host "Protobuf version:"
         protoc --version
+        
+        Write-Host "CMake version:"
         cmake --version
         
     - name: Setup Windows environment
@@ -60,7 +70,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path $ReleasePath
         
         # Add Scoop installed tools to PATH
-        $env:Path += ";$HOME\scoop\shims"
+        $env:Path += ";$HOME\scoop\shims;$HOME\scoop\apps\llvm\current\bin;$HOME\scoop\apps\mingw\current\bin"
         
         # Verify protoc exists and is in PATH
         $protoc_path = (Get-Command protoc -ErrorAction SilentlyContinue).Path
@@ -83,6 +93,9 @@ jobs:
     - name: Build Windows
       shell: pwsh
       run: |
+        # Add Scoop bins to PATH for this step
+        $env:Path += ";$HOME\scoop\shims;$HOME\scoop\apps\llvm\current\bin;$HOME\scoop\apps\mingw\current\bin"
+        
         # Set much higher stack size for Windows builds to prevent stack overflows
         $env:RUSTFLAGS="-C link-arg=/STACK:67108864"
         # Set a higher stack size for build scripts specifically
