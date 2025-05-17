@@ -106,7 +106,8 @@ jobs:
         echo "OPENSSL_INCLUDE_DIR=$opensslPath\include" >> $env:GITHUB_ENV
 
         # Append required Windows libraries to RUSTFLAGS
-        $extraFlags = "-C link-arg=advapi32.lib -C link-arg=userenv.lib"
+        # Adding all necessary libraries for libgit2 to resolve missing symbols
+        $extraFlags = "-C link-arg=advapi32.lib -C link-arg=userenv.lib -C link-arg=crypt32.lib -C link-arg=secur32.lib -C link-arg=ole32.lib -C link-arg=rpcrt4.lib"
         if ($env:RUSTFLAGS) {
           echo "RUSTFLAGS=$env:RUSTFLAGS $extraFlags" >> $env:GITHUB_ENV
         } else {
