@@ -107,7 +107,7 @@ jobs:
 
         # Append required Windows libraries to RUSTFLAGS
         # Adding all necessary libraries for libgit2 to resolve missing symbols
-        $extraFlags = "-C link-arg=advapi32.lib -C link-arg=userenv.lib -C link-arg=crypt32.lib -C link-arg=secur32.lib -C link-arg=ole32.lib -C link-arg=rpcrt4.lib -C link-arg=ws2_32.lib -C link-arg=bcrypt.lib"
+        $extraFlags = "-C link-arg=kernel32.lib -C link-arg=advapi32.lib -C link-arg=userenv.lib -C link-arg=crypt32.lib -C link-arg=secur32.lib -C link-arg=ole32.lib -C link-arg=rpcrt4.lib -C link-arg=ws2_32.lib -C link-arg=bcrypt.lib -C link-arg=user32.lib -C link-arg=shell32.lib -C link-arg=wintrust.lib"
         if ($env:RUSTFLAGS) {
           echo "RUSTFLAGS=$env:RUSTFLAGS $extraFlags" >> $env:GITHUB_ENV
         } else {

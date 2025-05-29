@@ -20,7 +20,7 @@ bcs = { workspace = true }
 bitcoin = { workspace = true }
 clap = { features = ["derive"], workspace = true }
 coerce = { workspace = true }
-datatest-stable = { git = "https://github.com/rooch-network/diem-devtools", branch = "feature/pub-test-opts" }
+datatest-stable = { git = "https://github.com/kanari-network/diem-devtools", branch = "feature/pub-test-opts" }
 tokio = { features = ["full"], workspace = true }
 serde = { workspace = true }
 serde_yaml = { workspace = true }

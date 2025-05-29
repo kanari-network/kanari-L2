@@ -2358,12 +2358,12 @@ dependencies = [
 [[package]]
 name = "cosmwasm-core"
 version = "2.1.3"
-source = "git+https://github.com/rooch-network/cosmwasm?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
+source = "git+https://github.com/kanari-network/cosmwasm.git?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
 
 [[package]]
 name = "cosmwasm-crypto"
 version = "2.1.3"
-source = "git+https://github.com/rooch-network/cosmwasm?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
+source = "git+https://github.com/kanari-network/cosmwasm.git?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
 dependencies = [
  "ark-bls12-381",
  "ark-ec",
@@ -2385,7 +2385,7 @@ dependencies = [
 [[package]]
 name = "cosmwasm-derive"
 version = "2.1.3"
-source = "git+https://github.com/rooch-network/cosmwasm?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
+source = "git+https://github.com/kanari-network/cosmwasm.git?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
 dependencies = [
  "proc-macro2 1.0.95",
  "quote 1.0.40",
@@ -2395,7 +2395,7 @@ dependencies = [
 [[package]]
 name = "cosmwasm-std"
 version = "2.1.3"
-source = "git+https://github.com/rooch-network/cosmwasm?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
+source = "git+https://github.com/kanari-network/cosmwasm.git?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
 dependencies = [
  "base64 0.22.1",
  "bech32 0.11.0",
@@ -2417,7 +2417,7 @@ dependencies = [
 [[package]]
 name = "cosmwasm-vm"
 version = "2.1.3"
-source = "git+https://github.com/rooch-network/cosmwasm?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
+source = "git+https://github.com/kanari-network/cosmwasm.git?rev=597d3e8437d8c4d1afce07e5a676c29c751a8a81#597d3e8437d8c4d1afce07e5a676c29c751a8a81"
 dependencies = [
  "bech32 0.11.0",
  "bytes",
@@ -3045,7 +3045,7 @@ dependencies = [
 [[package]]
 name = "datatest-stable"
 version = "0.1.1"
-source = "git+https://github.com/rooch-network/diem-devtools?branch=feature/pub-test-opts#c65933ee5aa5721ca0e6602995f1464ce0a93a53"
+source = "git+https://github.com/kanari-network/diem-devtools?branch=feature/pub-test-opts#c23faf0faff5fc25a2b68b26dcdb188c09f9ecea"
 dependencies = [
  "clap 4.5.17",
  "regex",
@@ -4346,7 +4346,7 @@ dependencies = [
 [[package]]
 name = "fastcrypto"
 version = "0.1.9"
-source = "git+https://github.com/rooch-network/fastcrypto.git?rev=863a6b9194787ad366f2d980ebe9c26b1649e25e#863a6b9194787ad366f2d980ebe9c26b1649e25e"
+source = "git+https://github.com/kanari-network/fastcrypto.git?branch=main#0acf0ff1a163c60e0dec1e16e4fbad4a4cf853bd"
 dependencies = [
  "ark-ec",
  "ark-ff 0.4.2",
@@ -4396,7 +4396,7 @@ dependencies = [
 [[package]]
 name = "fastcrypto-derive"
 version = "0.1.3"
-source = "git+https://github.com/rooch-network/fastcrypto.git?rev=863a6b9194787ad366f2d980ebe9c26b1649e25e#863a6b9194787ad366f2d980ebe9c26b1649e25e"
+source = "git+https://github.com/kanari-network/fastcrypto.git?branch=main#0acf0ff1a163c60e0dec1e16e4fbad4a4cf853bd"
 dependencies = [
  "quote 1.0.40",
  "syn 1.0.109",
@@ -4405,7 +4405,7 @@ dependencies = [
 [[package]]
 name = "fastcrypto-zkp"
 version = "0.1.3"
-source = "git+https://github.com/rooch-network/fastcrypto.git?rev=863a6b9194787ad366f2d980ebe9c26b1649e25e#863a6b9194787ad366f2d980ebe9c26b1649e25e"
+source = "git+https://github.com/kanari-network/fastcrypto.git?branch=main#0acf0ff1a163c60e0dec1e16e4fbad4a4cf853bd"
 dependencies = [
  "ark-bn254",
  "ark-ec",
