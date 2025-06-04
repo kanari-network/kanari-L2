@@ -15,23 +15,17 @@ rustflags = [
     "force-unwind-tables=yes",
     "-C",
     "link-arg=/STACK:8000000", # Set stack to 8 MB
-    # force static linking for the rocksdb and bitcoinconsensus crates
-    "-Ctarget-feature=+crt-static",
-    "-Clink-args=/DEFAULTLIB:libcmt.lib",
-    "-Clink-args=/DEFAULTLIB:libvcruntime.lib",
-    "-Clink-args=/DEFAULTLIB:libucrt.lib",
-    "-Clink-args=/DEFAULTLIB:oldnames.lib",
-    "-Clink-args=/DEFAULTLIB:legacy_stdio_definitions.lib",
-    "-Clink-args=/NODEFAULTLIB:msvcrt.lib",
-    "-Clink-args=/NODEFAULTLIB:msvcrtd.lib",
-    "-Clink-args=/NODEFAULTLIB:libcmtd.lib",
-    "-Clink-args=/NODEFAULTLIB:vcruntime.lib",
-    "-Clink-args=/NODEFAULTLIB:vcruntimed.lib",
+    # Remove static linking for better compatibility with libgit2
+    # "-Ctarget-feature=+crt-static",
+    # Use dynamic linking instead
     "-C", "link-arg=advapi32.lib",
     "-C", "link-arg=secur32.lib", 
     "-C", "link-arg=userenv.lib",
-    "-C", "link-arg=crypt32.lib"
+    "-C", "link-arg=crypt32.lib",
+    "-C", "link-arg=ws2_32.lib",
+    "-C", "link-arg=bcrypt.lib"
 ]
+
 [alias]
 a = "add"
 au = "audit"
