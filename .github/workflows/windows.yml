@@ -28,7 +28,7 @@ jobs:
         components: rustfmt, clippy
 
     - name: Cache Cargo dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/bin/
@@ -63,7 +63,7 @@ jobs:
         ./target/release/kanari.exe --help
 
     - name: Upload kanari.exe artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: kanari-windows-x64
         path: target/release/kanari.exe
@@ -86,7 +86,7 @@ jobs:
       uses: dtolnay/rust-toolchain@stable
 
     - name: Cache Cargo dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/bin/
