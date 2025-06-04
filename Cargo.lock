@@ -3045,7 +3045,7 @@ dependencies = [
 [[package]]
 name = "datatest-stable"
 version = "0.1.1"
-source = "git+https://github.com/kanari-network/diem-devtools?branch=feature/pub-test-opts#c23faf0faff5fc25a2b68b26dcdb188c09f9ecea"
+source = "git+https://github.com/rooch-network/diem-devtools?branch=feature/pub-test-opts#c65933ee5aa5721ca0e6602995f1464ce0a93a53"
 dependencies = [
  "clap 4.5.17",
  "regex",
