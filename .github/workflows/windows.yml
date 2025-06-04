@@ -10,6 +10,9 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
+  # Add these environment variables for libgit2
+  LIBGIT2_SYS_USE_PKG_CONFIG: 0
+  LIBGIT2_SYS_USE_VCPKG: 0
 
 permissions:
   contents: write
@@ -79,7 +82,11 @@ jobs:
         clang --version
 
     - name: Build kanari binary
-      run: cargo build --release --bin kanari
+      shell: cmd
+      run: |
+        REM Set environment variables for proper Windows linking
+        set RUSTFLAGS=%RUSTFLAGS% -C link-arg=advapi32.lib -C link-arg=secur32.lib -C link-arg=userenv.lib
+        cargo build --release --bin kanari
 
     - name: Debug binary location
       run: Get-ChildItem -Path target/release/ -Name
@@ -136,5 +143,4 @@ jobs:
           2. Run `kanari.exe --help` to see available commands
           3. Run `kanari.exe --version` to check the version
       env:
-
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -26,9 +26,12 @@ rustflags = [
     "-Clink-args=/NODEFAULTLIB:msvcrtd.lib",
     "-Clink-args=/NODEFAULTLIB:libcmtd.lib",
     "-Clink-args=/NODEFAULTLIB:vcruntime.lib",
-    "-Clink-args=/NODEFAULTLIB:vcruntimed.lib"
+    "-Clink-args=/NODEFAULTLIB:vcruntimed.lib",
+    "-C", "link-arg=advapi32.lib",
+    "-C", "link-arg=secur32.lib", 
+    "-C", "link-arg=userenv.lib",
+    "-C", "link-arg=crypt32.lib"
 ]
-
 [alias]
 a = "add"
 au = "audit"
