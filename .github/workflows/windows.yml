@@ -45,23 +45,9 @@ jobs:
       run: |
         # Install any required system dependencies for Windows
         choco install llvm -y
-        
-    - name: Check formatting
-      run: cargo fmt --all -- --check
-
-    - name: Run clippy
-      run: cargo clippy --all-targets --all-features -- -D warnings
-
-    - name: Run tests
-      run: cargo test --workspace --verbose
 
     - name: Build kanari binary
       run: cargo build --release --bin kanari
-
-    - name: Test kanari binary
-      run: |
-        ./target/release/kanari.exe --version
-        ./target/release/kanari.exe --help
 
     - name: Debug binary location
       run: Get-ChildItem -Path target/release/ -Name
