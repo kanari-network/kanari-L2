@@ -43,13 +43,20 @@ jobs:
           ${{ runner.os }}-cargo-
 
     - name: Install system dependencies
+      shell: powershell
       run: |
-        # Install Protocol Buffers compiler
-        choco install protoc -y
-        # Install LLVM
-        choco install llvm -y
-        # Refresh environment variables
-        refreshenv
+        # Install Scoop package manager
+        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        
+        # Add necessary buckets
+        scoop bucket add main
+        scoop bucket add extras
+        
+        # Install LLVM, MinGW, Protobuf, and CMake using Scoop
+        scoop install llvm
+        scoop install mingw
+        scoop install protobuf
+        scoop install cmake
 
     - name: Verify protoc installation
       run: |
