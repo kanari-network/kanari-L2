@@ -3,6 +3,7 @@ name: Windows CI
 on:
   push:
     branches: [ windows-git ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ windows-git ]
 
@@ -12,7 +13,7 @@ env:
 
 jobs:
   test:
-    name: Test on Windows
+    name: Windows
     runs-on: windows-latest
     
     steps:
@@ -62,56 +63,59 @@ jobs:
         ./target/release/kanari.exe --version
         ./target/release/kanari.exe --help
 
+    - name: Debug binary location
+      run: Get-ChildItem -Path target/release/ -Name
+
+    - name: Create release archive
+      run: |
+        $version = if ($env:GITHUB_REF -like "refs/tags/*") { 
+          $env:GITHUB_REF -replace "refs/tags/", ""
+        } else { 
+          "dev-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+        }
+        $archive_name = "kanari-$version-windows-x64.zip"
+        Compress-Archive -Path target/release/kanari.exe -DestinationPath $archive_name
+        echo "ARCHIVE_NAME=$archive_name" >> $env:GITHUB_ENV
+        echo "VERSION=$version" >> $env:GITHUB_ENV
+
     - name: Upload kanari.exe artifact
       uses: actions/upload-artifact@v4
       with:
         name: kanari-windows-x64
-        path: target/release/kanari.exe
+        path: ${{ env.ARCHIVE_NAME }}
         retention-days: 30
 
   release:
     name: Create Release
     needs: test
     runs-on: windows-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
       with:
-        submodules: recursive
-        fetch-depth: 0
-
-    - name: Install Rust toolchain
-      uses: dtolnay/rust-toolchain@stable
-
-    - name: Cache Cargo dependencies
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
-          target/
-        key: ${{ runner.os }}-cargo-release-${{ hashFiles('**/Cargo.lock') }}
-
-    - name: Build release binary
-      run: cargo build --release --bin kanari
-
-    - name: Create release archive
-      run: |
-        $version = "${{ github.ref_name }}"
-        $archive_name = "kanari-$version-windows-x64.zip"
-        Compress-Archive -Path target/release/kanari.exe -DestinationPath $archive_name
-        echo "ARCHIVE_NAME=$archive_name" >> $env:GITHUB_ENV
+        name: kanari-windows-x64
+        path: ./artifacts
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: ${{ env.ARCHIVE_NAME }}
+        files: ./artifacts/*.zip
         draft: false
         prerelease: false
         generate_release_notes: true
+        body: |
+          ## Kanari Windows Release
+          
+          This release contains the Windows executable for Kanari.
+          
+          ### Download
+          - `kanari-*-windows-x64.zip` - Windows 64-bit executable
+          
+          ### Usage
+          1. Download and extract the zip file
+          2. Run `kanari.exe --help` to see available commands
+          3. Run `kanari.exe --version` to check the version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
