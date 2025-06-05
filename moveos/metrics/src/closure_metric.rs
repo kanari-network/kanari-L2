@@ -52,7 +52,7 @@ where
 
     pub fn metric(&self) -> proto::Metric {
         let mut m = proto::Metric::default();
-        m.set_label(protobuf::RepeatedField::from_vec(self.label_pairs.clone()));
+        m.set_label(self.label_pairs.clone().into());
 
         let val = (self.f)().into_f64();
         match self.value_type {
@@ -86,7 +86,7 @@ where
         m.set_name(self.desc.fq_name.clone());
         m.set_help(self.desc.help.clone());
         m.set_field_type(self.value_type.metric_type());
-        m.set_metric(protobuf::RepeatedField::from_vec(vec![self.metric()]));
+        m.set_metric(vec![self.metric()].into());
         vec![m]
     }
 }

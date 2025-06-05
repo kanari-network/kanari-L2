@@ -85,8 +85,8 @@ homepage = "https://kanari.site"
 license = "Apache-2.0"
 publish = false
 repository = "https://github.com/kanari-network/kanari"
-rust-version = "1.82.0"
-version = "0.9.4"
+rust-version = "1.86.0"
+version = "0.0.1"
 
 [workspace.dependencies]
 # Internal crate dependencies.
@@ -159,19 +159,18 @@ kanari-nursery = { path = "frameworks/kanari-nursery" }
 # Please do not add any test features here: they should be declared by the individual crate.
 anyhow = "1.0.98"
 async-trait = "0"
-backtrace = "0.3"
+backtrace = "0.3.75"
 bcs = "0.1.3"
 bytes = "1.10.1"
 bech32 = "0.11.0"
 better_any = "0.1.1"
 bitcoin = { version = "0.32.6", features = ["rand-std", "bitcoinconsensus"] }
-#bitcoin-io = "0.2.0"
 bitcoin_hashes = { version = "0.14.0", features = ["serde"] }
 bitcoincore-rpc = "0.19.0"
 bitcoincore-rpc-json = "0.19.0"
-bip32 = "0.4.0"
+bip32 = "0.5.3"
 byteorder = "1.4.3"
-clap = { version = "4.5.13", features = ["derive", "env"] }
+clap = { version = "4.5.39", features = ["derive", "env"] }
 brotli = "8.0.1"
 chrono = "0.4.40"
 coerce = "0.8"
@@ -342,7 +341,7 @@ revm-precompile = "16.2.0"
 revm-primitives = "15.2.0"
 scopeguard = "1.1"
 uuid = { version = "1.16.0", features = ["v4", "fast-rng"] }
-protobuf = { version = "2.28", features = ["with-bytes"] }
+protobuf = { version = "3.7.2", features = ["with-bytes"] }
 # windows no longer supports jemalloc, so we need to use tikv-jemallocator
 rocksdb = { version = "0.23.0", features = ["lz4", "mt_static"] }
 # Use jemalloc for Linux and MacOS
