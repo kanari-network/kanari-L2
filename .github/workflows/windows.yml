@@ -86,11 +86,6 @@ jobs:
 
     - name: Create release archive
       run: |
-        $version = if ($env:GITHUB_REF -like "refs/tags/*") { 
-          $env:GITHUB_REF -replace "refs/tags/", ""
-        } else { 
-          "dev-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
-        }
         $archive_name = "kanari-windows-x64.zip"
         Compress-Archive -Path target/release/kanari.exe -DestinationPath $archive_name
         echo "ARCHIVE_NAME=$archive_name" >> $env:GITHUB_ENV
