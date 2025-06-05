@@ -110,6 +110,10 @@ jobs:
         path: ${{ env.ARCHIVE_NAME }}
         retention-days: 30
 
+    outputs:
+      archive-name: ${{ env.ARCHIVE_NAME }}
+      version: ${{ env.VERSION }}
+
   release:
     name: Create Release
     needs: test
@@ -126,7 +130,7 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: ./artifacts/*.zip
+        files: ./artifacts/${{ needs.test.outputs.archive-name }}
         draft: false
         prerelease: false
         generate_release_notes: true
@@ -136,7 +140,7 @@ jobs:
           This release contains the Windows executable for Kanari.
           
           ### Download
-          - `kanari-*-windows-x64.zip` - Windows 64-bit executable
+          - `${{ needs.test.outputs.archive-name }}` - Windows 64-bit executable
           
           ### Usage
           1. Download and extract the zip file
