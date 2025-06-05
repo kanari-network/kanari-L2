@@ -83,6 +83,7 @@ jobs:
       run: cargo build --release --bin kanari
       env:
         RUSTFLAGS: -C link-arg=advapi32.lib -C link-arg=secur32.lib -C link-arg=userenv.lib
+        SKIP_STDLIB_BUILD: "1"
 
     - name: Create release archive
       run: |

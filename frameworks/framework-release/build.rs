@@ -91,24 +91,26 @@ fn main() {
                 .display()
         );
 
-        // Skip the release process on Windows to avoid stack overflow
-        if cfg!(windows) {
-            println!("cargo:warning=Skipping framework release on Windows to avoid stack overflow");
-            println!("cargo:warning=The framework will be built on non-Windows platforms");
-            return;
-        }
-
+        // Try to release the framework with better error handling
+        println!("cargo:warning=Building framework release...");
         match framework_builder::releaser::release_latest() {
             Ok(msgs) => {
                 for msg in msgs {
                     println!("cargo::warning=\"{}\"", msg);
                 }
+                println!("cargo:warning=Framework release completed successfully");
             }
             Err(e) => {
                 println!(
                     "cargo::warning=\"Failed to release latest framework: {:?}\"",
                     e
                 );
+                // On Windows, if we get a stack overflow or similar error,
+                // we should still try to continue the build process
+                if cfg!(windows) {
+                    println!("cargo:warning=Framework build failed on Windows, this may cause runtime issues");
+                    println!("cargo:warning=Consider building on a non-Windows platform for full functionality");
+                }
             }
         }
     }
