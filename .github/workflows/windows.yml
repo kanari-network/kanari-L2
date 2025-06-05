@@ -1,4 +1,4 @@
-name: Windows CI
+name: Windows Build and Release
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
-  # Add these environment variables for libgit2
   LIBGIT2_SYS_USE_PKG_CONFIG: 0
   LIBGIT2_SYS_USE_VCPKG: 0
 
@@ -18,8 +17,8 @@ permissions:
   contents: write
 
 jobs:
-  test:
-    name: Windows
+  build:
+    name: Windows Build
     runs-on: windows-latest
     
     steps:
@@ -58,7 +57,6 @@ jobs:
         # Add Scoop to PATH for current session
         $env:PATH += ";$env:USERPROFILE\scoop\shims"
         
-        # Add necessary buckets
         scoop bucket add main
         scoop bucket add extras
         
@@ -82,14 +80,9 @@ jobs:
         clang --version
 
     - name: Build kanari binary
-      shell: cmd
-      run: |
-        REM Set environment variables for proper Windows linking
-        set RUSTFLAGS=%RUSTFLAGS% -C link-arg=advapi32.lib -C link-arg=secur32.lib -C link-arg=userenv.lib
-        cargo build --release --bin kanari
-
-    - name: Debug binary location
-      run: Get-ChildItem -Path target/release/ -Name
+      run: cargo build --release --bin kanari
+      env:
+        RUSTFLAGS: -C link-arg=advapi32.lib -C link-arg=secur32.lib -C link-arg=userenv.lib
 
     - name: Create release archive
       run: |
@@ -98,25 +91,20 @@ jobs:
         } else { 
           "dev-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
         }
-        $archive_name = "kanari-$version-windows-x64.zip"
+        $archive_name = "kanari-windows-x64.zip"
         Compress-Archive -Path target/release/kanari.exe -DestinationPath $archive_name
         echo "ARCHIVE_NAME=$archive_name" >> $env:GITHUB_ENV
-        echo "VERSION=$version" >> $env:GITHUB_ENV
 
-    - name: Upload kanari.exe artifact
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: kanari-windows-x64
         path: ${{ env.ARCHIVE_NAME }}
         retention-days: 30
 
-    outputs:
-      archive-name: ${{ env.ARCHIVE_NAME }}
-      version: ${{ env.VERSION }}
-
   release:
     name: Create Release
-    needs: test
+    needs: build
     runs-on: windows-latest
     if: startsWith(github.ref, 'refs/tags/')
     
@@ -130,21 +118,9 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: ./artifacts/${{ needs.test.outputs.archive-name }}
+        files: ./artifacts/kanari-windows-x64.zip
         draft: false
         prerelease: false
         generate_release_notes: true
-        body: |
-          ## Kanari Windows Release
-          
-          This release contains the Windows executable for Kanari.
-          
-          ### Download
-          - `${{ needs.test.outputs.archive-name }}` - Windows 64-bit executable
-          
-          ### Usage
-          1. Download and extract the zip file
-          2. Run `kanari.exe --help` to see available commands
-          3. Run `kanari.exe --version` to check the version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
