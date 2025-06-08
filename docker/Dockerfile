@@ -62,7 +62,7 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
-WORKDIR /rooch
+WORKDIR /kanari
 COPY ./ .
 RUN cargo build --release
 
@@ -93,10 +93,10 @@ RUN set -eux; \
     wget "http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb"; \
     DEBIAN_FRONTEND=noninteractive dpkg -i libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb;
 
-ENV RELEASE_PATH="/rooch/target/release"
-COPY --from=builder $RELEASE_PATH/rooch \
-     /rooch/
+ENV RELEASE_PATH="/kanari/target/release"
+COPY --from=builder $RELEASE_PATH/kanari \
+     /kanari/
 
 
-ENTRYPOINT [ "/rooch/rooch" ]
+ENTRYPOINT [ "/kanari/kanari" ]
 CMD [ "server", "start" ]

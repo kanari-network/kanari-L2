@@ -1,9 +1,0 @@
-{
-  "vapp":"VApp",
-  "accounts": "Account",
-  "transaction": "Transaction",
-  "objects": "Object",
-  "coins": "Coin",
-  "rgas": "RGas",
-  "move-contracts": "Move concepts" 
-}

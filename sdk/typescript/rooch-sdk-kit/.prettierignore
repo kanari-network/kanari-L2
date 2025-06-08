@@ -1,9 +1,0 @@
-# ignore everything by default
-# /*
-
-# ignore generated files
-dist/
-tools/generator
-pnpm-lock.yaml
-src/generated
-package.json

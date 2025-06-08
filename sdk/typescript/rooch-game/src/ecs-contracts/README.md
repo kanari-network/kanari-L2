@@ -1,1 +1,0 @@
-# ECS Contracts Standard Library
