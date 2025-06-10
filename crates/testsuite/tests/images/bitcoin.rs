@@ -21,7 +21,7 @@ pub struct BitcoindImageArgs {
 impl BitcoindImageArgs {
     // Function to generate salted hash for the rpcauth parameter
     fn generate_rpcauth(&self) -> String {
-        let salt: [u8; 16] = rand::thread_rng().gen();
+        let salt: [u8; 16] = rand::thread_rng().r#gen();
         let salt_hex = hex::encode(salt);
 
         let mut mac = Hmac::<Sha256>::new_from_slice(salt_hex.as_bytes()).unwrap();
