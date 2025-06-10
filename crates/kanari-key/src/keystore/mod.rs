@@ -221,6 +221,22 @@ impl AccountKeystore for Keystore {
         }
     }
 
+    fn get_session_key(
+        &self,
+        address: &KanariAddress,
+        authentication_key: &AuthenticationKey,
+        password: Option<String>,
+    ) -> Result<Option<KanariKeyPair>, anyhow::Error> {
+        match self {
+            Keystore::File(file_keystore) => {
+                file_keystore.get_session_key(address, authentication_key, password)
+            }
+            Keystore::InMem(inmem_keystore) => {
+                inmem_keystore.get_session_key(address, authentication_key, password)
+            }
+        }
+    }
+
     fn addresses(&self) -> Vec<KanariAddress> {
         match self {
             Keystore::File(file_keystore) => file_keystore.addresses(),

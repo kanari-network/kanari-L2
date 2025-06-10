@@ -237,6 +237,19 @@ impl AccountKeystore for BaseKeyStore {
         Ok(KanariTransaction::new(msg, auth))
     }
 
+    fn get_session_key(
+        &self,
+        address: &KanariAddress,
+        authentication_key: &AuthenticationKey,
+        password: Option<String>,
+    ) -> Result<Option<KanariKeyPair>, anyhow::Error> {
+        Ok(self.session_keys.get(address).ok_or_else(|| {
+            anyhow::Error::new(KanariError::KeyConversionError(format!("Cannot find session key for address:[{address}] and authentication_key:[{authentication_key}]", address = address, authentication_key = authentication_key)))
+        })?
+        .get(authentication_key)
+        .map(|local_session_key| local_session_key.private_key.decrypt_with_type(password).map_err(signature::Error::from_source)).transpose()?)
+    }
+
     fn addresses(&self) -> Vec<KanariAddress> {
         // Create an empty Vec to store the addresses.
         let mut addresses = Vec::with_capacity(self.keys.len() + self.session_keys.len());

@@ -141,6 +141,16 @@ impl AccountKeystore for FileBasedKeystore {
         Ok(())
     }
 
+    fn get_session_key(
+        &self,
+        address: &KanariAddress,
+        authentication_key: &AuthenticationKey,
+        password: Option<String>,
+    ) -> Result<Option<KanariKeyPair>, anyhow::Error> {
+        self.keystore
+            .get_session_key(address, authentication_key, password)
+    }
+
     fn sign_transaction_via_session_key(
         &self,
         address: &KanariAddress,

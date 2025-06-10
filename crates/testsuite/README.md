@@ -1,6 +1,6 @@
-# Rooch integration test
+# Kanari integration test
 
-Rooch integration test powered by Cucumber, a specification for running tests in a BDD (behavior-driven development) style workflow.
+Kanari integration test powered by Cucumber, a specification for running tests in a BDD (behavior-driven development) style workflow.
 
 The feature current supported:
 
@@ -27,7 +27,7 @@ Checkout `features/cmd.feature` for example.
 
 1. Add a new CLI command test case
 
-Use key word `Then cmd:` to add a new CLI command test case. The root command name `rooch` is not required.
+Use key word `Then cmd:` to add a new CLI command test case. The root command name `kanari` is not required.
 
 For example, 
 
@@ -35,7 +35,7 @@ For example,
 Then cmd: "move view --function 0x123::counter::value"
 ```
 
-will run `rooch move view --function 0x123::counter::value` command and check if it will return successfully.
+will run `kanari move view --function 0x123::counter::value` command and check if it will return successfully.
 
 2. Check the output of previous command
 

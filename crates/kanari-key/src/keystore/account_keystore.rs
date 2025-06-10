@@ -174,6 +174,13 @@ pub trait AccountKeystore {
         session_key: SessionKey,
     ) -> Result<(), anyhow::Error>;
 
+    fn get_session_key(
+        &self,
+        address: &KanariAddress,
+        authentication_key: &AuthenticationKey,
+        password: Option<String>,
+    ) -> Result<Option<KanariKeyPair>, anyhow::Error>;
+
     fn sign_transaction_via_session_key(
         &self,
         address: &KanariAddress,
