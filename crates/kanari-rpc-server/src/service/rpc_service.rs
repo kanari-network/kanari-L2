@@ -980,8 +980,26 @@ impl RpcService {
         filter: EventFilterView,
     ) -> SubscriptionResult {
         let permit = self.acquire_subscribe_permit()?;
-        let stream = self.subscription_handler.subscribe_events(filter);
-        spawn_subscription(sink, stream, Some(permit));
+        let handler = self.subscription_handler.clone();
+        
+        spawn_monitored_task!(async move {
+            let Ok(sink) = sink.accept().await else {
+                return;
+            };
+            let _permit = permit;
+            
+            let mut stream = handler.subscribe_events(filter);
+            
+            while let Some(item) = stream.next().await {
+                let Ok(message) = jsonrpsee::server::SubscriptionMessage::from_json(&item) else {
+                    break;
+                };
+                let Ok(()) = sink.send(message).await else {
+                    break;
+                };
+            }
+        });
+        
         Ok(())
     }
 
@@ -991,8 +1009,27 @@ impl RpcService {
         filter: TransactionFilterView,
     ) -> SubscriptionResult {
         let permit = self.acquire_subscribe_permit()?;
-        let stream = self.subscription_handler.subscribe_transactions(filter);
-        spawn_subscription(sink, stream, Some(permit));
+        let handler = self.subscription_handler.clone();
+        
+        spawn_monitored_task!(async move {
+            let Ok(sink) = sink.accept().await else {
+                return;
+            };
+            let _permit = permit;
+            
+            let mut stream = handler.subscribe_transactions(filter);
+            
+            while let Some(item) = stream.next().await {
+                let Ok(message) = jsonrpsee::server::SubscriptionMessage::from_json(&item) else {
+                    break;
+                };
+                let Ok(()) = sink.send(message).await else {
+                    break;
+                };
+            }
+        });
+        
         Ok(())
     }
+    
 }

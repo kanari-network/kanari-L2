@@ -497,7 +497,7 @@ mod tests {
                 time::SystemTime::now().elapsed().unwrap().as_secs()
             );
 
-            env::set_var(env_key.clone(), "env_value");
+            unsafe { env::set_var(env_key.clone(), "env_value") };
 
             assert_eq!(
                 retrieve_map_config_value(
@@ -510,7 +510,7 @@ mod tests {
             );
             assert_eq!(map_config.get("key2").unwrap(), "env_value");
 
-            env::remove_var(env_key);
+            unsafe { env::remove_var(env_key) };
         }
 
         #[test]

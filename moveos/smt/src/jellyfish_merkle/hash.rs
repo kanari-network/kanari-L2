@@ -73,13 +73,13 @@ impl SMTNodeHash {
     /// Create a cryptographically random instance.
     pub fn random() -> Self {
         let mut rng = OsRng;
-        let hash: [u8; SMTNodeHash::LEN] = rng.gen();
+        let hash: [u8; SMTNodeHash::LEN] = rng.r#gen();
         SMTNodeHash::new(hash)
     }
 
     /// Creates a random instance with given rng. Useful in unit tests.
     pub fn random_with_rng<R: Rng>(rng: &mut R) -> Self {
-        let hash: [u8; SMTNodeHash::LEN] = rng.gen();
+        let hash: [u8; SMTNodeHash::LEN] = rng.r#gen();
         SMTNodeHash::new(hash)
     }
 

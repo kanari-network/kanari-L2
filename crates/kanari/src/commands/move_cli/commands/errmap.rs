@@ -73,7 +73,7 @@ impl CommandAction<Option<Value>> for ErrmapCommand {
             },
         )?;
         let mut errmap_gen = move_errmapgen::ErrmapGen::new(&model, &errmap_options);
-        errmap_gen.gen();
+        errmap_gen.r#gen();
         errmap_gen.save_result();
 
         print_serialized_success(self.json)

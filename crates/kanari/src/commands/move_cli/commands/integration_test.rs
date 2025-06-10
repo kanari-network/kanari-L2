@@ -329,7 +329,9 @@ impl CommandAction<Option<Value>> for IntegrationTestCommand {
             named_address_string_map,
         );
         if self.update_baseline {
-            std::env::set_var(UPDATE_BASELINE, "true");
+            unsafe {
+                std::env::set_var(UPDATE_BASELINE, "true");
+            }
         }
         let mut test_args = vec![
             "test_runner".to_owned(),

@@ -80,7 +80,7 @@ exclude = ["generator/rust"]
 # for package declarations.
 [workspace.package]
 authors = ["Kanari Contributors <opensource@kanari.site>"]
-edition = "2021"
+edition = "2024"
 homepage = "https://kanari.site"
 license = "Apache-2.0"
 publish = false

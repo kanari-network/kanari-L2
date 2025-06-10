@@ -6,7 +6,7 @@
 
 use move_core_types::account_address::AccountAddress;
 use moveos_types::move_std::string::MoveString;
-use schemars::gen::SchemaGenerator;
+use schemars::r#gen::SchemaGenerator;
 use schemars::schema::{InstanceType, Schema, SchemaObject};
 use schemars::JsonSchema;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};

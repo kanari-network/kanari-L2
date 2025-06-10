@@ -525,16 +525,16 @@ mod tests {
 
     fn random_outpoint() -> OutPoint {
         let mut rng = rand::thread_rng();
-        let txid: Txid = Txid::from_slice(&rng.gen::<[u8; 32]>()).unwrap();
-        let vout: u32 = rng.gen();
+        let txid: Txid = Txid::from_slice(&rng. r#gen::<[u8; 32]>()).unwrap();
+        let vout: u32 = rng.r#gen();
 
         OutPoint { txid, vout }
     }
 
     fn random_inscription_id() -> InscriptionID {
         let mut rng = rand::thread_rng();
-        let txid: Txid = Txid::from_slice(&rng.gen::<[u8; 32]>()).unwrap();
-        let index: u32 = rng.gen();
+        let txid: Txid = Txid::from_slice(&rng.r#gen::<[u8; 32]>()).unwrap();
+        let index: u32 = rng.r#gen();
 
         InscriptionID {
             txid: txid.into_address(),

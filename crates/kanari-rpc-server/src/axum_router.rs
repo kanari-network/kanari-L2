@@ -480,54 +480,6 @@ pub struct SSEQuery {
     filter: String,
 }
 
-async fn sse_handler<T, U, S, F>(
-    State(service): State<JsonRpcService>,
-    Query(query): Query<SSEQuery>,
-    parse_filter: impl FnOnce(&str) -> Result<T, serde_json::Error>,
-    subscribe: F,
-) -> Sse<impl Stream<Item = Result<Event, Infallible>>>
-where
-    T: serde::Serialize + Send,
-    U: serde::Serialize + Send,
-    S: Stream<Item = U> + Send + 'static,
-    F: FnOnce(Arc<SubscriptionHandler>, T) -> S + Send,
-{
-    let filter = match parse_filter(query.filter.as_str()) {
-        Ok(filter) => filter,
-        Err(e) => {
-            tracing::error!("Failed to parse event filter: {:?}", e);
-            let (tx, rx) = mpsc::channel::<Event>(1);
-            let _ = tx
-                .send(
-                    Event::default()
-                        .event("error")
-                        .data(format!("Failed to parse event filter: {}", e)),
-                )
-                .await;
-            let stream = ReceiverStream::new(rx).map(Ok);
-            return Sse::new(stream).keep_alive(KeepAlive::default());
-        }
-    };
-
-    let (tx, rx) = mpsc::channel::<Event>(100);
-    let event_stream = subscribe(service.subscription_handler.clone(), filter);
-
-    // Spawn a task to handle the subscription
-    tokio::spawn(async move {
-        let mut event_stream = Box::pin(event_stream);
-        while let Some(event) = event_stream.next().await {
-            let event_data = serde_json::to_string(&event).unwrap();
-            let sse_event = Event::default().event("message").data(event_data);
-
-            if tx.send(sse_event).await.is_err() {
-                break;
-            }
-        }
-    });
-
-    let stream = ReceiverStream::new(rx).map(Ok);
-    Sse::new(stream).keep_alive(KeepAlive::default())
-}
 
 macro_rules! create_sse_handler {
     ($name:ident, $filter_type:ty, $subscribe_method:ident) => {
@@ -535,13 +487,41 @@ macro_rules! create_sse_handler {
             State(service): State<JsonRpcService>,
             Query(query): Query<SSEQuery>,
         ) -> Sse<impl Stream<Item = Result<Event, Infallible>>> {
-            sse_handler(
-                State(service),
-                Query(query),
-                |filter_str| serde_json::from_str::<$filter_type>(filter_str),
-                |handler, filter| handler.$subscribe_method(filter),
-            )
-            .await
+            let filter = match serde_json::from_str::<$filter_type>(&query.filter) {
+                Ok(filter) => filter,
+                Err(e) => {
+                    tracing::error!("Failed to parse filter: {:?}", e);
+                    let (tx, rx) = mpsc::channel::<Event>(1);
+                    let _ = tx
+                        .send(
+                            Event::default()
+                                .event("error")
+                                .data(format!("Failed to parse filter: {}", e)),
+                        )
+                        .await;
+                    let stream = ReceiverStream::new(rx).map(Ok);
+                    return Sse::new(stream).keep_alive(KeepAlive::default());
+                }
+            };
+
+            let (tx, rx) = mpsc::channel::<Event>(100);
+            let handler = service.subscription_handler.clone();
+
+            // Spawn a task to handle the subscription
+            tokio::spawn(async move {
+                let mut event_stream = handler.$subscribe_method(filter);
+                while let Some(event) = event_stream.next().await {
+                    let event_data = serde_json::to_string(&event).unwrap();
+                    let sse_event = Event::default().event("message").data(event_data);
+
+                    if tx.send(sse_event).await.is_err() {
+                        break;
+                    }
+                }
+            });
+
+            let stream = ReceiverStream::new(rx).map(Ok);
+            Sse::new(stream).keep_alive(KeepAlive::default())
         }
     };
 }

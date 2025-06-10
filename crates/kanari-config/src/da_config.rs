@@ -322,7 +322,7 @@ impl DABackendConfig {
         let backends_count = self.backends.len();
 
         // If it's Number, adjust the value to be within [1, n].
-        if let DASubmitStrategy::Number(ref mut num) = strategy {
+        if let DASubmitStrategy::Number(num) = strategy {
             *num = std::cmp::max(1, std::cmp::min(*num, backends_count));
         }
     }

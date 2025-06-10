@@ -198,7 +198,7 @@ impl StdlibBuildConfig {
 
         let generator = move_docgen::Docgen::new(model, &options);
         let mut new_docs = HashSet::new();
-        for (file, content) in generator.gen() {
+        for (file, content) in generator.r#gen() {
             match old_docs.get(&file) {
                 Some(old_content) if old_content != &content => {
                     println!("Update doc {:?}", file);
@@ -239,7 +239,7 @@ impl StdlibBuildConfig {
             ..Default::default()
         };
         let mut errmap_gen = move_errmapgen::ErrmapGen::new(model, &error_map_gen_opt);
-        errmap_gen.gen();
+        errmap_gen.r#gen();
         errmap_gen.save_result();
 
         Ok(())

@@ -16,13 +16,13 @@ use kanari_types::error::{KanariError, KanariResult};
 use serde_json::Value;
 
 const MOVE_STDLIB_PKG_NAME: &str = "MoveStdlib";
-const MOVE_STDLIB_PKG_PATH: &str = "{ git = \"https://github.com/jamesatomc/rooch.git\", subdir = \"frameworks/move-stdlib\", rev = \"kanari-network\" }";
+const MOVE_STDLIB_PKG_PATH: &str = "{ git = \"https://github.com/kanari-network/kanari-L2.git\", subdir = \"frameworks/move-stdlib\", rev = \"kanari-network\" }";
 
 const MOVEOS_STDLIB_PKG_NAME: &str = "MoveosStdlib";
-const MOVEOS_STDLIB_PKG_PATH: &str = "{ git = \"https://github.com/jamesatomc/rooch.git\", subdir = \"frameworks/moveos-stdlib\", rev = \"kanari-network\" }";
+const MOVEOS_STDLIB_PKG_PATH: &str = "{ git = \"https://github.com/kanari-network/kanari-L2.git\", subdir = \"frameworks/moveos-stdlib\", rev = \"kanari-network\" }";
 
 const KANARI_FRAMEWORK_PKG_NAME: &str = "KanariFramework";
-const KANARI_FRAMEWORK_PKG_PATH: &str = "{ git = \"https://github.com/jamesatomc/rooch.git\", subdir = \"frameworks/kanari-framework\", rev = \"kanari-network\" }";
+const KANARI_FRAMEWORK_PKG_PATH: &str = "{ git = \"https://github.com/kanari-network/kanari-L2.git\", subdir = \"frameworks/kanari-framework\", rev = \"kanari-network\" }";
 
 #[derive(Parser)]
 pub struct NewCommand {
