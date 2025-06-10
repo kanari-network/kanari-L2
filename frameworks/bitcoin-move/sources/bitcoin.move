@@ -14,11 +14,11 @@ module bitcoin_move::bitcoin{
     use moveos_std::simple_multimap;
     use moveos_std::signer;
     use moveos_std::event;
-
+    
     use kanari_framework::address_mapping;
     use kanari_framework::bitcoin_address::BitcoinAddress;
     use kanari_framework::chain_id;
-
+    
     use bitcoin_move::network;
     use bitcoin_move::types::{Self, Block, Header, Transaction, BlockHeightHash, OutPoint};
     use bitcoin_move::utxo::{Self, UTXOSeal};
