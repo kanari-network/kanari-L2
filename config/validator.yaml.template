@@ -1,0 +1,258 @@
+# Kanari L2 Validator Configuration Template
+# Copy this file to ~/.kanari/validator.yaml and customize for your setup
+
+# Validator Identity
+validator:
+  # Your validator address (Bitcoin format)
+  address: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"
+  
+  # Validator name/alias (optional)
+  name: "my-validator"
+  
+  # Validator description (optional)
+  description: "Kanari L2 Validator Node"
+
+# Network Configuration
+network:
+  # Network type: local, dev, test, main
+  type: "local"
+  
+  # Chain ID (auto-detected based on network type)
+  # local: 4, dev: 3, test: 2, main: 1
+  chain_id: 4
+  
+  # Bitcoin network: regtest, testnet, mainnet
+  bitcoin_network: "regtest"
+
+# Data Storage
+storage:
+  # Base data directory
+  data_dir: "/var/lib/kanari"
+  
+  # Log directory
+  log_dir: "/var/log/kanari"
+  
+  # Database backend: rocksdb
+  db_backend: "rocksdb"
+  
+  # Enable state pruning
+  pruning: false
+
+# Sequencer Configuration
+sequencer:
+  # Sequencer account address
+  account: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"
+  
+  # Block time in seconds
+  block_interval: 5
+  
+  # Maximum transactions per block
+  max_tx_per_block: 1000
+  
+  # Transaction pool settings
+  tx_pool:
+    max_size: 10000
+    max_per_sender: 100
+
+# Proposer Configuration  
+proposer:
+  # Proposer account address
+  account: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"
+  
+  # Proposer check interval in seconds
+  interval: 10
+  
+  # Initial block offset
+  init_offset: 0
+
+# RPC Configuration
+rpc:
+  # RPC server settings
+  server:
+    host: "0.0.0.0"
+    port: 6767
+    
+  # CORS settings
+  cors:
+    enabled: true
+    allowed_origins: ["*"]
+    allowed_methods: ["GET", "POST"]
+    
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_second: 100
+    burst_size: 200
+
+# WebSocket Configuration
+websocket:
+  enabled: true
+  host: "0.0.0.0"
+  port: 6767
+  max_connections: 1000
+
+# Metrics Configuration
+metrics:
+  enabled: true
+  host: "0.0.0.0" 
+  port: 9184
+  path: "/metrics"
+
+# Logging Configuration
+logging:
+  # Log level: trace, debug, info, warn, error
+  level: "info"
+  
+  # Log format: json, text
+  format: "text"
+  
+  # Log to file
+  file:
+    enabled: true
+    path: "/var/log/kanari/kanari.log"
+    max_size: "100MB"
+    max_files: 10
+    
+  # Log to console
+  console:
+    enabled: true
+    colors: true
+
+# P2P Networking
+p2p:
+  # Listen address
+  listen_addr: "0.0.0.0:30333"
+  
+  # External address (for NAT traversal)
+  external_addr: null
+  
+  # Bootstrap nodes
+  bootstrap_nodes: []
+  
+  # Maximum number of peers
+  max_peers: 50
+  
+  # Peer discovery
+  discovery:
+    enabled: true
+    mdns: true
+
+# Bitcoin Integration
+bitcoin:
+  # Bitcoin node connection
+  rpc:
+    url: "http://127.0.0.1:18443"
+    username: "kanariuser"
+    password: "kanaripass"
+    
+  # Bitcoin network type
+  network: "regtest"
+  
+  # Block indexing
+  indexing:
+    enabled: true
+    start_height: 0
+
+# Data Availability
+da:
+  # DA backend: mock, celestia
+  backend: "mock"
+  
+  # Celestia configuration (if using celestia)
+  celestia:
+    rpc_url: "http://localhost:26658"
+    auth_token: ""
+    namespace: "kanari"
+    
+  # Submission settings
+  submission:
+    min_block_to_submit: 100
+    interval: 30
+
+# Security Settings
+security:
+  # Enable authentication
+  auth:
+    enabled: false
+    jwt_secret: "your-jwt-secret-here"
+    
+  # TLS settings
+  tls:
+    enabled: false
+    cert_file: "/etc/ssl/certs/kanari.crt"
+    key_file: "/etc/ssl/private/kanari.key"
+    
+  # Firewall settings
+  firewall:
+    enabled: false
+    allowed_ips: ["127.0.0.1", "::1"]
+
+# Performance Tuning
+performance:
+  # Number of worker threads
+  worker_threads: 4
+  
+  # Max blocking threads
+  max_blocking_threads: 512
+  
+  # Database cache size (MB)
+  db_cache_size: 1024
+  
+  # Memory pool size (MB)
+  mempool_size: 256
+
+# Monitoring & Alerting
+monitoring:
+  # Health check endpoint
+  health_check:
+    enabled: true
+    path: "/health"
+    
+  # Prometheus metrics
+  prometheus:
+    enabled: true
+    namespace: "kanari"
+    
+  # Alert thresholds
+  alerts:
+    disk_usage_threshold: 80  # percentage
+    memory_usage_threshold: 80  # percentage
+    block_sync_lag_threshold: 10  # blocks
+
+# Backup Configuration
+backup:
+  # Automatic backup
+  auto_backup:
+    enabled: false
+    interval: "24h"
+    retention: "7d"
+    
+  # Backup storage
+  storage:
+    type: "local"  # local, s3, gcs
+    path: "/var/backups/kanari"
+    
+    # S3 configuration (if using s3)
+    s3:
+      bucket: "kanari-backups"
+      region: "us-east-1"
+      access_key: ""
+      secret_key: ""
+
+# Development Settings (only for local/dev networks)
+development:
+  # Enable debug mode
+  debug: false
+  
+  # Enable profiling
+  profiling: false
+  
+  # Mock components
+  mock:
+    bitcoin: false
+    da: true
+    
+  # Testing features
+  testing:
+    fast_blocks: true
+    skip_validation: false
