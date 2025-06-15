@@ -44,6 +44,7 @@ tracing = { workspace = true }
 xxhash-rust = { workspace = true, features = ["xxh3"] }
 lz4 = { workspace = true }
 coerce = { workspace = true }
+multibase = { workspace = true }
 
 move-core-types = { workspace = true }
 move-vm-types = { workspace = true }
@@ -59,6 +60,7 @@ framework-types = { workspace = true }
 
 proptest = { optional = true, workspace = true }
 proptest-derive = { optional = true, workspace = true }
+
 
 [dev-dependencies]
 proptest = { workspace = true }

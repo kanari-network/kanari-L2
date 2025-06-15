@@ -228,7 +228,7 @@ smallvec = "1.15.0"
 thiserror = "1.0.69"
 tiny-keccak = { version = "2", features = ["keccak", "sha3"] }
 tiny-bip39 = "2.0.0"
-tokio = { version = "1.44.2", features = ["full"] }
+tokio = { version = "1.45.1", features = ["full"] }
 tokio-tungstenite = { version = "0.24.0", features = ["native-tls"] }
 tokio-stream = "0.1.17"
 tracing = "0.1.41"
@@ -272,7 +272,7 @@ tower_governor = { version = "0.4.3", features = ["tracing"] }
 pin-project = "1.1.10"
 mirai-annotations = "1.12.0"
 lru = "0.11.0"
-quick_cache = "0.6.13"
+quick_cache = "0.6.14"
 bs58 = "0.5.1"
 dirs-next = "2.0.0"
 chacha20poly1305 = "0.10.1"
@@ -366,6 +366,7 @@ tikv-jemallocator = { git = "https://github.com/jamesatomc/jemallocator.git", fe
     "profiling",
 ] }
 mimalloc = { version = "0.1.46" }
+multibase = "0.9.0"
 
 # Note: the BEGIN and END comments below are required for external tooling. Do not remove.
 # BEGIN MOVE DEPENDENCIES

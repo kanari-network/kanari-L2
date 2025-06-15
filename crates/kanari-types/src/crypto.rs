@@ -36,12 +36,21 @@ use fastcrypto::{
 use fastcrypto::{
     hash::{Blake2b256, HashFunction},
     secp256k1::{Secp256k1PublicKey, Secp256k1Signature, Secp256k1SignatureAsBytes},
+    secp256r1::{
+        Secp256r1KeyPair, Secp256r1PublicKey, Secp256r1PublicKeyAsBytes, Secp256r1Signature,
+        Secp256r1SignatureAsBytes,
+    },
 };
+use multibase;
 use schemars::JsonSchema;
 use serde::ser::Serializer;
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::serde_as;
 use std::{hash::Hash, str::FromStr};
+
+pub use fastcrypto::ed25519::ED25519_PUBLIC_KEY_LENGTH;
+pub use fastcrypto::secp256k1::SECP256K1_PUBLIC_KEY_LENGTH;
+pub use fastcrypto::secp256r1::SECP256R1_PUBLIC_KEY_LENGTH;
 
 pub type DefaultHash = Blake2b256;
 
@@ -49,6 +58,7 @@ pub type DefaultHash = Blake2b256;
 pub enum SignatureScheme {
     Ed25519,
     Secp256k1,
+    EcdsaR1,
 }
 
 impl SignatureScheme {
@@ -56,6 +66,7 @@ impl SignatureScheme {
         match self {
             SignatureScheme::Ed25519 => 0,
             SignatureScheme::Secp256k1 => 1,
+            SignatureScheme::EcdsaR1 => 2,
         }
     }
 
@@ -63,6 +74,7 @@ impl SignatureScheme {
         match byte_int {
             0 => Ok(SignatureScheme::Ed25519),
             1 => Ok(SignatureScheme::Secp256k1),
+            2 => Ok(SignatureScheme::EcdsaR1),
             _ => Err(KanariError::InvalidSignatureScheme),
         }
     }
@@ -75,6 +87,8 @@ pub enum KanariKeyPair {
     Ed25519(Ed25519KeyPair),
     ///For Bitcoin
     Secp256k1(Secp256k1KeyPair),
+    ///For WebAuthn
+    EcdsaR1(Secp256r1KeyPair),
 }
 
 impl KanariKeyPair {
@@ -90,6 +104,12 @@ impl KanariKeyPair {
         KanariKeyPair::Secp256k1(secp256k1_keypair)
     }
 
+    pub fn generate_ecdsa_r1() -> Self {
+        let rng = &mut rand::thread_rng();
+        let ecdsa_r1_keypair = Secp256r1KeyPair::generate(rng);
+        KanariKeyPair::EcdsaR1(ecdsa_r1_keypair)
+    }
+
     pub fn from_ed25519_bytes(bytes: &[u8]) -> Result<Self, FastCryptoError> {
         Ok(KanariKeyPair::Ed25519(Ed25519KeyPair::from_bytes(bytes)?))
     }
@@ -98,6 +118,10 @@ impl KanariKeyPair {
         Ok(KanariKeyPair::Secp256k1(Secp256k1KeyPair::from_bytes(
             bytes,
         )?))
+    }
+
+    pub fn from_ecdsa_r1_bytes(bytes: &[u8]) -> Result<Self, FastCryptoError> {
+        Ok(KanariKeyPair::EcdsaR1(Secp256r1KeyPair::from_bytes(bytes)?))
     }
 
     pub fn sign(&self, msg: &[u8]) -> Signature {
@@ -115,6 +139,7 @@ impl KanariKeyPair {
         match self {
             KanariKeyPair::Ed25519(kp) => PublicKey::Ed25519(kp.public().into()),
             KanariKeyPair::Secp256k1(kp) => PublicKey::Secp256k1(kp.public().into()),
+            KanariKeyPair::EcdsaR1(kp) => PublicKey::EcdsaR1(kp.public().into()),
         }
     }
 
@@ -131,6 +156,7 @@ impl KanariKeyPair {
         match self {
             KanariKeyPair::Ed25519(kp) => kp.as_bytes(),
             KanariKeyPair::Secp256k1(kp) => kp.as_bytes(),
+            KanariKeyPair::EcdsaR1(kp) => kp.as_bytes(),
         }
     }
 
@@ -151,12 +177,7 @@ impl KanariKeyPair {
     /// Get the secp256k1 private key
     pub fn secp256k1_secret_key(&self) -> Option<SecretKey> {
         match self {
-            KanariKeyPair::Secp256k1(kp) => {
-                SecretKey::from_slice(kp.secret.as_bytes()).ok()
-                //The bitcoin and fastcrypto dependent on different version secp256k1 library
-                //So we cannot directly return the private key
-                //Some(&kp.secret.privkey)
-            }
+            KanariKeyPair::Secp256k1(kp) => SecretKey::from_slice(kp.secret.as_bytes()).ok(),
             _ => None,
         }
     }
@@ -170,6 +191,7 @@ impl KanariKeyPair {
         match self {
             KanariKeyPair::Ed25519(kp) => KanariKeyPair::Ed25519(kp.copy()),
             KanariKeyPair::Secp256k1(kp) => KanariKeyPair::Secp256k1(kp.copy()),
+            KanariKeyPair::EcdsaR1(kp) => KanariKeyPair::EcdsaR1(kp.copy()),
         }
     }
 
@@ -183,6 +205,33 @@ impl KanariKeyPair {
         let bech32_encoded = encode::<Bech32>(*KANARI_SECRET_KEY_HRP, &priv_key_bytes)?;
         Ok(bech32_encoded)
     }
+
+    /// Encode the public key to multibase format using base58btc encoding
+    /// This is a convenience method that delegates to the public key's multibase encoding
+    pub fn public_key_to_multibase(&self) -> String {
+        self.public().to_multibase()
+    }
+
+    /// Encode only the raw public key bytes (without flag) to multibase
+    /// This is useful for DID verification methods
+    pub fn raw_public_key_to_multibase(&self) -> String {
+        self.public().raw_to_multibase()
+    }
+
+    /// Get the signature scheme of this keypair
+    pub fn scheme(&self) -> SignatureScheme {
+        match self {
+            KanariKeyPair::Ed25519(_) => SignatureScheme::Ed25519,
+            KanariKeyPair::Secp256k1(_) => SignatureScheme::Secp256k1,
+            KanariKeyPair::EcdsaR1(_) => SignatureScheme::EcdsaR1,
+        }
+    }
+
+    /// Generate a complete did:key string from the public key
+    /// Format: "did:key:z6Mk..." or "did:key:zQ3s..."
+    pub fn to_did_key_string(&self) -> String {
+        self.public().to_did_key_string()
+    }
 }
 
 impl Signer<Signature> for KanariKeyPair {
@@ -190,6 +239,7 @@ impl Signer<Signature> for KanariKeyPair {
         match self {
             KanariKeyPair::Ed25519(kp) => kp.sign(msg),
             KanariKeyPair::Secp256k1(kp) => kp.sign(msg),
+            KanariKeyPair::EcdsaR1(kp) => kp.sign(msg),
         }
     }
 }
@@ -216,6 +266,9 @@ impl EncodeDecodeBase64 for KanariKeyPair {
             KanariKeyPair::Secp256k1(kp) => {
                 bytes.extend_from_slice(kp.as_bytes());
             }
+            KanariKeyPair::EcdsaR1(kp) => {
+                bytes.extend_from_slice(kp.as_bytes());
+            }
         }
         Base64::encode(&bytes[..])
     }
@@ -232,6 +285,11 @@ impl EncodeDecodeBase64 for KanariKeyPair {
                 )?)),
                 SignatureScheme::Secp256k1 => {
                     Ok(KanariKeyPair::Secp256k1(Secp256k1KeyPair::from_bytes(
+                        bytes.get(1..).ok_or(FastCryptoError::InvalidInput)?,
+                    )?))
+                }
+                SignatureScheme::EcdsaR1 => {
+                    Ok(KanariKeyPair::EcdsaR1(Secp256r1KeyPair::from_bytes(
                         bytes.get(1..).ok_or(FastCryptoError::InvalidInput)?,
                     )?))
                 }
@@ -264,9 +322,16 @@ impl<'de> Deserialize<'de> for KanariKeyPair {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, JsonSchema)]
+pub struct MultibasePublicKey {
+    pub verification_method_type: String,
+    pub multibase_str: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub enum PublicKey {
     Ed25519(Ed25519PublicKeyAsBytes),
     Secp256k1(Secp256k1PublicKeyAsBytes),
+    EcdsaR1(Secp256r1PublicKeyAsBytes),
 }
 
 impl AsRef<[u8]> for PublicKey {
@@ -274,6 +339,7 @@ impl AsRef<[u8]> for PublicKey {
         match self {
             PublicKey::Ed25519(pk) => &pk.0,
             PublicKey::Secp256k1(pk) => &pk.0,
+            PublicKey::EcdsaR1(pk) => &pk.0,
         }
     }
 }
@@ -302,6 +368,12 @@ impl EncodeDecodeBase64 for PublicKey {
                         bytes.get(1..).ok_or(FastCryptoError::InvalidInput)?,
                     )?;
                     Ok(PublicKey::Secp256k1((&pk).into()))
+                }
+                SignatureScheme::EcdsaR1 => {
+                    let pk = Secp256r1PublicKey::from_bytes(
+                        bytes.get(1..).ok_or(FastCryptoError::InvalidInput)?,
+                    )?;
+                    Ok(PublicKey::EcdsaR1((&pk).into()))
                 }
             },
             Err(_) => Err(FastCryptoError::InvalidInput),
@@ -339,6 +411,15 @@ impl PublicKey {
         match self {
             PublicKey::Ed25519(_) => Ed25519KanariSignature::SCHEME,
             PublicKey::Secp256k1(_) => Secp256k1KanariSignature::SCHEME,
+            PublicKey::EcdsaR1(_) => EcdsaR1KanariSignature::SCHEME,
+        }
+    }
+
+    pub fn did_verification_method_type(&self) -> String {
+        match self {
+            PublicKey::Ed25519(_) => "Ed25519VerificationKey2020".to_string(),
+            PublicKey::Secp256k1(_) => "EcdsaSecp256k1VerificationKey2019".to_string(),
+            PublicKey::EcdsaR1(_) => "EcdsaSecp256r1VerificationKey2019".to_string(),
         }
     }
 
@@ -416,6 +497,14 @@ impl PublicKey {
                     )?;
                     Ok(PublicKey::Secp256k1((&pk).into()))
                 }
+                SignatureScheme::EcdsaR1 => {
+                    let pk = Secp256r1PublicKey::from_bytes(
+                        bytes
+                            .get(1..)
+                            .ok_or_else(|| anyhow!("Invalid public key length"))?,
+                    )?;
+                    Ok(PublicKey::EcdsaR1((&pk).into()))
+                }
             },
             Err(e) => Err(anyhow!("Invalid bytes :{}", e)),
         }
@@ -425,6 +514,164 @@ impl PublicKey {
         let bytes = pk.to_bytes();
         let pk = Secp256k1PublicKey::from_bytes(&bytes)?;
         Ok(PublicKey::Secp256k1((&pk).into()))
+    }
+
+    /// Encode the public key to multibase format using DID standard multicodec prefixes
+    /// Ed25519: 0xed01 prefix -> z6Mk... format
+    /// Secp256k1: 0xe701 prefix -> zQ3s... format
+    pub fn to_multibase(&self) -> String {
+        let mut prefixed_key = match self {
+            PublicKey::Ed25519(_) => vec![0xed, 0x01], // Ed25519 multicodec prefix
+            PublicKey::Secp256k1(_) => vec![0xe7, 0x01], // Secp256k1 multicodec prefix
+            PublicKey::EcdsaR1(_) => vec![0x12, 0x00], // P-256 multicodec prefix
+        };
+        prefixed_key.extend_from_slice(self.raw_public_key_bytes());
+        multibase::encode(multibase::Base::Base58Btc, &prefixed_key)
+    }
+
+    /// Decode a multibase-encoded public key string with DID standard multicodec prefixes
+    /// Supports Ed25519 (z6Mk...) and Secp256k1 (zQ3s...) formats
+    pub fn from_multibase(multibase_str: &str) -> Result<Self, anyhow::Error> {
+        let (base, data) = multibase::decode(multibase_str)?;
+        if base != multibase::Base::Base58Btc {
+            return Err(anyhow!("Unsupported multibase encoding: {:?}", base));
+        }
+        if data.len() < 2 {
+            return Err(anyhow!("Multibase data too short"));
+        }
+        let prefix = &data[0..2];
+        let decoded_bytes = &data[2..];
+        match prefix {
+            [0xed, 0x01] => {
+                if decoded_bytes.len() != 32 {
+                    return Err(anyhow!("Invalid Ed25519 multibase public key length"));
+                }
+                let pk = Ed25519PublicKey::from_bytes(decoded_bytes)?;
+                Ok(PublicKey::Ed25519((&pk).into()))
+            }
+            [0xe7, 0x01] => {
+                if decoded_bytes.len() != 33 {
+                    return Err(anyhow!("Invalid Secp256k1 multibase public key length"));
+                }
+                let pk = Secp256k1PublicKey::from_bytes(decoded_bytes)?;
+                Ok(PublicKey::Secp256k1((&pk).into()))
+            }
+            [0x12, 0x00] => {
+                if decoded_bytes.len() != 33 {
+                    return Err(anyhow!("Invalid ECDSA R1 multibase public key length"));
+                }
+                let pk = Secp256r1PublicKey::from_bytes(decoded_bytes)?;
+                Ok(PublicKey::EcdsaR1((&pk).into()))
+            }
+            _ => Err(anyhow!(
+                "Unsupported multicodec prefix: 0x{:02x}{:02x}",
+                prefix[0],
+                prefix[1]
+            )),
+        }
+    }
+
+    /// Get the raw public key bytes without the flag
+    /// For Ed25519: 32 bytes
+    /// For Secp256k1: 33 bytes (compressed)
+    /// For EcdsaR1: 33 bytes (compressed)
+    pub fn raw_public_key_bytes(&self) -> &[u8] {
+        self.as_ref()
+    }
+
+    /// Encode only the raw public key bytes (without flag) to multibase
+    /// This is useful for DID verification methods
+    pub fn raw_to_multibase(&self) -> String {
+        multibase::encode(multibase::Base::Base58Btc, self.raw_public_key_bytes())
+    }
+
+    /// Decode raw public key bytes from multibase and create PublicKey with specified scheme
+    pub fn from_raw_multibase(
+        multibase_str: &str,
+        scheme: SignatureScheme,
+    ) -> Result<Self, anyhow::Error> {
+        let (base, decoded_bytes) = multibase::decode(multibase_str)
+            .map_err(|e| anyhow!("Failed to decode multibase string: {}", e))?;
+
+        // Verify the encoding is supported
+        match base {
+            multibase::Base::Base58Btc
+            | multibase::Base::Base64Pad
+            | multibase::Base::Base16Lower => {
+                // These are supported encodings
+            }
+            _ => {
+                return Err(anyhow!("Unsupported multibase encoding: {:?}", base));
+            }
+        }
+
+        // Validate key length based on scheme
+        match scheme {
+            SignatureScheme::Ed25519 => {
+                if decoded_bytes.len() != 32 {
+                    return Err(anyhow!(
+                        "Invalid Ed25519 public key length: expected 32 bytes, got {}",
+                        decoded_bytes.len()
+                    ));
+                }
+                let pk = Ed25519PublicKey::from_bytes(&decoded_bytes)?;
+                Ok(PublicKey::Ed25519((&pk).into()))
+            }
+            SignatureScheme::Secp256k1 => {
+                if decoded_bytes.len() != 33 {
+                    return Err(anyhow!(
+                        "Invalid Secp256k1 public key length: expected 33 bytes, got {}",
+                        decoded_bytes.len()
+                    ));
+                }
+                let pk = Secp256k1PublicKey::from_bytes(&decoded_bytes)?;
+                Ok(PublicKey::Secp256k1((&pk).into()))
+            }
+            SignatureScheme::EcdsaR1 => {
+                if decoded_bytes.len() != 33 {
+                    return Err(anyhow!(
+                        "Invalid ECDSA R1 public key length: expected 33 bytes, got {}",
+                        decoded_bytes.len()
+                    ));
+                }
+                let pk = Secp256r1PublicKey::from_bytes(&decoded_bytes)?;
+                Ok(PublicKey::EcdsaR1((&pk).into()))
+            }
+        }
+    }
+
+    pub fn to_multibase_public_key(&self) -> MultibasePublicKey {
+        MultibasePublicKey {
+            verification_method_type: self.did_verification_method_type(),
+            multibase_str: self.raw_to_multibase(),
+        }
+    }
+
+    /// Generate a complete did:key string from the public key
+    /// Format: "did:key:" + multibase_identifier
+    pub fn to_did_key_string(&self) -> String {
+        format!("did:key:{}", self.to_multibase())
+    }
+
+    /// Parse a complete did:key string and extract the public key
+    /// Format: "did:key:z6Mk..." or "did:key:zQ3s..."
+    pub fn from_did_key_string(did_key_string: &str) -> Result<Self, anyhow::Error> {
+        if !did_key_string.starts_with("did:key:") {
+            return Err(anyhow!("Invalid did:key string format"));
+        }
+
+        let identifier = &did_key_string[8..]; // Skip "did:key:"
+        Self::from_multibase(identifier)
+    }
+
+    /// Get the multicodec prefix for this public key type
+    /// Returns the 2-byte multicodec prefix used in did:key identifiers
+    pub fn multicodec_prefix(&self) -> Vec<u8> {
+        match self {
+            PublicKey::Ed25519(_) => vec![0xed, 0x01],
+            PublicKey::Secp256k1(_) => vec![0xe7, 0x01],
+            PublicKey::EcdsaR1(_) => vec![0x12, 0x00], // P-256 multicodec prefix
+        }
     }
 }
 
@@ -512,6 +759,7 @@ pub trait KanariSignatureInner: Sized + ToFromBytes + PartialEq + Eq + Hash {
 pub enum Signature {
     Ed25519KanariSignature,
     Secp256k1KanariSignature,
+    EcdsaR1KanariSignature,
 }
 
 impl Serialize for Signature {
@@ -587,6 +835,14 @@ impl Signature {
                 })?)
                     .into(),
             )),
+            Signature::EcdsaR1KanariSignature(sig) => Ok(CompressedSignature::EcdsaR1(
+                (&Secp256r1Signature::from_bytes(sig.signature_bytes()).map_err(|_| {
+                    KanariError::InvalidSignature {
+                        error: "Cannot parse sig".to_owned(),
+                    }
+                })?)
+                    .into(),
+            )),
         }
     }
 
@@ -608,6 +864,7 @@ impl AsRef<[u8]> for Signature {
         match self {
             Signature::Ed25519KanariSignature(sig) => sig.as_ref(),
             Signature::Secp256k1KanariSignature(sig) => sig.as_ref(),
+            Signature::EcdsaR1KanariSignature(sig) => sig.as_ref(),
         }
     }
 }
@@ -620,6 +877,8 @@ impl ToFromBytes for Signature {
                     Ok(<Ed25519KanariSignature as ToFromBytes>::from_bytes(bytes)?.into())
                 } else if x == &Secp256k1KanariSignature::SCHEME.flag() {
                     Ok(<Secp256k1KanariSignature as ToFromBytes>::from_bytes(bytes)?.into())
+                } else if x == &EcdsaR1KanariSignature::SCHEME.flag() {
+                    Ok(<EcdsaR1KanariSignature as ToFromBytes>::from_bytes(bytes)?.into())
                 } else {
                     Err(FastCryptoError::InvalidInput)
                 }
@@ -634,6 +893,7 @@ impl ToFromBytes for Signature {
 pub enum CompressedSignature {
     Ed25519(Ed25519SignatureAsBytes),
     Secp256k1(Secp256k1SignatureAsBytes),
+    EcdsaR1(Secp256r1SignatureAsBytes),
 }
 
 impl AsRef<[u8]> for CompressedSignature {
@@ -641,6 +901,7 @@ impl AsRef<[u8]> for CompressedSignature {
         match self {
             CompressedSignature::Ed25519(sig) => &sig.0,
             CompressedSignature::Secp256k1(sig) => &sig.0,
+            CompressedSignature::EcdsaR1(sig) => &sig.0,
         }
     }
 }
@@ -774,6 +1035,43 @@ impl Signer<Signature> for Secp256k1KeyPair {
     }
 }
 
+#[serde_as]
+#[derive(Clone, Debug, Serialize, Deserialize, JsonSchema, PartialEq, Eq, Hash, AsRef)]
+#[as_ref(forward)]
+pub struct EcdsaR1KanariSignature(
+    #[schemars(with = "Base64")]
+    #[serde_as(as = "serde_with::base64::Base64")]
+    [u8; Secp256r1PublicKey::LENGTH + Secp256r1Signature::LENGTH + 1],
+);
+
+impl KanariSignatureInner for EcdsaR1KanariSignature {
+    type Sig = Secp256r1Signature;
+    type PubKey = Secp256r1PublicKey;
+    type KeyPair = Secp256r1KeyPair;
+    const LENGTH: usize = Secp256r1PublicKey::LENGTH + Secp256r1Signature::LENGTH + 1;
+}
+
+impl KanariPublicKey for Secp256r1PublicKey {
+    const SIGNATURE_SCHEME: SignatureScheme = SignatureScheme::EcdsaR1;
+}
+
+impl ToFromBytes for EcdsaR1KanariSignature {
+    fn from_bytes(bytes: &[u8]) -> Result<Self, FastCryptoError> {
+        if bytes.len() != Self::LENGTH {
+            return Err(FastCryptoError::InputLengthWrong(Self::LENGTH));
+        }
+        let mut sig_bytes = [0; Self::LENGTH];
+        sig_bytes.copy_from_slice(bytes);
+        Ok(Self(sig_bytes))
+    }
+}
+
+impl Signer<Signature> for Secp256r1KeyPair {
+    fn sign(&self, msg: &[u8]) -> Signature {
+        EcdsaR1KanariSignature::new(self, msg).into()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -857,5 +1155,97 @@ mod tests {
         };
         let signature = kp.sign_secure(&value);
         assert!(signature.verify_secure(&value).is_ok());
+    }
+
+    #[test]
+    fn test_ecdsa_r1_signature() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let message = b"hello world";
+        let signature = kp.sign(message);
+        println!("pubkey: {:?}", kp.public().to_hex());
+        println!("signature: {:?}", hex::encode(signature.signature_bytes()));
+        assert!(signature.verify(message).is_ok());
+
+        let value = SignData {
+            value: message.to_vec(),
+        };
+        let signature = kp.sign_secure(&value);
+        assert!(signature.verify_secure(&value).is_ok());
+    }
+
+    #[test]
+    fn test_ecdsa_r1_keypair_serialization() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let serialized = kp.encode_base64();
+        let deserialized = KanariKeyPair::decode_base64(&serialized).unwrap();
+        assert_eq!(kp.public(), deserialized.public());
+    }
+
+    #[test]
+    fn test_ecdsa_r1_public_key_serialization() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let public_key = kp.public();
+
+        // Test Base64 serialization
+        let serialized = public_key.encode_base64();
+        let deserialized = PublicKey::decode_base64(&serialized).unwrap();
+        assert_eq!(public_key, deserialized);
+
+        // Test multibase serialization
+        let multibase = public_key.to_multibase();
+        let decoded = PublicKey::from_multibase(&multibase).unwrap();
+        assert_eq!(public_key, decoded);
+
+        // Test raw multibase serialization
+        let raw_multibase = public_key.raw_to_multibase();
+        let decoded_raw =
+            PublicKey::from_raw_multibase(&raw_multibase, SignatureScheme::EcdsaR1).unwrap();
+        assert_eq!(public_key, decoded_raw);
+    }
+
+    #[test]
+    fn test_ecdsa_r1_did_key() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let did_key = kp.to_did_key_string();
+        assert!(did_key.starts_with("did:key:"));
+
+        let public_key = PublicKey::from_did_key_string(&did_key).unwrap();
+        assert_eq!(kp.public(), public_key);
+    }
+
+    #[test]
+    fn test_ecdsa_r1_verification_method_type() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let public_key = kp.public();
+        assert_eq!(
+            public_key.did_verification_method_type(),
+            "EcdsaSecp256r1VerificationKey2019"
+        );
+    }
+
+    #[test]
+    fn test_ecdsa_r1_multibase_public_key() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let public_key = kp.public();
+        let multibase_pk = public_key.to_multibase_public_key();
+
+        assert_eq!(
+            multibase_pk.verification_method_type,
+            "EcdsaSecp256r1VerificationKey2019"
+        );
+        assert!(multibase_pk.multibase_str.starts_with('z'));
+    }
+
+    #[test]
+    fn test_ecdsa_r1_compressed_signature() {
+        let kp = KanariKeyPair::generate_ecdsa_r1();
+        let message = b"hello world";
+        let signature = kp.sign(message);
+
+        let compressed = signature.to_compressed().unwrap();
+        match compressed {
+            CompressedSignature::EcdsaR1(_) => (),
+            _ => panic!("Expected EcdsaR1 compressed signature"),
+        }
     }
 }

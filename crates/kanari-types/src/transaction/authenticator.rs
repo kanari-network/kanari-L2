@@ -52,7 +52,6 @@ impl SessionAuthenticator {
     }
 
     pub fn sign(kp: &KanariKeyPair, tx_data: &KanariTransactionData) -> Self {
-        assert_eq!(kp.public().scheme(), SignatureScheme::Ed25519);
         let data_hash = tx_data.tx_hash();
         let signature = kp.sign(data_hash.as_bytes());
         Self { signature }
@@ -199,6 +198,7 @@ impl Authenticator {
         match kp.public().scheme() {
             SignatureScheme::Ed25519 => Self::session(kp, tx_data),
             SignatureScheme::Secp256k1 => Self::bitcoin(kp, tx_data),
+            SignatureScheme::EcdsaR1 => Self::session(kp, tx_data),
         }
     }
 
