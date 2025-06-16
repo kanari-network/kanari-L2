@@ -20,6 +20,7 @@ module kanari_framework::genesis {
     use kanari_framework::address_mapping;
     use kanari_framework::onchain_config;
     use kanari_framework::bitcoin_address::{Self, BitcoinAddress};
+    use kanari_framework::did;
 
     const ErrorGenesisInit: u64 = 1;
 
@@ -76,7 +77,9 @@ module kanari_framework::genesis {
         // give initial gas to the sequencer if it's not mainnet
         if(!chain_id::is_main()){
             kari::faucet(sequencer_addr, GENESIS_INIT_GAS_AMOUNT);
-        }
+        };
+
+        did::genesis_init();
     }
 
     #[test_only]
