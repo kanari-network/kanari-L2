@@ -14,7 +14,7 @@ dependencies = [
 
 [[package]]
 name = "accumulator"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -1264,7 +1264,7 @@ dependencies = [
 
 [[package]]
 name = "bitcoin-client"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -1294,7 +1294,7 @@ checksum = "340e09e8399c7bd8912f495af6aa58bea0c9214773417ffaa8f6460f93aaee56"
 
 [[package]]
 name = "bitcoin-move"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "axum",
@@ -3014,7 +3014,7 @@ dependencies = [
 
 [[package]]
 name = "data-verify"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "kanari-rpc-api",
@@ -4578,7 +4578,7 @@ dependencies = [
 
 [[package]]
 name = "framework-builder"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -4602,7 +4602,7 @@ dependencies = [
 
 [[package]]
 name = "framework-release"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -4618,7 +4618,7 @@ dependencies = [
 
 [[package]]
 name = "framework-types"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "move-core-types",
  "moveos-stdlib",
@@ -6428,7 +6428,7 @@ dependencies = [
 
 [[package]]
 name = "kanari"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -6530,7 +6530,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-anomalies"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -6544,7 +6544,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-benchmarks"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.76",
  "anyhow 1.0.93",
@@ -6599,7 +6599,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-common"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "libc",
@@ -6607,7 +6607,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-config"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "clap 4.5.39",
@@ -6626,7 +6626,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-cosmwasm-vm"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "cosmwasm-std",
  "cosmwasm-vm",
@@ -6638,7 +6638,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-da"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -6662,7 +6662,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-db"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -6681,7 +6681,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-executor"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -6706,7 +6706,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-faucet"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -6734,7 +6734,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-framework"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "bitcoin",
  "fastcrypto",
@@ -6754,7 +6754,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-framework-tests"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -6792,7 +6792,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-genesis"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -6825,7 +6825,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-indexer"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -6854,7 +6854,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-integration-test-runner"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -6887,7 +6887,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-key"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "argon2",
@@ -6906,7 +6906,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-notify"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -6928,7 +6928,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-nursery"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "ciborium",
  "cosmwasm-std",
@@ -6953,7 +6953,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-open-rpc"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "clap 4.5.39",
@@ -6968,7 +6968,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-open-rpc-macros"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "derive-syn-parse",
  "itertools 0.13.0",
@@ -6980,7 +6980,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-open-rpc-spec"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "clap 4.5.39",
  "kanari-open-rpc-spec-builder",
@@ -6991,7 +6991,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-open-rpc-spec-builder"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "clap 4.5.39",
@@ -7004,7 +7004,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-oracle"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -7029,7 +7029,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-ord"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "kanari-types",
@@ -7043,7 +7043,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-pipeline-processor"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -7069,7 +7069,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-proposer"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -7086,7 +7086,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-relayer"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -7113,7 +7113,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-rpc-api"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -7138,7 +7138,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-rpc-client"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -7160,7 +7160,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-rpc-server"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "axum",
@@ -7211,7 +7211,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-sequencer"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -7236,7 +7236,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-store"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -7253,7 +7253,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-test-transaction-builder"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -7267,7 +7267,7 @@ dependencies = [
 
 [[package]]
 name = "kanari-types"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -7745,7 +7745,7 @@ dependencies = [
 
 [[package]]
 name = "metrics"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "async-trait",
@@ -8598,7 +8598,7 @@ dependencies = [
 
 [[package]]
 name = "moveos"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "clap 4.5.39",
@@ -8637,7 +8637,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-common"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -8652,7 +8652,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-compiler"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "move-binary-format",
@@ -8661,7 +8661,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-config"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "clap 4.5.39",
  "serde 1.0.219",
@@ -8670,7 +8670,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-eventbus"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "coerce",
@@ -8681,7 +8681,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-gas-profiling"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "handlebars",
@@ -8698,7 +8698,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-object-runtime"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "bcs",
  "better_any",
@@ -8714,7 +8714,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-stdlib"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "base64 0.22.1",
@@ -8747,7 +8747,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-store"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "accumulator",
  "anyhow 1.0.98",
@@ -8770,7 +8770,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-types"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -8798,7 +8798,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-verifier"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "bcs",
@@ -8823,7 +8823,7 @@ dependencies = [
 
 [[package]]
 name = "moveos-wasm"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "once_cell",
@@ -10746,7 +10746,7 @@ dependencies = [
 
 [[package]]
 name = "raw-store"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "metrics",
@@ -12446,7 +12446,7 @@ checksum = "b7c388c1b5e93756d0c740965c41e8822f866621d41acbdf6336a6a168f8840c"
 
 [[package]]
 name = "smt"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "backtrace",
@@ -13052,7 +13052,7 @@ dependencies = [
 
 [[package]]
 name = "testsuite"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "assert_cmd",
@@ -13202,7 +13202,7 @@ dependencies = [
 
 [[package]]
 name = "timeout-join-handler"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow 1.0.98",
  "thiserror 1.0.69",
