@@ -30,7 +30,7 @@ mod allocator {
 #[global_allocator]
 static GLOBAL: allocator::Allocator = allocator::allocator();
 
-/// rooch is a command line tools for Rooch Network
+/// kanari is a command line tools for Kanari Network
 #[tokio::main]
 async fn main() {
     let _ = tracing_subscriber::fmt::try_init();
