@@ -27,7 +27,7 @@ use kanari_executor::actor::{executor::ExecutorActor, messages::ExecuteTransacti
 use kanari_genesis::KanariGenesisV2;
 use kanari_types::address::BitcoinAddress;
 use kanari_types::crypto::KanariKeyPair;
-use kanari_types::framework::kari::KARI;
+use kanari_types::framework::gas_coin::KARI;
 use kanari_types::framework::transfer::TransferModule;
 use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
 use kanari_types::transaction::authenticator::BitcoinAuthenticator;

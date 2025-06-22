@@ -12,7 +12,7 @@ use kanari_types::crypto::{KanariKeyPair, KanariSignature};
 use kanari_types::framework::auth_payload::{MultisignAuthPayload, SignData};
 use kanari_types::framework::auth_validator::BuiltinAuthValidator;
 use kanari_types::framework::empty::Empty;
-use kanari_types::framework::kari::KARI;
+use kanari_types::framework::gas_coin::KARI;
 use kanari_types::framework::transfer::TransferModule;
 use kanari_types::transaction::kanari::KanariTransactionData;
 use kanari_types::transaction::{Authenticator, KanariTransaction};

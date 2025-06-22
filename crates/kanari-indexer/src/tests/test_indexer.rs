@@ -16,7 +16,7 @@ use moveos_types::transaction::{TransactionExecutionInfo, VerifiedMoveOSTransact
 use rand::random;
 use kanari_config::store_config::DEFAULT_DB_INDEXER_SUBDIR;
 use kanari_types::framework::coin_store::CoinStore;
-use kanari_types::framework::kari::KARI;
+use kanari_types::framework::gas_coin::KARI;
 use kanari_types::indexer::event::{EventFilter, IndexerEvent};
 use kanari_types::indexer::field::FieldFilter;
 use kanari_types::indexer::state::{IndexerObjectState, ObjectStateFilter, ObjectStateType};
