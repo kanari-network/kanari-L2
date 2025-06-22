@@ -18,7 +18,7 @@ use kanari_types::addresses::MOVEOS_STD_ADDRESS;
 use kanari_types::crypto::KanariKeyPair;
 use kanari_types::error::KanariError;
 use kanari_types::framework::empty::Empty;
-use kanari_types::framework::kari::KARI;
+use kanari_types::framework::gas_coin::KARI;
 use kanari_types::framework::transfer::TransferModule;
 use kanari_types::test_utils::{random_string, random_string_with_size};
 use kanari_types::transaction::kanari::KanariTransactionData;

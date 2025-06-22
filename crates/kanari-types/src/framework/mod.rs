@@ -21,7 +21,7 @@ pub mod empty;
 pub mod ethereum;
 pub mod ethereum_address;
 pub mod ethereum_validator;
-pub mod kari;
+pub mod gas_coin;
 pub mod genesis;
 pub mod indexer;
 pub mod multi_coin_store;
