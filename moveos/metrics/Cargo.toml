@@ -28,3 +28,6 @@ async-trait = { workspace = true }
 anyhow = { workspace = true }
 protobuf = { workspace = true }
 tracing = { workspace = true }
+
+[package.metadata.cargo-machete]
+ignored = ["protobuf"]

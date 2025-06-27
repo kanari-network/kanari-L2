@@ -126,6 +126,8 @@ mimalloc = { workspace = true }
 # [[bin]]
 # name = "kari"
 # path = "src/main.rs"
+[package.metadata.cargo-machete]
+ignored = ["prost", "libsqlite3-sys"]
 
 [build-dependencies]
 anyhow = { workspace = true }
