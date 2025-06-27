@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::natives::rooch_framework::crypto::rs256::GasParameters;
+use crate::natives::kanari_framework::crypto::rs256::GasParameters;
 
 crate::natives::gas_parameter::native::define_gas_parameters_for_natives!(GasParameters, "rs256", [
     [.verify.base, optional "verify.base", 0],
