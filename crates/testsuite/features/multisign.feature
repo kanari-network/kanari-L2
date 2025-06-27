@@ -1,4 +1,4 @@
-Feature: Rooch CLI multisign integration tests
+Feature: Kanari CLI multisign integration tests
 
    
     @serial
@@ -37,11 +37,11 @@ Feature: Rooch CLI multisign integration tests
       Then assert: "{{$.account[-1].BTC.balance}} == 100000000"
 
       #transfer some gas to multisign account
-      Then cmd: "account transfer --to {{$.account[-2].multisign_address}} --amount 10000000000 --coin-type rooch_framework::gas_coin::RGas --json"
+      Then cmd: "account transfer --to {{$.account[-2].multisign_address}} --amount 10000000000 --coin-type kanari_framework::gas_coin::RGas --json"
       Then assert: "{{$.account[-1].execution_info.status.type}} == executed"
 
       # l2 transaction
-      Then cmd: "tx build --sender {{$.account[-3].multisign_address}}  --function rooch_framework::empty::empty --json"
+      Then cmd: "tx build --sender {{$.account[-3].multisign_address}}  --function kanari_framework::empty::empty --json"
       Then assert: "'{{$.tx[-1]}}' not_contains error"
       Then cmd: "tx sign {{$.tx[-1].path}} -s {{$.account[-3].participants[0].participant_address}}  --json -y"
       Then assert: "'{{$.tx[-1]}}' not_contains error"

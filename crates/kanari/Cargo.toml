@@ -66,7 +66,11 @@ move-core-types = { workspace = true }
 move-errmapgen = { workspace = true }
 move-package = { workspace = true }
 move-unit-test = { workspace = true }
-move-vm-runtime = { workspace = true, features = ["stacktrace", "debugging", "testing"] }
+move-vm-runtime = { workspace = true, features = [
+    "stacktrace",
+    "debugging",
+    "testing",
+] }
 move-vm-test-utils = { workspace = true }
 move-stdlib = { workspace = true }
 move-vm-types = { workspace = true }

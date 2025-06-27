@@ -214,6 +214,22 @@ impl FrameworksGasParameters {
             .kanari_framework_gas_params
             .ecdsa_r1
             .verify = kanari_framework::natives::kanari_framework::crypto::ecdsa_r1::FromBytesGasParameters::init(1000.into(), 30.into());
+
+        v5_gas_parameter.kanari_framework_gas_params.rs256.verify =
+            kanari_framework::natives::kanari_framework::crypto::rs256::VerifyGasParameters::init(
+                1000.into(),
+                30.into(),
+            );
+
+        v5_gas_parameter
+            .kanari_framework_gas_params
+            .rs256
+            .verify_prehash =
+            kanari_framework::natives::kanari_framework::crypto::rs256::VerifyGasParameters::init(
+                1000.into(),
+                30.into(),
+            );
+
         v5_gas_parameter
     }
 
