@@ -19,3 +19,6 @@ wasmer-compiler-singlepass = { workspace = true }
 rand = { workspace = true }
 anyhow = { workspace = true }
 tracing = { workspace = true }
+
+[package.metadata.cargo-machete]
+ignored = ["once_cell"]

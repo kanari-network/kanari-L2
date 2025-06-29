@@ -1,4 +1,4 @@
-Feature: Rooch CLI argument resolver integration tests
+Feature: Kanari CLI argument resolver integration tests
 
     @serial
     Scenario: argument_resolver_test

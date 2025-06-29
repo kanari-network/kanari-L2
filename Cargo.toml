@@ -85,7 +85,7 @@ homepage = "https://kanari.site"
 license = "Apache-2.0"
 publish = false
 repository = "https://github.com/kanari-network/kanari"
-rust-version = "1.86.0"
+rust-version = "1.88.0"
 version = "0.0.2"
 
 [workspace.dependencies]
@@ -280,7 +280,7 @@ argon2 = "0.5.2"
 rpassword = "7.2.0"
 uint = "0.9.5"
 rlp = "0.5.2"
-diesel = { version = "2.2.10", features = [
+diesel = { version = "2.2.11", features = [
     "chrono",
     "sqlite",
     "r2d2",
@@ -367,6 +367,7 @@ tikv-jemallocator = { git = "https://github.com/jamesatomc/jemallocator.git", fe
 ] }
 mimalloc = { version = "0.1.47" }
 multibase = "0.9.0"
+terminal_size = "0.4.2"
 
 # Note: the BEGIN and END comments below are required for external tooling. Do not remove.
 # BEGIN MOVE DEPENDENCIES

@@ -1,20 +1,20 @@
-Feature: Rooch CLI bitseed tests
+Feature: Kanari CLI bitseed tests
 
     @serial
-    Scenario: rooch bitseed test
+    Scenario: kanari bitseed test
       Then cmd: "init --skip-password"
       Then cmd: "env switch --alias local"
 
       # prepare servers
-      Given a bitcoind server for rooch_bitseed_test
-      Given a server for rooch_bitseed_test
+      Given a bitcoind server for kanari_bitseed_test
+      Given a server for kanari_bitseed_test
 
-      # create rooch account
+      # create kanari account
       Then cmd: "account list --json"
 
       # mint utxos
       Then cmd bitcoin-cli: "generatetoaddress 101 {{$.account[-1].default.bitcoin_address}}"
-      Then sleep: "10" # wait rooch to sync  
+      Then sleep: "10" # wait kanari to sync  
 
       # generator
       Then cmd: "bitseed generator --fee-rate 5000 --name random --generator ../../generator/cpp/generator.wasm"
@@ -107,13 +107,13 @@ Feature: Rooch CLI bitseed tests
       Then stop the bitcoind server
 
     @serial
-    Scenario: rooch bitseed_on_rooch test
+    Scenario: kanari bitseed_on_kanari test
       Then cmd: "init --skip-password"
       Then cmd: "env switch --alias local"
 
       # prepare servers
-      Given a bitcoind server for bitseed_on_rooch
-      Given a server for bitseed_on_rooch
+      Given a bitcoind server for bitseed_on_kanari
+      Given a server for bitseed_on_kanari
 
       Then cmd: "account list --json"
 
@@ -144,7 +144,7 @@ Feature: Rooch CLI bitseed tests
       # the second index `1` means the second field of `0x4::ord::MetaprotocolValidity`, that is `is_valid`.
       Then assert: "{{$.move[-1].return_values[0].decoded_value.value.vec.value[0][1]}} == true"
 
-      # mint on rooch
+      # mint on kanari
       Then cmd: "move run --function 0xa::mint_get_factory::mint --args string:bitseed --args string:test --json" 
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
 

@@ -23,7 +23,6 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 tokio = { features = ["full"], workspace = true }
 include_dir = { workspace = true }
-libsqlite3-sys = { workspace = true }
 
 move-core-types = { workspace = true }
 move-vm-runtime = { workspace = true, features = ["stacktrace", "debugging", "testing"] }

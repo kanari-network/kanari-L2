@@ -1,4 +1,4 @@
-Feature: Rooch Bitcoin ord tests
+Feature: Kanari Bitcoin ord tests
 
     @serial
     Scenario: rooch_bitcoin ord burn test

@@ -1,4 +1,4 @@
-Feature: RoochDAO Apps contract tests
+Feature: KanariDAO Apps contract tests
 
    
     @serial
@@ -14,7 +14,7 @@ Feature: RoochDAO Apps contract tests
       Then cmd bitcoin-cli: "generatetoaddress 101 {{$.account[2].account0.bitcoin_address}}"
       Then sleep: "10"
 
-      Then cmd: "move run --function rooch_framework::gas_coin::faucet_entry --args u256:1000000000000000 --json"
+      Then cmd: "move run --function kanari_framework::gas_coin::faucet_entry --args u256:1000000000000000 --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
     
       # publish gas_market via default address
@@ -31,32 +31,32 @@ Feature: RoochDAO Apps contract tests
       Then cmd: "object -t moveos_std::timestamp::Timestamp"
 
       # submit the oracle price, require at least two record
-      Then cmd: "move run --function rooch_framework::oracle::create_entry --args string:oracle1 --args string:oracle1_url --args string:oracle1_desc --json"
+      Then cmd: "move run --function kanari_framework::oracle::create_entry --args string:oracle1 --args string:oracle1_url --args string:oracle1_desc --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "event get-events-by-event-handle -t rooch_framework::oracle::NewOracleEvent --limit 1 -d true"
-      Then cmd: "move run --function rooch_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:1 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
+      Then cmd: "event get-events-by-event-handle -t kanari_framework::oracle::NewOracleEvent --limit 1 -d true"
+      Then cmd: "move run --function kanari_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:1 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "move run --function rooch_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:1 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
-      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "move run --function default::trusted_oracle::add_trusted_oracle --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args object:{{$.object[2].data[0].id}} --json"
-      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-
-      Then cmd: "move run --function rooch_framework::oracle::create_entry --args string:oracle2 --args string:oracle2_url --args string:oracle2_desc --json"
-      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "event get-events-by-event-handle -t rooch_framework::oracle::NewOracleEvent --limit 1 -d true"
-      Then cmd: "move run --function rooch_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:2 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
-      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "move run --function rooch_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:2 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
+      Then cmd: "move run --function kanari_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:1 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
       Then cmd: "move run --function default::trusted_oracle::add_trusted_oracle --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args object:{{$.object[2].data[0].id}} --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
 
-      Then cmd: "move run --function rooch_framework::oracle::create_entry --args string:oracle3 --args string:oracle3_url --args string:oracle3_desc --json"
+      Then cmd: "move run --function kanari_framework::oracle::create_entry --args string:oracle2 --args string:oracle2_url --args string:oracle2_desc --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "event get-events-by-event-handle -t rooch_framework::oracle::NewOracleEvent --limit 1 -d true"
-      Then cmd: "move run --function rooch_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:3 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
+      Then cmd: "event get-events-by-event-handle -t kanari_framework::oracle::NewOracleEvent --limit 1 -d true"
+      Then cmd: "move run --function kanari_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:2 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
-      Then cmd: "move run --function rooch_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:3 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
+      Then cmd: "move run --function kanari_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:2 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
+      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
+      Then cmd: "move run --function default::trusted_oracle::add_trusted_oracle --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args object:{{$.object[2].data[0].id}} --json"
+      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
+
+      Then cmd: "move run --function kanari_framework::oracle::create_entry --args string:oracle3 --args string:oracle3_url --args string:oracle3_desc --json"
+      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
+      Then cmd: "event get-events-by-event-handle -t kanari_framework::oracle::NewOracleEvent --limit 1 -d true"
+      Then cmd: "move run --function kanari_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:3 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
+      Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
+      Then cmd: "move run --function kanari_framework::oracle::submit_decimal_data --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args string:BTCUSD --args u256:5805106000000 --args u8:8 --args string:3 --args u64:{{$.object[3].data[0].updated_at}} --args object:{{$.event[-1].data[0].decoded_event_data.value.admin_id}} --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
       Then cmd: "move run --function default::trusted_oracle::add_trusted_oracle --args object:{{$.event[-1].data[0].decoded_event_data.value.oracle_id}} --args object:{{$.object[2].data[0].id}} --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
@@ -121,7 +121,7 @@ Feature: RoochDAO Apps contract tests
       Then cmd bitcoin-cli: "generatetoaddress 101 {{$.account[0].default.bitcoin_address}}"
       Then sleep: "10"
 
-      Then cmd: "move run --function rooch_framework::gas_coin::faucet_entry --args u256:1000000000000000 --json"
+      Then cmd: "move run --function kanari_framework::gas_coin::faucet_entry --args u256:1000000000000000 --json"
       Then assert: "{{$.move[-1].execution_info.status.type}} == executed"
     
       # publish grow_bitcoin via default address

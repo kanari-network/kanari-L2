@@ -1,4 +1,4 @@
-Feature: Rooch CLI vector object integration tests
+Feature: Kanari CLI vector object integration tests
 
     @serial
     Scenario: vector_object_test
