@@ -1,16 +1,16 @@
-Feature: Rooch Bitcoin tests
+Feature: Kanari Bitcoin tests
 
     @serial
-    Scenario: rooch bitcoin test
+    Scenario: kanari bitcoin test
       # prepare servers
-      Given a bitcoind server for rooch_bitcoin_test
-      Given a server for rooch_bitcoin_test
+      Given a bitcoind server for kanari_bitcoin_test
+      Given a server for kanari_bitcoin_test
 
       Then cmd: "account list --json" 
       
       # mint utxos
       Then cmd bitcoin-cli: "generatetoaddress 101 {{$.account[-1].default.bitcoin_address}}"
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
 
       # query utxos
       Then cmd: "object -t 0x4::utxo::UTXO -o {{$.account[-1].default.bitcoin_address}}"
@@ -21,13 +21,13 @@ Feature: Rooch Bitcoin tests
       Then stop the bitcoind server 
 
     @serial
-    Scenario: rooch bitcoin_reorg_test
+    Scenario: kanari bitcoin_reorg_test
       # prepare servers
       Given a bitcoind server for bitcoin_reorg_test
       Given a server for bitcoin_reorg_test
       
       # Wait genesis block synced
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
 
       # Update the reorg pending block count
       Then cmd: "move run --function 0x4::pending_block::update_reorg_block_count_for_local --args u64:1 --json"
@@ -37,7 +37,7 @@ Feature: Rooch Bitcoin tests
       
       # mint utxos
       Then cmd bitcoin-cli: "generatetoaddress 2 {{$.account[-1].default.bitcoin_address}}"
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
       
       Then cmd bitcoin-cli: "getbestblockhash"
       # invalid the latest
@@ -45,7 +45,7 @@ Feature: Rooch Bitcoin tests
       # generate a new block
       Then cmd bitcoin-cli: "generatetoaddress 2 {{$.account[-1].default.bitcoin_address}}"
        
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
 
       Then cmd: "event get-events-by-event-handle -t 0x4::pending_block::ReorgEvent --descending-order true"
       Then assert: "{{$.event[-1].data[0].decoded_event_data.value.success}} == true"
@@ -57,13 +57,13 @@ Feature: Rooch Bitcoin tests
     
 
     @serial
-    Scenario: rooch bitcoin_reorg_failed_test
+    Scenario: kanari bitcoin_reorg_failed_test
       # prepare servers
       Given a bitcoind server for bitcoin_reorg_failed_test
       Given a server for bitcoin_reorg_test
       
       # Wait genesis block synced
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
 
       # Update the reorg pending block count
       Then cmd: "move run --function 0x4::pending_block::update_reorg_block_count_for_local --args u64:1 --json"
@@ -73,7 +73,7 @@ Feature: Rooch Bitcoin tests
       
       # mint utxos
       Then cmd bitcoin-cli: "generatetoaddress 3 {{$.account[-1].default.bitcoin_address}}"
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
       
       Then cmd bitcoin-cli: "getbestblockhash"
       # invalid the latest two block
@@ -83,9 +83,9 @@ Feature: Rooch Bitcoin tests
       # generate a new block
       Then cmd bitcoin-cli: "generatetoaddress 2 {{$.account[-1].default.bitcoin_address}}"
        
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
 
-      Then cmd: "rpc request --method rooch_status"
+      Then cmd: "rpc request --method kanari_status"
       Then assert: "{{$.rpc[-1].service_status}} == 'maintenance'"
       
       # release servers
@@ -93,13 +93,13 @@ Feature: Rooch Bitcoin tests
       Then stop the bitcoind server 
 
     @serial
-    Scenario: rooch bitcoin api test
+    Scenario: kanari bitcoin api test
       Then cmd: "init --skip-password"
       Then cmd: "env switch --alias local"
 
       # prepare servers
-      Given a bitcoind server for rooch_bitcoin_api_test
-      Given a server for rooch_bitcoin_api_test
+      Given a bitcoind server for kanari_bitcoin_api_test
+      Given a server for kanari_bitcoin_api_test
 
       # Create and load a wallet
       Then cmd bitcoin-cli: "createwallet \"test_wallet\""
@@ -110,7 +110,7 @@ Feature: Rooch Bitcoin tests
       
       # mint utxos
       Then cmd bitcoin-cli: "generatetoaddress 101 {{$.getnewaddress[-1]}}"
-      Then sleep: "10" # wait rooch sync and index
+      Then sleep: "10" # wait kanari sync and index
 
       # Get UTXO for transaction input
       Then cmd bitcoin-cli: "listunspent 1 9999999 [\"{{$.getnewaddress[-1]}}\"] true"
@@ -119,7 +119,7 @@ Feature: Rooch Bitcoin tests
       Then cmd bitcoin-cli: "createrawtransaction [{\"txid\":\"{{$.listunspent[-1][0].txid}}\",\"vout\":{{$.listunspent[-1][0].vout}}}] {\"{{$.getnewaddress[-1]}}\":49.999}"
       Then cmd bitcoin-cli: "signrawtransactionwithwallet {{$.createrawtransaction[-1]}}"
 
-      # Broadcast transaction using Rooch RPC
+      # Broadcast transaction using kanari RPC
       Then cmd: "rpc request --method btc_broadcastTX --params '["{{$.signrawtransactionwithwallet[-1].hex}}", 0.1, 0.1]' --json"
 
       # Verify transaction broadcast

@@ -12,6 +12,7 @@ mod cbor;
 mod ecdsa_k1;
 mod ecdsa_r1;
 mod ed25519;
+mod rs256;
 mod events;
 pub mod evm;
 pub mod gas_member;
