@@ -31,6 +31,7 @@ pub struct NativeGasParameters {
     pub ecdsa_k1: kanari_framework::crypto::ecdsa_k1::GasParameters,
     pub ecdsa_r1: kanari_framework::crypto::ecdsa_r1::GasParameters,
     pub bitcoin_address: kanari_framework::bitcoin_address::GasParameters,
+    pub rs256: kanari_framework::crypto::rs256::GasParameters,
 }
 
 impl FromOnChainGasSchedule for NativeGasParameters {
@@ -43,6 +44,7 @@ impl FromOnChainGasSchedule for NativeGasParameters {
             ecdsa_r1: FromOnChainGasSchedule::from_on_chain_gas_schedule(gas_schedule).unwrap(),
             bitcoin_address: FromOnChainGasSchedule::from_on_chain_gas_schedule(gas_schedule)
                 .unwrap(),
+            rs256: FromOnChainGasSchedule::from_on_chain_gas_schedule(gas_schedule).unwrap(),
         })
     }
 }
@@ -54,6 +56,7 @@ impl ToOnChainGasSchedule for NativeGasParameters {
         entires.extend(self.ecdsa_k1.to_on_chain_gas_schedule());
         entires.extend(self.ecdsa_r1.to_on_chain_gas_schedule());
         entires.extend(self.bitcoin_address.to_on_chain_gas_schedule());
+        entires.extend(self.rs256.to_on_chain_gas_schedule());
         entires
     }
 }
@@ -66,6 +69,7 @@ impl InitialGasSchedule for NativeGasParameters {
             ecdsa_k1: InitialGasSchedule::initial(),
             ecdsa_r1: InitialGasSchedule::initial(),
             bitcoin_address: InitialGasSchedule::initial(),
+            rs256: InitialGasSchedule::initial(),
         }
     }
 }
@@ -170,6 +174,7 @@ impl NativeGasParameters {
             ecdsa_k1: kanari_framework::crypto::ecdsa_k1::GasParameters::zeros(),
             ecdsa_r1: kanari_framework::crypto::ecdsa_r1::GasParameters::zeros(),
             bitcoin_address: kanari_framework::bitcoin_address::GasParameters::zeros(),
+            rs256: kanari_framework::crypto::rs256::GasParameters::zeros(),
         }
     }
 }

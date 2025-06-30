@@ -6516,6 +6516,7 @@ dependencies = [
  "tabled",
  "tempfile",
  "termcolor",
+ "terminal_size",
  "tikv-jemallocator",
  "tiny-keccak",
  "tokio",

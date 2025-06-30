@@ -6,7 +6,8 @@ use async_trait::async_trait;
 use commands::{
     balance::BalanceCommand, create::CreateCommand, create_multisign::CreateMultisignCommand,
     export::ExportCommand, import::ImportCommand, list::ListCommand, nullify::NullifyCommand,
-    sign::SignCommand, switch::SwitchCommand, transfer::TransferCommand, verify::VerifyCommand,
+    object::ObjectCommand, show::ShowCommand, sign::SignCommand, switch::SwitchCommand,
+    transfer::TransferCommand, tx::TxCommand, verify::VerifyCommand,
 };
 use kanari_rpc_api::jsonrpc_types::json_to_table_display::json_to_table;
 use kanari_types::error::KanariResult;
@@ -52,6 +53,9 @@ impl CommandAction<String> for Account {
             AccountCommand::Import(import) => import.execute_serialized().await,
             AccountCommand::Sign(sign) => sign.execute_serialized().await,
             AccountCommand::Verify(verify) => verify.execute_serialized().await,
+            AccountCommand::Tx(tx) => tx.execute_serialized().await,
+            AccountCommand::Object(object) => object.execute_serialized().await,
+            AccountCommand::Show(show) => show.execute_serialized().await,
         }
     }
 }
@@ -70,4 +74,7 @@ pub enum AccountCommand {
     Import(ImportCommand),
     Sign(SignCommand),
     Verify(VerifyCommand),
+    Tx(TxCommand),
+    Object(ObjectCommand),
+    Show(ShowCommand),
 }
