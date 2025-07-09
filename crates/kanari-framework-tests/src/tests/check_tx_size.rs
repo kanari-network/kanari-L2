@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::binding_test::RustBindingTest;
+use kanari_key::keystore::account_keystore::AccountKeystore;
+use kanari_key::keystore::memory_keystore::InMemKeystore;
+use kanari_types::transaction::KanariTransactionData;
 use move_core_types::identifier::Identifier;
 use move_core_types::language_storage::ModuleId;
 use move_core_types::value::MoveValue;
@@ -9,9 +12,6 @@ use moveos_types::addresses::MOVEOS_STD_ADDRESS;
 use moveos_types::move_types::FunctionId;
 use moveos_types::transaction::MoveAction;
 use rand::Rng;
-use kanari_key::keystore::account_keystore::AccountKeystore;
-use kanari_key::keystore::memory_keystore::InMemKeystore;
-use kanari_types::transaction::KanariTransactionData;
 
 #[tokio::test]
 async fn check_tx_size() {
@@ -24,9 +24,11 @@ async fn check_tx_size() {
     );
 
     let big_size_payload = generate_random_bytes(1024 * 1024 * 10);
-    let arg_bytes = vec![MoveValue::vector_u8(big_size_payload)
-        .simple_serialize()
-        .unwrap()];
+    let arg_bytes = vec![
+        MoveValue::vector_u8(big_size_payload)
+            .simple_serialize()
+            .unwrap(),
+    ];
 
     let action = MoveAction::new_function_call(function_id, vec![], arg_bytes);
 

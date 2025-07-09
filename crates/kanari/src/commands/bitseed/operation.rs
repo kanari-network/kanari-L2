@@ -5,7 +5,7 @@ use super::{
     inscription::{BitseedInscription, InscriptionBuilder},
     sft::SFT,
 };
-use anyhow::{anyhow, bail, Result};
+use anyhow::{Result, anyhow, bail};
 use ciborium::Value;
 use kanari_types::bitcoin::ord::{Inscription, InscriptionRecord};
 use serde::{Deserialize, Serialize};

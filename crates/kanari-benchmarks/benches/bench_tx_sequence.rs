@@ -1,8 +1,8 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use criterion::{criterion_group, criterion_main, Criterion};
-use kanari_benchmarks::config::{configure_criterion, BenchTxConfig};
+use criterion::{Criterion, criterion_group, criterion_main};
+use kanari_benchmarks::config::{BenchTxConfig, configure_criterion};
 use kanari_benchmarks::tx::{create_l2_tx, gen_sequencer};
 use kanari_framework_tests::binding_test;
 use kanari_test_transaction_builder::TestTransactionBuilder;

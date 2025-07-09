@@ -1,17 +1,16 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use anyhow::{anyhow, bail, Result};
+use anyhow::{Result, anyhow, bail};
 use move_core_types::{
     account_address::AccountAddress, identifier::Identifier, language_storage::ModuleId,
     language_storage::StructTag, language_storage::TypeTag,
 };
 #[cfg(any(test, feature = "fuzzing"))]
 use proptest::prelude::*;
+use rand::Rng;
 use rand::prelude::{Distribution, SliceRandom};
 use rand::rngs::OsRng;
-use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -328,10 +327,12 @@ mod tests {
         // error cases
         assert!(parse_type_tag("invalid_type").is_err());
         assert!(parse_type_tag("vector<>").is_err());
-        assert!(parse_type_tag(
-            "0x0000000000000000000000000000000000000000000000000000000000000001::module::"
-        )
-        .is_err());
+        assert!(
+            parse_type_tag(
+                "0x0000000000000000000000000000000000000000000000000000000000000001::module::"
+            )
+            .is_err()
+        );
         assert!(parse_type_tag(
             "0x900f053234b0ba66ad062b277896b28e049f2813d388da375efcd54b6e429dbe::coin::Coin<0000000000000000000000000000000000000000000000000000000000000003::gas_coin::RGas>"
         )
@@ -405,18 +406,24 @@ mod tests {
             panic!("Expected Vector TypeTag");
         }
 
-        assert!(parse_struct_tag(
-            "0000000000000000000000000000000000000000000000000000000000000001::module"
-        )
-        .is_err());
-        assert!(parse_struct_tag(
-            "0000000000000000000000000000000000000000000000000000000000000001::module::Name<>"
-        )
-        .is_err());
-        assert!(parse_struct_tag(
-            "0000000000000000000000000000000000000000000000000000000000000001::module::Name<u8"
-        )
-        .is_err());
+        assert!(
+            parse_struct_tag(
+                "0000000000000000000000000000000000000000000000000000000000000001::module"
+            )
+            .is_err()
+        );
+        assert!(
+            parse_struct_tag(
+                "0000000000000000000000000000000000000000000000000000000000000001::module::Name<>"
+            )
+            .is_err()
+        );
+        assert!(
+            parse_struct_tag(
+                "0000000000000000000000000000000000000000000000000000000000000001::module::Name<u8"
+            )
+            .is_err()
+        );
         assert!(parse_struct_tag("invalid::module::Name").is_err());
     }
 }

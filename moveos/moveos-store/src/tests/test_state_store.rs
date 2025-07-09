@@ -1,15 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{MoveOSStore, StoreMeta};
 use anyhow::Result;
 use moveos_config::store_config::RocksdbConfig;
 use moveos_types::h256::H256;
 use moveos_types::test_utils::random_state_change_set;
+use raw_store::StoreInstance;
 use raw_store::metrics::DBMetrics;
 use raw_store::rocks::RocksDB;
-use raw_store::StoreInstance;
 use smt::NodeReader;
 
 #[tokio::test]

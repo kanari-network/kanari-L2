@@ -1,7 +1,21 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
+use kanari_config::KanariOpt;
+use kanari_db::KanariDB;
+use kanari_executor::actor::reader_executor::ReaderExecutorActor;
+use kanari_executor::actor::{executor::ExecutorActor, messages::ExecuteTransactionResult};
+use kanari_genesis::KanariGenesisV2;
+use kanari_types::address::BitcoinAddress;
+use kanari_types::crypto::KanariKeyPair;
+use kanari_types::framework::gas_coin::KARI;
+use kanari_types::framework::transfer::TransferModule;
+use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
+use kanari_types::transaction::authenticator::BitcoinAuthenticator;
+use kanari_types::transaction::{
+    Authenticator, KanariTransaction, KanariTransactionData, L1BlockWithBody, L1Transaction,
+};
 use metrics::RegistryService;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::u256::U256;
@@ -20,20 +34,6 @@ use moveos_types::state_resolver::{
     RootObjectResolver, StateKV, StateReaderExt, StateResolver, StatelessResolver,
 };
 use moveos_types::transaction::{FunctionCall, MoveAction, VerifiedMoveOSTransaction};
-use kanari_config::KanariOpt;
-use kanari_db::KanariDB;
-use kanari_executor::actor::reader_executor::ReaderExecutorActor;
-use kanari_executor::actor::{executor::ExecutorActor, messages::ExecuteTransactionResult};
-use kanari_genesis::KanariGenesisV2;
-use kanari_types::address::BitcoinAddress;
-use kanari_types::crypto::KanariKeyPair;
-use kanari_types::framework::gas_coin::KARI;
-use kanari_types::framework::transfer::TransferModule;
-use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
-use kanari_types::transaction::authenticator::BitcoinAuthenticator;
-use kanari_types::transaction::{
-    Authenticator, L1BlockWithBody, L1Transaction, KanariTransaction, KanariTransactionData,
-};
 use std::collections::VecDeque;
 use std::path::Path;
 use std::sync::Arc;

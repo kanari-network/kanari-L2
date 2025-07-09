@@ -1,14 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::MAX_ACCUMULATOR_PROOF_DEPTH;
 use crate::node::InternalNode;
 use crate::node_index::NodeIndex;
-use crate::MAX_ACCUMULATOR_PROOF_DEPTH;
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use moveos_types::h256::H256;
 use serde::{Deserialize, Serialize};
 

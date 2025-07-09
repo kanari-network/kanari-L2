@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -9,7 +8,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use super::super::nibble::Nibble;
-use super::{arb_internal_nibble_path, skip_common_prefix, NibblePath};
+use super::{NibblePath, arb_internal_nibble_path, skip_common_prefix};
 use proptest::prelude::*;
 
 #[test]

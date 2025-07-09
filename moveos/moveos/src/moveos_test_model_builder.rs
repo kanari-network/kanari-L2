@@ -1,11 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use move_command_line_common::address::NumericalAddress;
 use move_compiler::command_line::compiler::PASS_COMPILATION;
 use move_compiler::expansion::ast::{self as E};
-use move_compiler::{compiled_unit, FullyCompiledProgram};
+use move_compiler::{FullyCompiledProgram, compiled_unit};
 use move_model::model::GlobalEnv;
 use move_model::options::ModelBuilderOptions;
 use move_model::{add_move_lang_diagnostics, collect_related_modules_recursive, run_spec_checker};

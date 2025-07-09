@@ -15,7 +15,7 @@ use fastcrypto::traits::KeyPair;
 #[cfg(any(test, feature = "fuzzing"))]
 use proptest::{collection::vec, prelude::*};
 #[cfg(any(test, feature = "fuzzing"))]
-use rand::{rngs::StdRng, SeedableRng};
+use rand::{SeedableRng, rngs::StdRng};
 use serde::{Deserialize, Serialize};
 use std::{fmt, str::FromStr};
 

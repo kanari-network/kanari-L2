@@ -9,8 +9,30 @@ use super::messages::{
 use crate::metrics::ExecutorMetrics;
 use anyhow::Result;
 use async_trait::async_trait;
-use coerce::actor::{context::ActorContext, message::Handler, Actor, LocalActorRef};
+use coerce::actor::{Actor, LocalActorRef, context::ActorContext, message::Handler};
 use function_name::named;
+use kanari_genesis::FrameworksGasParameters;
+use kanari_notify::actor::NotifyActor;
+use kanari_notify::event::GasUpgradeEvent;
+use kanari_notify::messages::{GasUpgradeMessage, NotifyActorSubscribeMessage};
+use kanari_store::KanariStore;
+use kanari_store::state_store::StateStore;
+use kanari_types::address::{BitcoinAddress, MultiChainAddress};
+use kanari_types::bitcoin::BitcoinModule;
+use kanari_types::bitcoin::transaction_validator::TransactionValidator as L1TransactionValidator;
+use kanari_types::error::KanariError;
+use kanari_types::framework::auth_validator::{
+    AuthValidatorCaller, BuiltinAuthValidator, TxValidateResult,
+};
+use kanari_types::framework::ethereum::EthereumModule;
+use kanari_types::framework::transaction_validator::TransactionValidator;
+use kanari_types::framework::{system_post_execute_functions, system_pre_execute_functions};
+use kanari_types::multichain_id::KanariMultiChainID;
+use kanari_types::transaction::authenticator::AUTH_PAYLOAD_SIZE;
+use kanari_types::transaction::{
+    AuthenticatorInfo, KanariTransaction, KanariTransactionData, L1Block, L1BlockWithBody,
+    L1Transaction,
+};
 use move_core_types::account_address::AccountAddress;
 use move_core_types::vm_status::VMStatus;
 use moveos::moveos::{MoveOS, MoveOSConfig};
@@ -28,28 +50,6 @@ use moveos_types::state_resolver::RootObjectResolver;
 use moveos_types::transaction::{FunctionCall, MoveOSTransaction, VerifiedMoveAction};
 use moveos_types::transaction::{MoveAction, VerifiedMoveOSTransaction};
 use prometheus::Registry;
-use kanari_genesis::FrameworksGasParameters;
-use kanari_notify::actor::NotifyActor;
-use kanari_notify::event::GasUpgradeEvent;
-use kanari_notify::messages::{GasUpgradeMessage, NotifyActorSubscribeMessage};
-use kanari_store::state_store::StateStore;
-use kanari_store::KanariStore;
-use kanari_types::address::{BitcoinAddress, MultiChainAddress};
-use kanari_types::bitcoin::transaction_validator::TransactionValidator as L1TransactionValidator;
-use kanari_types::bitcoin::BitcoinModule;
-use kanari_types::error::KanariError;
-use kanari_types::framework::auth_validator::{
-    AuthValidatorCaller, BuiltinAuthValidator, TxValidateResult,
-};
-use kanari_types::framework::ethereum::EthereumModule;
-use kanari_types::framework::transaction_validator::TransactionValidator;
-use kanari_types::framework::{system_post_execute_functions, system_pre_execute_functions};
-use kanari_types::multichain_id::KanariMultiChainID;
-use kanari_types::transaction::authenticator::AUTH_PAYLOAD_SIZE;
-use kanari_types::transaction::{
-    AuthenticatorInfo, L1Block, L1BlockWithBody, L1Transaction, KanariTransaction,
-    KanariTransactionData,
-};
 use std::str::FromStr;
 use std::sync::Arc;
 

@@ -5,9 +5,9 @@ use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
 use itertools::Itertools;
-use moveos_types::state::FieldKey;
 use kanari_rpc_api::jsonrpc_types::{FieldKeyView, ObjectStateView, StateOptions};
 use kanari_types::{error::KanariResult, function_arg::ParsedObjectID};
+use moveos_types::state::FieldKey;
 
 /// Get field states for a special dynamic field with an Object ID and Field Keys.
 #[derive(Debug, Parser)]

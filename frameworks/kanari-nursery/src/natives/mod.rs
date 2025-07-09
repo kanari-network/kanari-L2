@@ -1,11 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use move_vm_runtime::native_functions::{make_table_from_iter, NativeFunctionTable};
 use kanari_framework::natives::gas_parameter::gas_member::{
     FromOnChainGasSchedule, InitialGasSchedule, ToOnChainGasSchedule,
 };
 use kanari_types::addresses::KANARI_NURSERY_ADDRESS;
+use move_vm_runtime::native_functions::{NativeFunctionTable, make_table_from_iter};
 use std::collections::BTreeMap;
 
 pub mod cosmwasm_vm;

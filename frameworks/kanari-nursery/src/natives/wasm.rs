@@ -10,7 +10,7 @@ use move_vm_types::natives::function::NativeResult;
 use move_vm_types::pop_arg;
 use move_vm_types::values::{Struct, Value};
 use serde_json::Value as JSONValue;
-use smallvec::{smallvec, SmallVec};
+use smallvec::{SmallVec, smallvec};
 use std::collections::VecDeque;
 use std::ffi::CString;
 use std::ops::Deref;
@@ -301,7 +301,7 @@ fn native_create_wasm_args_in_memory(
             return Ok(NativeResult::err(
                 gas_params.base_create_args,
                 E_GET_INSTANCE_POOL_FAILED,
-            ))
+            ));
         }
     };
     match pool_object.get_mut(&instance_id) {
@@ -484,7 +484,7 @@ fn execute_wasm_function_inner(
                                     return build_err(
                                         gas_params.base_create_execution,
                                         E_EMPTY_RETURN_VALUE,
-                                    )
+                                    );
                                 }
                             };
                             let offset = match return_value.i32() {
@@ -493,7 +493,7 @@ fn execute_wasm_function_inner(
                                     return build_err(
                                         gas_params.base_create_execution,
                                         E_VALUE_NOT_I32,
-                                    )
+                                    );
                                 }
                             };
                             let ret_val = Value::u64(offset as u64);
@@ -580,7 +580,7 @@ fn native_read_data_length(
             return Ok(NativeResult::err(
                 gas_params.base,
                 E_GET_INSTANCE_POOL_FAILED,
-            ))
+            ));
         }
     };
     let ret = match pool_object.get_mut(&instance_id) {
@@ -653,7 +653,7 @@ fn native_read_data_from_heap(
             return Ok(NativeResult::err(
                 gas_params.base,
                 E_GET_INSTANCE_POOL_FAILED,
-            ))
+            ));
         }
     };
     let ret = match pool_object.get_mut(&instance_id) {
@@ -759,7 +759,7 @@ fn native_release_wasm_instance(
                 return Ok(NativeResult::err(
                     gas_params.base,
                     E_GET_INSTANCE_POOL_FAILED,
-                ))
+                ));
             }
         };
         if pool_object.get_mut(&instance_id).is_none() {
@@ -773,7 +773,7 @@ fn native_release_wasm_instance(
             return Ok(NativeResult::err(
                 gas_params.base,
                 E_GET_INSTANCE_POOL_FAILED,
-            ))
+            ));
         }
     };
 

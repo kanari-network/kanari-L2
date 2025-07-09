@@ -11,7 +11,7 @@ use crate::{
     kanari_key::KANARI_SECRET_KEY_HRP,
 };
 use anyhow::{anyhow, bail};
-use bech32::{encode, Bech32, EncodeError};
+use bech32::{Bech32, EncodeError, encode};
 use bitcoin::secp256k1::SecretKey;
 use derive_more::{AsRef, From};
 pub use enum_dispatch::enum_dispatch;

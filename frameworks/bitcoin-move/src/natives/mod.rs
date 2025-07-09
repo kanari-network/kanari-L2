@@ -1,13 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use move_vm_runtime::native_functions::make_table_from_iter;
-use move_vm_runtime::native_functions::NativeFunctionTable;
 use kanari_framework::natives::gas_parameter::gas_member::InitialGasSchedule;
 use kanari_framework::natives::gas_parameter::gas_member::{
     FromOnChainGasSchedule, ToOnChainGasSchedule,
 };
 use kanari_types::addresses::BITCOIN_MOVE_ADDRESS;
+use move_vm_runtime::native_functions::NativeFunctionTable;
+use move_vm_runtime::native_functions::make_table_from_iter;
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::BTreeMap;

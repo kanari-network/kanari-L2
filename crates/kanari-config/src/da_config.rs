@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::config::Config;
-use crate::{retrieve_map_config_value, BaseConfig, MapConfigValueSource};
+use crate::{BaseConfig, MapConfigValueSource, retrieve_map_config_value};
 use moveos_types::h256::H256;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;

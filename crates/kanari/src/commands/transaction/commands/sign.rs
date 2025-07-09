@@ -5,17 +5,17 @@ use super::{FileOutput, FileOutputData};
 use crate::cli_types::{CommandAction, FileOrHexInput, WalletContextOptions};
 use crate::utils::prompt_yes_no;
 use async_trait::async_trait;
-use moveos_types::module_binding::MoveFunctionCaller;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_types::{
-    address::{ParsedAddress, KanariAddress},
+    address::{KanariAddress, ParsedAddress},
     bitcoin::multisign_account::MultisignAccountModule,
     error::KanariResult,
     transaction::{
-        authenticator::BitcoinAuthenticator, kanari::PartiallySignedKanariTransaction,
-        KanariTransaction, KanariTransactionData,
+        KanariTransaction, KanariTransactionData, authenticator::BitcoinAuthenticator,
+        kanari::PartiallySignedKanariTransaction,
     },
 };
+use moveos_types::module_binding::MoveFunctionCaller;
 
 #[derive(Debug, Clone)]
 pub enum SignInput {
@@ -156,7 +156,10 @@ impl SignCommand {
                         }
                     }
                     if !has_participant {
-                        return Err(anyhow::anyhow!("No participant found in the multisign account from the keystore, participants: {:?}", participants));
+                        return Err(anyhow::anyhow!(
+                            "No participant found in the multisign account from the keystore, participants: {:?}",
+                            participants
+                        ));
                     }
                 }
             }
@@ -172,7 +175,7 @@ impl SignCommand {
                 SignInput::PartiallySignedKanariTransaction(_) => {
                     return Err(anyhow::anyhow!(
                         "Cannot sign a partially signed transaction with a single signer"
-                    ))
+                    ));
                 }
             };
             SignOutput::SignedKanariTransaction(context.sign_transaction(sender, tx_data)?)
@@ -240,7 +243,10 @@ impl CommandAction<Option<FileOutput>> for SignCommand {
                     "Partially signed transaction is written to {:?}",
                     file_output.path
                 );
-                println!("You can send the partially signed transaction to other signers, and sign it later with `kanari tx sign {}`", file_output.path);
+                println!(
+                    "You can send the partially signed transaction to other signers, and sign it later with `kanari tx sign {}`",
+                    file_output.path
+                );
             }
             Ok(None)
         } else {

@@ -3,8 +3,8 @@
 
 use crate::utils::open_inner_rocks;
 use clap::Parser;
-use rocksdb::{WriteBatch, DB};
 use kanari_types::error::KanariResult;
+use rocksdb::{DB, WriteBatch};
 
 /// copy column family by column family name
 #[derive(Debug, Parser)]
@@ -26,7 +26,8 @@ impl CpCfCommand {
             vec![cf_name]
         } else {
             let mut column_families = moveos_store::StoreMeta::get_column_family_names().to_vec();
-            column_families.append(&mut kanari_store::StoreMeta::get_column_family_names().to_vec());
+            column_families
+                .append(&mut kanari_store::StoreMeta::get_column_family_names().to_vec());
             column_families.into_iter().map(String::from).collect()
         };
 

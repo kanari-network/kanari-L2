@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::PROPOSER_LAST_BLOCK_COLUMN_FAMILY_NAME;
-use raw_store::{derive_store, CodecKVStore};
+use raw_store::{CodecKVStore, derive_store};
 
 pub const PROPOSER_LAST_BLOCK_KEY: &str = "proposer_last_block";
 

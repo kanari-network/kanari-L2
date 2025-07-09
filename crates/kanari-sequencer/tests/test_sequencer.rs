@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use anyhow::Result;
-use coerce::actor::{system::ActorSystem, IntoActor};
-use metrics::RegistryService;
-use prometheus::Registry;
-use raw_store::metrics::DBMetrics;
-use raw_store::StoreInstance;
+use coerce::actor::{IntoActor, system::ActorSystem};
 use kanari_config::KanariOpt;
 use kanari_db::KanariDB;
 use kanari_genesis::KanariGenesisV2;
@@ -14,8 +10,12 @@ use kanari_sequencer::{actor::sequencer::SequencerActor, proxy::SequencerProxy};
 use kanari_types::{
     crypto::KanariKeyPair,
     service_status::ServiceStatus,
-    transaction::{LedgerTxData, KanariTransaction},
+    transaction::{KanariTransaction, LedgerTxData},
 };
+use metrics::RegistryService;
+use prometheus::Registry;
+use raw_store::StoreInstance;
+use raw_store::metrics::DBMetrics;
 
 fn init_kanari_db(opt: &KanariOpt, registry: &Registry) -> Result<KanariDB> {
     DBMetrics::init(registry);

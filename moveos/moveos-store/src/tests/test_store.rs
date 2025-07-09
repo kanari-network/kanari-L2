@@ -1,11 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 extern crate chrono;
 
-use crate::event_store::EventStore;
 use crate::MoveOSStore;
+use crate::event_store::EventStore;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::identifier::Identifier;
 use move_core_types::language_storage::{StructTag, TypeTag};
@@ -14,9 +13,9 @@ use moveos_config::store_config::RocksdbConfig;
 use moveos_types::h256::H256;
 use moveos_types::moveos_std::event::TransactionEvent;
 use moveos_types::transaction::TransactionExecutionInfo;
-use raw_store::rocks::{RocksDB, DEFAULT_COLUMN_FAMILY_NAME};
-use raw_store::traits::DBStore;
 use raw_store::CodecKVStore;
+use raw_store::rocks::{DEFAULT_COLUMN_FAMILY_NAME, RocksDB};
+use raw_store::traits::DBStore;
 
 #[test]
 fn test_reopen() {

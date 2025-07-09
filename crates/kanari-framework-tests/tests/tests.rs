@@ -12,7 +12,6 @@ fn async_run_test(path: &Path) -> Result<(), Box<dyn std::error::Error + 'static
     runtime.block_on(async { run_test(path) })
 }
 
-
 datatest_stable::harness! {
     { test = async_run_test, root = "tests", pattern = r".*\.(mvir|move)$" },
 }

@@ -3,23 +3,23 @@
 
 use crate::cli_types::WalletContextOptions;
 use itertools::Itertools;
-use metrics::RegistryService;
-use moveos_config::store_config::RocksdbConfig;
-use moveos_types::moveos_std::object::ObjectMeta;
-use raw_store::rocks::RocksDB;
-use rocksdb::{ColumnFamilyDescriptor, DB};
-use kanari_config::da_config::derive_namespace_from_genesis;
 use kanari_config::KanariOpt;
+use kanari_config::da_config::derive_namespace_from_genesis;
 use kanari_db::KanariDB;
-use kanari_genesis::{load_genesis_from_binary, KanariGenesis};
+use kanari_genesis::{KanariGenesis, load_genesis_from_binary};
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_types::address::KanariAddress;
 use kanari_types::crypto::KanariKeyPair;
 use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::kanari_network::{BuiltinChainID, KanariChainID};
+use metrics::RegistryService;
+use moveos_config::store_config::RocksdbConfig;
+use moveos_types::moveos_std::object::ObjectMeta;
+use raw_store::rocks::RocksDB;
+use rocksdb::{ColumnFamilyDescriptor, DB};
 use std::cmp::Reverse;
 use std::collections::BinaryHeap;
-use std::io::{self, stdout, Write};
+use std::io::{self, Write, stdout};
 use std::path::PathBuf;
 use std::time::SystemTime;
 use std::{collections::BTreeMap, str::FromStr};
@@ -131,7 +131,8 @@ pub fn open_kanari_db(
 
     let opt = KanariOpt::new_with_default(base_data_dir, chain_id, None).unwrap();
     let registry_service = RegistryService::default();
-    let kanari_db = KanariDB::init(opt.store_config(), &registry_service.default_registry()).unwrap();
+    let kanari_db =
+        KanariDB::init(opt.store_config(), &registry_service.default_registry()).unwrap();
     let root = kanari_db.latest_root().unwrap().unwrap();
     (root, kanari_db, start_time)
 }

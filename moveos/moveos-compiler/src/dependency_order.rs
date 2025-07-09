@@ -1,11 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{bail, ensure, Result};
+use anyhow::{Result, bail, ensure};
 use move_binary_format::{access::ModuleAccess, file_format::CompiledModule};
 use petgraph::graphmap::DiGraphMap;
 use std::collections::BTreeMap;

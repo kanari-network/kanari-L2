@@ -5,7 +5,7 @@ use crate::{
     crypto::{KanariSignature, Signature, SignatureScheme},
     transaction::KanariTransactionData,
 };
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use bitcoin::consensus::{Decodable, Encodable};
 use bitcoin::io::{Read, Write};
 
@@ -17,7 +17,7 @@ use fastcrypto::{
 use framework_types::addresses::KANARI_FRAMEWORK_ADDRESS;
 use move_core_types::{account_address::AccountAddress, ident_str, identifier::IdentStr};
 use moveos_types::{
-    h256::{sha2_256_of, H256},
+    h256::{H256, sha2_256_of},
     state::{MoveStructState, MoveStructType},
 };
 use schemars::JsonSchema;

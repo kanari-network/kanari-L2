@@ -30,10 +30,10 @@ use move_vm_types::{
     loaded_data::runtime_types::Type,
     natives::function::NativeResult,
     pop_arg,
-    values::{values_impl::Reference, Struct, Value, Vector},
+    values::{Struct, Value, Vector, values_impl::Reference},
 };
 
-use moveos_types::addresses::{self, to_bech32, MOVE_STD_ADDRESS};
+use moveos_types::addresses::{self, MOVE_STD_ADDRESS, to_bech32};
 use moveos_types::move_std::string::MoveString;
 use moveos_types::moveos_std::decimal_value::DecimalValue;
 use moveos_types::moveos_std::object::ObjectID;
@@ -346,11 +346,12 @@ fn native_from_json(
         let result = match parse_struct_value_from_bytes(&struct_layout, bytes, context) {
             Ok(val) => {
                 //Pack the MoveOption Some
-                Struct::pack(vec![Vector::pack(type_param, vec![Value::struct_(val)])
-                    .map_err(|e| {
+                Struct::pack(vec![
+                    Vector::pack(type_param, vec![Value::struct_(val)]).map_err(|e| {
                         PartialVMError::new(StatusCode::UNKNOWN_INVARIANT_VIOLATION_ERROR)
                             .with_message(format!("Failed to pack MoveOption: {:?}", e))
-                    })?])
+                    })?,
+                ])
             }
             Err(e) => {
                 debug!("Failed to parse struct_value: {:?}", e);
@@ -417,7 +418,7 @@ fn serialize_move_value_to_json(layout: &MoveTypeLayout, value: &MoveValue) -> R
             JsonValue::String(value)
         }
         (L::Signer, MoveValue::Signer(_a)) => {
-            return Err(anyhow::anyhow!("Do not support Signer type"))
+            return Err(anyhow::anyhow!("Do not support Signer type"));
         }
         (L::Vector(vec_layout), MoveValue::Vector(vec)) => {
             let layout = vec_layout.as_ref();
@@ -446,7 +447,7 @@ fn serialize_move_value_to_json(layout: &MoveTypeLayout, value: &MoveValue) -> R
         _ => {
             return Err(anyhow::anyhow!(
                 "Invalid combination of MoveStructLayout and MoveStruct"
-            ))
+            ));
         }
     };
 
@@ -554,7 +555,7 @@ fn serialize_move_struct_to_json(
                                     _ => {
                                         return Err(anyhow::anyhow!(
                                             "Invalid element in SimpleMap data"
-                                        ))
+                                        ));
                                     }
                                 };
 

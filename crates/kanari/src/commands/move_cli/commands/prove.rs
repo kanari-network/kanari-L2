@@ -8,8 +8,8 @@ use crate::cli_types::CommandAction;
 use crate::commands::move_cli::serialized_success;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::prove::Prove, Move};
 use kanari_types::error::KanariResult;
+use move_cli::{Move, base::prove::Prove};
 use serde_json::Value;
 
 /// Run the Move Prover on the package at `path`. If no path is provided defaults to current

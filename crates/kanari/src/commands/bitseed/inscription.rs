@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use super::{
-    sft::Content, METADATA_AMOUNT, METADATA_ATTRIBUTES, METADATA_OP, METADATA_TICK, PROTOCOL,
+    METADATA_AMOUNT, METADATA_ATTRIBUTES, METADATA_OP, METADATA_TICK, PROTOCOL, sft::Content,
 };
-use anyhow::{anyhow, bail, ensure, Result};
-use ciborium::{value::Integer, Value};
+use anyhow::{Result, anyhow, bail, ensure};
+use ciborium::{Value, value::Integer};
 use kanari_types::bitcoin::ord::{Inscription, InscriptionID, InscriptionRecord};
 
 pub struct InscriptionBuilder {

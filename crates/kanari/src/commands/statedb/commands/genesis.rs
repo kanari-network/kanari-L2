@@ -7,7 +7,7 @@ use std::fs::File;
 use std::io::Read;
 use std::path::PathBuf;
 use std::str::FromStr;
-use std::sync::{mpsc, Arc};
+use std::sync::{Arc, mpsc};
 use std::time::Instant;
 use std::{fmt, thread};
 
@@ -24,7 +24,7 @@ use crate::commands::statedb::commands::genesis_utxo::{
     apply_address_updates, apply_utxo_updates, produce_address_map_updates, produce_utxo_updates,
 };
 use crate::commands::statedb::commands::inscription::InscriptionStats;
-use crate::commands::statedb::commands::{init_kanari_db, OutpointInscriptionsMap};
+use crate::commands::statedb::commands::{OutpointInscriptionsMap, init_kanari_db};
 
 /// Import BTC Inscription & UTXO & kanari_address:BTC_address mapping for genesis
 #[derive(Debug, Parser)]

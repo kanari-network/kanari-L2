@@ -3,10 +3,10 @@
 
 use crate::faucet_proxy::FaucetProxy;
 use crate::*;
-use coerce::actor::{system::ActorSystem, IntoActor};
-use prometheus::Registry;
+use coerce::actor::{IntoActor, system::ActorSystem};
 use kanari_rpc_client::wallet_context::WalletContext;
-use serenity::{all::GatewayIntents, Client};
+use prometheus::Registry;
+use serenity::{Client, all::GatewayIntents};
 use tokio::{
     spawn,
     sync::mpsc::{self},

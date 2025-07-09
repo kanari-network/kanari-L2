@@ -1,8 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use crate::gas::table::{initial_cost_schedule, MoveOSGasMeter};
+use crate::gas::table::{MoveOSGasMeter, initial_cost_schedule};
 use crate::vm::moveos_vm::MoveOSVM;
 use anyhow::Error;
 use move_binary_format::file_format::empty_module;
@@ -24,7 +23,7 @@ use move_core_types::{
     language_storage::{ModuleId, StructTag, TypeTag},
     resolver::{ModuleResolver, ResourceResolver},
     u256::U256,
-    value::{serialize_values, MoveValue},
+    value::{MoveValue, serialize_values},
     vm_status::StatusCode,
 };
 use move_vm_runtime::config::VMConfig;

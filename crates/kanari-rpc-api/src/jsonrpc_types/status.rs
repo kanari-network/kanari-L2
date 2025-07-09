@@ -4,13 +4,13 @@
 use super::StrView;
 use accumulator::accumulator_info::AccumulatorInfo;
 use bitcoin::BlockHash;
-use moveos_types::h256::H256;
-use moveos_types::{startup_info::StartupInfo, state::ObjectState};
 use kanari_types::da::status::DAServerStatus;
 use kanari_types::into_address::FromAddress;
 use kanari_types::{
     bitcoin::types::BlockHeightHash, sequencer::SequencerInfo, service_status::ServiceStatus,
 };
+use moveos_types::h256::H256;
+use moveos_types::{startup_info::StartupInfo, state::ObjectState};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

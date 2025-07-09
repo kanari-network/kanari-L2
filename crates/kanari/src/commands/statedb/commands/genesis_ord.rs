@@ -2,26 +2,26 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::commands::statedb::commands::inscription::{
-    gen_inscription_id_update, InscriptionSource, InscriptionStats,
+    InscriptionSource, InscriptionStats, gen_inscription_id_update,
 };
 use crate::commands::statedb::commands::{apply_fields, apply_nodes, init_kanari_db};
 use clap::Parser;
-use moveos_store::MoveOSStore;
-use moveos_types::h256::H256;
-use moveos_types::moveos_std::object::GENESIS_STATE_ROOT;
-use moveos_types::state::{FieldKey, ObjectState};
 use kanari_common::fs::FileCacheManager;
 use kanari_common::humanize;
 use kanari_config::R_OPT_NET_HELP;
 use kanari_types::error::KanariResult;
 use kanari_types::kanari_network::KanariChainID;
+use moveos_store::MoveOSStore;
+use moveos_types::h256::H256;
+use moveos_types::moveos_std::object::GENESIS_STATE_ROOT;
+use moveos_types::state::{FieldKey, ObjectState};
 use smt::UpdateSet;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read};
 use std::path::PathBuf;
 use std::sync::mpsc::{Receiver, SyncSender};
-use std::sync::{mpsc, Arc};
+use std::sync::{Arc, mpsc};
 use std::thread;
 use std::time::{Instant, SystemTime};
 
@@ -195,7 +195,10 @@ pub(crate) fn apply_inscription_updates(
 
     println!(
         "genesis InscriptionStore object updated, state_root: {:?}, cursed: {}, blessed: {}, total: {}",
-        inscription_store_state_root, cursed_inscription_count, blessed_inscription_count, inscritpion_store_field_count / 2
+        inscription_store_state_root,
+        cursed_inscription_count,
+        blessed_inscription_count,
+        inscritpion_store_field_count / 2
     );
 
     let act_stats = InscriptionStats {

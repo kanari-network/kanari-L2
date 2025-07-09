@@ -8,9 +8,9 @@ use crate::messages::{
 };
 use crate::subscription_handler::SubscriptionHandler;
 use async_trait::async_trait;
+use coerce::actor::Actor;
 use coerce::actor::context::ActorContext;
 use coerce::actor::message::Handler;
-use coerce::actor::Actor;
 use moveos_eventbus::bus::EventBus;
 use std::sync::Arc;
 

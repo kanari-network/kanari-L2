@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use include_dir::{include_dir, Dir};
+use include_dir::{Dir, include_dir};
 use moveos_types::h256::H256;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -46,7 +46,11 @@ impl TxAnomalies {
             .map_or(0, |map| map.len());
         format!(
             "Namespace: {}, Dup count: {}, No execution count: {}, Accumulator Should Revert count: {}, check_l1_tx_executed_start_from: {:?}",
-            self.genesis_namespace, dup_count, no_execution_count, revert_count, self.check_l1_tx_executed_start_from
+            self.genesis_namespace,
+            dup_count,
+            no_execution_count,
+            revert_count,
+            self.check_l1_tx_executed_start_from
         )
     }
 

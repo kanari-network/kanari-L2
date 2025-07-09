@@ -13,6 +13,8 @@ pub mod tag;
 #[allow(dead_code)]
 pub(crate) mod test;
 
+use kanari_types::bitcoin::ord::{Envelope, InscriptionRecord};
+use kanari_types::bitcoin::types::Witness;
 use move_binary_format::errors::{PartialVMError, PartialVMResult};
 use move_core_types::gas_algebra::{InternalGas, InternalGasPerByte, NumBytes};
 use move_core_types::vm_status::StatusCode;
@@ -26,8 +28,6 @@ use move_vm_types::{
 };
 use moveos_stdlib::natives::helpers::{make_module_natives, make_native};
 use moveos_types::state::{MoveState, MoveType};
-use kanari_types::bitcoin::ord::{Envelope, InscriptionRecord};
-use kanari_types::bitcoin::types::Witness;
 use serde::{Deserialize, Serialize};
 use smallvec::smallvec;
 use std::collections::VecDeque;

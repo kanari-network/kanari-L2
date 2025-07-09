@@ -4,13 +4,13 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::state::MoveState;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_types::{
     address::ParsedAddress,
     error::KanariResult,
-    framework::auth_payload::{SignData, MESSAGE_INFO_PREFIX},
+    framework::auth_payload::{MESSAGE_INFO_PREFIX, SignData},
 };
+use moveos_types::state::MoveState;
 
 /// Sign a message with a parsed address
 #[derive(Debug, Parser)]

@@ -34,7 +34,9 @@ pub struct DropCommand {
 impl DropCommand {
     pub async fn execute(self) -> KanariResult<()> {
         if !self.force {
-            println!("This operation is dangerous, make sure you know what you are doing. If you are sure, please add --force to execute this command.");
+            println!(
+                "This operation is dangerous, make sure you know what you are doing. If you are sure, please add --force to execute this command."
+            );
             return Ok(());
         }
         let mut rocks = open_rocks(self.base_data_dir.clone(), self.chain_id)?;

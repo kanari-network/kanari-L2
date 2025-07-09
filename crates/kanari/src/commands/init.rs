@@ -6,16 +6,16 @@ use crate::utils::read_line;
 use async_trait::async_trait;
 use clap::Parser;
 use fastcrypto::encoding::{Base64, Encoding};
-use regex::Regex;
 use kanari_config::config::Config;
-use kanari_config::{kanari_config_dir, KANARI_CLIENT_CONFIG, KANARI_KEYSTORE_FILENAME};
+use kanari_config::{KANARI_CLIENT_CONFIG, KANARI_KEYSTORE_FILENAME, kanari_config_dir};
 use kanari_key::key_derive::hash_password;
+use kanari_key::keystore::Keystore;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_key::keystore::file_keystore::FileBasedKeystore;
-use kanari_key::keystore::Keystore;
 use kanari_rpc_client::client_config::{ClientConfig, Env};
 use kanari_types::error::KanariError;
 use kanari_types::error::KanariResult;
+use regex::Regex;
 use rpassword::prompt_password;
 use std::fs;
 
@@ -119,7 +119,9 @@ impl CommandAction<()> for Init {
 
             if let Some(env) = env {
                 let (password, is_password_empty) = if !self.skip_password {
-                    let input_password = prompt_password("Enter a password to encrypt the keys. Press enter to leave it an empty password: ")?;
+                    let input_password = prompt_password(
+                        "Enter a password to encrypt the keys. Press enter to leave it an empty password: ",
+                    )?;
                     if input_password.is_empty() {
                         (None, true)
                     } else {

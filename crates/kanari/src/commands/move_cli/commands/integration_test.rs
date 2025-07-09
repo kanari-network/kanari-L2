@@ -5,6 +5,8 @@ use crate::cli_types::{CommandAction, WalletContextOptions};
 use crate::commands::move_cli::serialized_success;
 use async_trait::async_trait;
 use clap::{Args, Parser};
+use kanari_integration_test_runner;
+use kanari_types::error::{KanariError, KanariResult};
 use move_cli::Move;
 use move_command_line_common::address::NumericalAddress;
 use move_command_line_common::testing::UPDATE_BASELINE;
@@ -13,14 +15,12 @@ use move_compiler::diagnostics::report_diagnostics;
 use move_compiler::shared::unique_map::UniqueMap;
 use move_compiler::shared::{NamedAddressMapIndex, NamedAddressMaps};
 use move_compiler::{
-    cfgir, expansion, hlir, naming, parser, typing, Compiler, Flags, FullyCompiledProgram,
+    Compiler, Flags, FullyCompiledProgram, cfgir, expansion, hlir, naming, parser, typing,
 };
 use move_package::compilation::build_plan::BuildPlan;
 use move_package::source_package::layout::SourcePackageLayout;
 use moveos_types::addresses::MOVEOS_NAMED_ADDRESS_MAPPING;
 use once_cell::sync::Lazy;
-use kanari_integration_test_runner;
-use kanari_types::error::{KanariError, KanariResult};
 use serde_json::Value;
 use std::collections::BTreeMap;
 use std::fmt::Display;
@@ -220,63 +220,43 @@ impl CommandAction<Option<Value>> for IntegrationTestCommand {
                     pre_compiled_lib.expansion.modules =
                         pre_compiled_lib.expansion.modules.union_with(
                             &full_program.expansion.modules.filter_map(|_k, v| {
-                                if v.is_source_module {
-                                    Some(v)
-                                } else {
-                                    None
-                                }
+                                if v.is_source_module { Some(v) } else { None }
                             }),
                             |_k, v1, _v2| v1.clone(),
                         );
                     pre_compiled_lib.naming.modules = pre_compiled_lib.naming.modules.union_with(
-                        &full_program.naming.modules.filter_map(|_k, v| {
-                            if v.is_source_module {
-                                Some(v)
-                            } else {
-                                None
-                            }
-                        }),
+                        &full_program
+                            .naming
+                            .modules
+                            .filter_map(|_k, v| if v.is_source_module { Some(v) } else { None }),
                         |_k, v1, _v2| v1.clone(),
                     );
                     pre_compiled_lib.typing.modules = pre_compiled_lib.typing.modules.union_with(
-                        &full_program.typing.modules.filter_map(|_k, v| {
-                            if v.is_source_module {
-                                Some(v)
-                            } else {
-                                None
-                            }
-                        }),
+                        &full_program
+                            .typing
+                            .modules
+                            .filter_map(|_k, v| if v.is_source_module { Some(v) } else { None }),
                         |_k, v1, _v2| v1.clone(),
                     );
                     pre_compiled_lib.inlining.modules =
                         pre_compiled_lib.inlining.modules.union_with(
                             &full_program.inlining.modules.filter_map(|_k, v| {
-                                if v.is_source_module {
-                                    Some(v)
-                                } else {
-                                    None
-                                }
+                                if v.is_source_module { Some(v) } else { None }
                             }),
                             |_k, v1, _v2| v1.clone(),
                         );
                     pre_compiled_lib.hlir.modules = pre_compiled_lib.hlir.modules.union_with(
-                        &full_program.hlir.modules.filter_map(|_k, v| {
-                            if v.is_source_module {
-                                Some(v)
-                            } else {
-                                None
-                            }
-                        }),
+                        &full_program
+                            .hlir
+                            .modules
+                            .filter_map(|_k, v| if v.is_source_module { Some(v) } else { None }),
                         |_k, v1, _v2| v1.clone(),
                     );
                     pre_compiled_lib.cfgir.modules = pre_compiled_lib.cfgir.modules.union_with(
-                        &full_program.cfgir.modules.filter_map(|_k, v| {
-                            if v.is_source_module {
-                                Some(v)
-                            } else {
-                                None
-                            }
-                        }),
+                        &full_program
+                            .cfgir
+                            .modules
+                            .filter_map(|_k, v| if v.is_source_module { Some(v) } else { None }),
                         |_k, v1, _v2| v1.clone(),
                     );
                     pre_compiled_lib

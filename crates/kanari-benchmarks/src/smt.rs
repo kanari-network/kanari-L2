@@ -3,7 +3,7 @@
 
 use anyhow::Result;
 use ethers::types::H256;
-use rand::{rngs::StdRng, SeedableRng};
+use rand::{SeedableRng, rngs::StdRng};
 use serde::{Deserialize, Serialize};
 use smt::{InMemoryNodeStore, SMTree, TreeChangeSet};
 

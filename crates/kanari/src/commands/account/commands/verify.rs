@@ -4,13 +4,13 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::state::MoveState;
 use kanari_types::{
     crypto::KanariSignature,
     error::KanariResult,
-    framework::auth_payload::{SignData, MESSAGE_INFO_PREFIX},
+    framework::auth_payload::{MESSAGE_INFO_PREFIX, SignData},
     kanari_signature::ParsedSignature,
 };
+use moveos_types::state::MoveState;
 
 /// Verify a signature
 #[derive(Debug, Parser)]

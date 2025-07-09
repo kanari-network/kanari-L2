@@ -3,7 +3,7 @@
 
 use metrics::metrics_util::LATENCY_SEC_BUCKETS;
 use once_cell::sync::OnceCell;
-use prometheus::{register_histogram_vec_with_registry, HistogramVec, Registry};
+use prometheus::{HistogramVec, Registry, register_histogram_vec_with_registry};
 use std::sync::Arc;
 use tap::TapFallible;
 use tracing::warn;

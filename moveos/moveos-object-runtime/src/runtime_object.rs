@@ -1,15 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{
-    assert_abort,
+    TypeLayoutLoader, assert_abort,
     runtime::{
-        deserialize, partial_extension_error, serialize, ERROR_NOT_FOUND,
-        ERROR_OBJECT_ALREADY_BORROWED, ERROR_OBJECT_ALREADY_TAKEN_OUT_OR_EMBEDED,
+        ERROR_NOT_FOUND, ERROR_OBJECT_ALREADY_BORROWED, ERROR_OBJECT_ALREADY_TAKEN_OUT_OR_EMBEDED,
+        deserialize, partial_extension_error, serialize,
     },
     runtime_object_meta::RuntimeObjectMeta,
-    TypeLayoutLoader,
 };
 use move_binary_format::errors::{PartialVMError, PartialVMResult};
 use move_core_types::{
@@ -31,7 +29,7 @@ use moveos_types::{
     state::{FieldKey, MoveState, MoveType, ObjectChange, ObjectState},
     state_resolver::StatelessResolver,
 };
-use std::collections::{btree_map::Entry, BTreeMap};
+use std::collections::{BTreeMap, btree_map::Entry};
 
 type ScanFieldList = Vec<(FieldKey, Value)>;
 type FieldList = Vec<(FieldKey, RuntimeObject, Option<Option<NumBytes>>)>;
@@ -218,30 +216,26 @@ impl RuntimeObject {
         let field_obj_id = self.id().child_id(field_key);
         Ok(match self.fields.entry(field_key) {
             Entry::Vacant(entry) => {
-                let (tv, loaded) =
-                    match resolver
-                        .get_field_at(state_root, &field_key)
-                        .map_err(|err| {
-                            partial_extension_error(format!(
-                                "remote object resolver failure: {}",
-                                err
-                            ))
-                        })? {
-                        Some(obj_state) => {
-                            debug_assert!(
+                let (tv, loaded) = match resolver.get_field_at(state_root, &field_key).map_err(
+                    |err| {
+                        partial_extension_error(format!("remote object resolver failure: {}", err))
+                    },
+                )? {
+                    Some(obj_state) => {
+                        debug_assert!(
                             obj_state.metadata.id == field_obj_id,
                             "The loaded object id should be equal to the expected field object id"
                         );
-                            let value_layout =
-                                layout_loader.get_type_layout(obj_state.object_type())?;
-                            let state_bytes_len = obj_state.value.len() as u64;
-                            (
-                                RuntimeObject::load(value_layout, obj_state)?,
-                                Some(NumBytes::new(state_bytes_len)),
-                            )
-                        }
-                        None => (RuntimeObject::none(field_obj_id), None),
-                    };
+                        let value_layout =
+                            layout_loader.get_type_layout(obj_state.object_type())?;
+                        let state_bytes_len = obj_state.value.len() as u64;
+                        (
+                            RuntimeObject::load(value_layout, obj_state)?,
+                            Some(NumBytes::new(state_bytes_len)),
+                        )
+                    }
+                    None => (RuntimeObject::none(field_obj_id), None),
+                };
                 (entry.insert(tv), Some(loaded))
             }
             Entry::Occupied(entry) => (entry.into_mut(), None),

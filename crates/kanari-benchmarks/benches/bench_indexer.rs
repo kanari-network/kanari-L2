@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use criterion::measurement::WallTime;
-use criterion::{criterion_group, criterion_main, BenchmarkGroup, BenchmarkId, Criterion};
-use moveos_types::move_types::as_struct_tag;
+use criterion::{BenchmarkGroup, BenchmarkId, Criterion, criterion_group, criterion_main};
 use kanari_benchmarks::indexer::{
     gen_indexer_object_states_with_tx_order, prepare_indexer_object_states_with_tx_order,
 };
 use kanari_framework_tests::binding_test;
+use kanari_indexer::IndexerStore;
 use kanari_indexer::indexer_reader::IndexerReader;
 use kanari_indexer::store::traits::IndexerStoreTrait;
-use kanari_indexer::IndexerStore;
 use kanari_types::indexer::state::{IndexerObjectState, ObjectStateFilter, ObjectStateType};
+use moveos_types::move_types::as_struct_tag;
 use std::cell::RefCell;
 use tokio::runtime::Runtime;
 

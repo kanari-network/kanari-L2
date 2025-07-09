@@ -1,9 +1,9 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::backend::DABackend;
 use crate::backend::openda::adapter::{AdapterSubmitStat, OpenDAAdapter, OpenDAAdapterConfig};
 use crate::backend::openda::derive_identifier;
-use crate::backend::DABackend;
 use async_trait::async_trait;
 use kanari_config::da_config::DABackendOpenDAConfig;
 use kanari_types::da::batch::DABatch;

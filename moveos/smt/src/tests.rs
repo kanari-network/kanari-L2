@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use super::*;
 
 #[test]
@@ -16,16 +15,20 @@ fn test_smt() {
     node_store.write_nodes(changeset.nodes).unwrap();
     let (result, proof) = smt.get_with_proof(changeset.state_root, key).unwrap();
     assert_eq!(result.unwrap(), value.to_string());
-    assert!(proof
-        .verify(changeset.state_root, key, Some(value.to_string()))
-        .is_ok());
+    assert!(
+        proof
+            .verify(changeset.state_root, key, Some(value.to_string()))
+            .is_ok()
+    );
     let key2 = H256::random();
 
     let (result, proof) = smt.get_with_proof(changeset.state_root, key2).unwrap();
     assert_eq!(result, None);
-    assert!(proof
-        .verify::<H256, String>(changeset.state_root, key2, None)
-        .is_ok());
+    assert!(
+        proof
+            .verify::<H256, String>(changeset.state_root, key2, None)
+            .is_ok()
+    );
 
     let mut iter = smt.iter(changeset.state_root, None).unwrap();
 
@@ -46,9 +49,11 @@ fn test_smt() {
     node_store.write_nodes(changeset2.nodes).unwrap();
     let (result, proof) = smt.get_with_proof(changeset2.state_root, key2).unwrap();
     assert_eq!(result, Some(value2.clone()));
-    assert!(proof
-        .verify::<H256, String>(changeset2.state_root, key2, Some(value2))
-        .is_ok());
+    assert!(
+        proof
+            .verify::<H256, String>(changeset2.state_root, key2, Some(value2))
+            .is_ok()
+    );
 
     let iter = smt.iter(changeset2.state_root, None).unwrap();
     assert_eq!(iter.count(), 3);

@@ -118,7 +118,11 @@ impl ReGenesisCommand {
     fn remove(&self) {
         let kanari_db = init_kanari_db(self.base_data_dir.clone(), self.chain_id.clone());
 
-        kanari_db.moveos_store.config_store.remove_genesis().unwrap();
+        kanari_db
+            .moveos_store
+            .config_store
+            .remove_genesis()
+            .unwrap();
         kanari_db
             .moveos_store
             .config_store

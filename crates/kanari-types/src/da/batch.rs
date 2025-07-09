@@ -5,7 +5,7 @@ use crate::crypto::{KanariKeyPair, KanariSignature, Signature};
 use crate::transaction::LedgerTransaction;
 use fastcrypto::traits::ToFromBytes;
 use moveos_types::h256;
-use moveos_types::h256::{sha2_256_of, H256};
+use moveos_types::h256::{H256, sha2_256_of};
 use serde::{Deserialize, Serialize};
 
 /// The tx order range of the block.
@@ -203,7 +203,9 @@ fn verify_tx_order(
         if tx_order != exp_tx_order {
             return Err(anyhow::anyhow!(
                 "Transaction order is not strictly incremental for block {}: exp_tx_order: {}, tx_order: {}",
-                block_number, exp_tx_order, tx_order
+                block_number,
+                exp_tx_order,
+                tx_order
             ));
         }
         exp_tx_order += 1;
@@ -212,7 +214,9 @@ fn verify_tx_order(
     if exp_tx_order != tx_order_end {
         return Err(anyhow::anyhow!(
             "Transaction order is not strictly incremental for block {}: exp_tx_order: {}, tx_order_end: {}",
-            block_number, exp_tx_order, tx_order_end
+            block_number,
+            exp_tx_order,
+            tx_order_end
         ));
     }
 

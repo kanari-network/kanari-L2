@@ -7,8 +7,8 @@ use crate::commands::event::EventCommand;
 use crate::commands::indexer::Indexer;
 use crate::commands::statedb::Statedb;
 use clap::builder::{
-    styling::{AnsiColor, Effects},
     Styles,
+    styling::{AnsiColor, Effects},
 };
 use cli_types::CommandAction;
 use commands::{
@@ -18,8 +18,8 @@ use commands::{
     server::Server, session_key::SessionKey, state::StateCommand, task::Task,
     transaction::Transaction, upgrade::Upgrade, util::Util, version::Version,
 };
-use once_cell::sync::Lazy;
 use kanari_types::error::KanariResult;
+use once_cell::sync::Lazy;
 
 pub mod cli_types;
 pub mod commands;

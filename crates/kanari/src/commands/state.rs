@@ -4,9 +4,9 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::access_path::AccessPath;
 use kanari_rpc_api::jsonrpc_types::ObjectStateView;
 use kanari_types::error::{KanariError, KanariResult};
+use moveos_types::access_path::AccessPath;
 
 /// Get states by accessPath
 #[derive(Parser)]

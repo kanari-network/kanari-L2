@@ -3,12 +3,12 @@
 
 use crate::binding_test;
 use ethers::prelude::*;
-use moveos_types::module_binding::MoveFunctionCaller;
-use moveos_types::transaction::MoveAction;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_key::keystore::memory_keystore::InMemKeystore;
 use kanari_types::framework::ethereum::BlockHeader;
 use kanari_types::transaction::kanari::KanariTransactionData;
+use moveos_types::module_binding::MoveFunctionCaller;
+use moveos_types::transaction::MoveAction;
 
 #[tokio::test]
 async fn test_submit_block() {

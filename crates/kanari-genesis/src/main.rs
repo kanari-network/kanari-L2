@@ -1,9 +1,9 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use clap::Parser;
-use kanari_genesis::{genesis_file, KanariGenesis, KanariGenesisV2};
+use kanari_genesis::{KanariGenesis, KanariGenesisV2, genesis_file};
 use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
 use tracing::info;
 

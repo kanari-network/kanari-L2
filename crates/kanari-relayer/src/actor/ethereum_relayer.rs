@@ -4,7 +4,7 @@
 use super::messages::{GetReadyL1BlockMessage, GetReadyL1TxsMessage, SyncTick};
 use anyhow::Result;
 use async_trait::async_trait;
-use coerce::actor::{context::ActorContext, message::Handler, Actor};
+use coerce::actor::{Actor, context::ActorContext, message::Handler};
 use ethers::prelude::*;
 use kanari_config::EthereumRelayerConfig;
 use kanari_types::{

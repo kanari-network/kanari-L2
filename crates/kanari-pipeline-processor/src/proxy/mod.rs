@@ -12,7 +12,7 @@ use coerce::actor::ActorRef;
 use kanari_types::{
     service_status::ServiceStatus,
     transaction::{
-        kanari::KanariTransaction, ExecuteTransactionResponse, L1BlockWithBody, L1Transaction,
+        ExecuteTransactionResponse, L1BlockWithBody, L1Transaction, kanari::KanariTransaction,
     },
 };
 

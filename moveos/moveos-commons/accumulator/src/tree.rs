@@ -1,15 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0s
 
 use crate::node_index::FrozenSubTreeIterator;
-use crate::node_index::{NodeIndex, MAX_ACCUMULATOR_PROOF_DEPTH};
+use crate::node_index::{MAX_ACCUMULATOR_PROOF_DEPTH, NodeIndex};
 use crate::tree_store::NodeCacheKey;
-use crate::{AccumulatorNode, AccumulatorTreeStore, LeafCount, NodeCount, MAX_CACHE_SIZE};
-use anyhow::{bail, format_err, Result};
+use crate::{AccumulatorNode, AccumulatorTreeStore, LeafCount, MAX_CACHE_SIZE, NodeCount};
+use anyhow::{Result, bail, format_err};
 use lru::LruCache;
 use mirai_annotations::*;
 use moveos_types::h256::{ACCUMULATOR_PLACEHOLDER_HASH, H256};

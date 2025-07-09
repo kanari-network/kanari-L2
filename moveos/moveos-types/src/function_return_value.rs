@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use move_binary_format::errors::{VMError, VMResult};
 use move_core_types::{language_storage::TypeTag, vm_status::VMStatus};
 use move_resource_viewer::AnnotatedMoveValue;

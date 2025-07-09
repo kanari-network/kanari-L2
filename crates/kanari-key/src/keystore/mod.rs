@@ -4,7 +4,6 @@
 use crate::keystore::account_keystore::AccountKeystore;
 use crate::keystore::file_keystore::FileBasedKeystore;
 use enum_dispatch::enum_dispatch;
-use memory_keystore::InMemKeystore;
 use kanari_types::key_struct::{GeneratedKeyPair, MnemonicData, MnemonicResult};
 use kanari_types::{
     address::KanariAddress,
@@ -13,6 +12,7 @@ use kanari_types::{
     key_struct::EncryptionData,
     transaction::kanari::{KanariTransaction, KanariTransactionData},
 };
+use memory_keystore::InMemKeystore;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use std::fmt::Write;

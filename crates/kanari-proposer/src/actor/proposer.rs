@@ -5,13 +5,13 @@ use super::messages::ProposeBlock;
 use crate::metrics::ProposerMetrics;
 use crate::scc::StateCommitmentChain;
 use async_trait::async_trait;
-use coerce::actor::{context::ActorContext, message::Handler, Actor};
+use coerce::actor::{Actor, context::ActorContext, message::Handler};
+use kanari_config::proposer_config::ProposerConfig;
+use kanari_store::KanariStore;
+use kanari_store::proposer_store::ProposerStore;
+use kanari_types::crypto::KanariKeyPair;
 use moveos_store::MoveOSStore;
 use prometheus::Registry;
-use kanari_config::proposer_config::ProposerConfig;
-use kanari_store::proposer_store::ProposerStore;
-use kanari_store::KanariStore;
-use kanari_types::crypto::KanariKeyPair;
 use std::sync::Arc;
 
 const PROPOSE_BLOCK_FN_NAME: &str = "propose_block";

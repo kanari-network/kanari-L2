@@ -3,10 +3,10 @@
 
 use crate::backend::openda::adapter::{AdapterSubmitStat, OpenDAAdapter};
 use async_trait::async_trait;
-use opendal::layers::{LoggingLayer, RetryLayer};
-use opendal::{Operator, Scheme};
 use kanari_config::da_config::OpenDAScheme;
 use kanari_types::da::segment::SegmentID;
+use opendal::layers::{LoggingLayer, RetryLayer};
+use opendal::{Operator, Scheme};
 use std::collections::HashMap;
 use std::time::Duration;
 

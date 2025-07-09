@@ -3,8 +3,8 @@
 
 use crate::META_SEQUENCER_INFO_COLUMN_FAMILY_NAME;
 use anyhow::Result;
-use raw_store::{derive_store, CodecKVStore, StoreInstance};
 use kanari_types::sequencer::SequencerInfo;
+use raw_store::{CodecKVStore, StoreInstance, derive_store};
 use std::string::ToString;
 
 pub const SEQUENCER_INFO_KEY: &str = "sequencer_info";

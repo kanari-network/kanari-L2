@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use super::{error_to_abort_code, CommonGasParameters, GasParameters};
+use super::{CommonGasParameters, GasParameters, error_to_abort_code};
 use crate::natives::moveos_stdlib::object::pop_object_id;
 use move_binary_format::errors::PartialVMResult;
 use move_core_types::gas_algebra::InternalGas;

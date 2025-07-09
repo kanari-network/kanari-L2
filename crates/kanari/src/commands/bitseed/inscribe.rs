@@ -2,25 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use super::{
+    GENERATOR_TICK,
     generator::{self, Generator, InscribeSeed},
     operation::{AsSFT, DeployRecord, MergeRecord, MintRecord, Operation, SplitRecord},
     sft::{Content, SFT},
-    GENERATOR_TICK,
 };
 use crate::commands::{
     bitcoin::utxo_selector::UTXOSelector,
     bitseed::{
-        generator::{wasm::wasm_generator::WASMGenerator, CONTENT_TYPE},
+        generator::{CONTENT_TYPE, wasm::wasm_generator::WASMGenerator},
         inscription::BitseedInscription,
     },
 };
-use anyhow::{anyhow, bail, ensure, Result};
+use anyhow::{Result, anyhow, bail, ensure};
 use bitcoin::{
+    EcdsaSighashType, OutPoint,
     key::{TapTweak, TweakedKeypair},
     script::PushBytesBuf,
     secp256k1::Message,
     transaction::Version,
-    EcdsaSighashType, OutPoint,
 };
 use clap::Parser;
 use kanari_rpc_api::jsonrpc_types::btc::ord::InscriptionObjectView;
@@ -34,15 +34,15 @@ use std::{collections::BTreeMap, path::Path, str::FromStr};
 use tracing::debug;
 use {
     bitcoin::{
+        Address, Amount, FeeRate, ScriptBuf, Sequence, Transaction, TxIn, TxOut, Txid, Witness,
         absolute::LockTime,
         blockdata::{opcodes, script},
         key::{Keypair, TweakedPublicKey},
-        secp256k1::{constants::SCHNORR_SIGNATURE_SIZE, rand, All, Secp256k1, XOnlyPublicKey},
+        secp256k1::{All, Secp256k1, XOnlyPublicKey, constants::SCHNORR_SIGNATURE_SIZE, rand},
         sighash::{Prevouts, SighashCache, TapSighashType},
         taproot::{
             ControlBlock, LeafVersion, Signature, TapLeafHash, TaprootBuilder, TaprootSpendInfo,
         },
-        Address, Amount, FeeRate, ScriptBuf, Sequence, Transaction, TxIn, TxOut, Txid, Witness,
     },
     ciborium::Value,
 };
@@ -1055,12 +1055,15 @@ impl Inscriber {
             Err(err) => return Err(anyhow!("Failed to send commit transaction: {err}")),
         };
 
-        let reveal_txid = match self.send_raw_transaction(signed_reveal_tx, None, ctx.total_burn_postage).await {
+        let reveal_txid = match self
+            .send_raw_transaction(signed_reveal_tx, None, ctx.total_burn_postage)
+            .await
+        {
             Ok(txid) => txid,
             Err(err) => {
                 return Err(anyhow!(
-                "Failed to send reveal transaction: {err}\nCommit tx {commit_txid} will be recovered once mined"
-                ))
+                    "Failed to send reveal transaction: {err}\nCommit tx {commit_txid} will be recovered once mined"
+                ));
             }
         };
 

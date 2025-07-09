@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -10,17 +9,17 @@
 
 use super::hash::*;
 use super::{
-    node_type::{Node, NodeKey},
     NodeBatch, StaleNodeIndex, TreeReader, TreeUpdateBatch, TreeWriter,
+    node_type::{Node, NodeKey},
 };
 use crate::{Key, SMTObject, Value};
-use anyhow::{bail, ensure, Result};
+use anyhow::{Result, bail, ensure};
 use primitive_types::H256;
 #[cfg(any(test, feature = "fuzzing"))]
 use proptest_derive::Arbitrary;
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::{hash_map::Entry, BTreeSet, HashMap},
+    collections::{BTreeSet, HashMap, hash_map::Entry},
     sync::RwLock,
 };
 

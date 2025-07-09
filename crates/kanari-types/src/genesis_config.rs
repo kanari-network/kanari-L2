@@ -6,7 +6,7 @@ use crate::{
     bitcoin::{genesis::MultisignAccountConfig, ord::InscriptionStore, utxo::BitcoinUTXOStore},
     framework::address_mapping::KanariToBitcoinAddressMapping,
 };
-use bitcoin::{block::Header, BlockHash};
+use bitcoin::{BlockHash, block::Header};
 use framework_builder::stdlib_version::StdlibVersion;
 use move_core_types::value::MoveTypeLayout;
 use moveos_types::{
@@ -83,10 +83,10 @@ pub static G_LOCAL_CONFIG: Lazy<GenesisConfig> = Lazy::new(|| GenesisConfig {
         )
         .unwrap(),
         threshold: 1,
-        participant_public_keys: vec![hex::decode(
-            "03ff7e1d7b4a152671124545f4fb68efe2a9bd0b3870ac22fee4afd4ecdfa8a19c",
-        )
-        .unwrap()],
+        participant_public_keys: vec![
+            hex::decode("03ff7e1d7b4a152671124545f4fb68efe2a9bd0b3870ac22fee4afd4ecdfa8a19c")
+                .unwrap(),
+        ],
     },
     genesis_objects: vec![
         (
@@ -122,10 +122,10 @@ pub static G_DEV_CONFIG: Lazy<GenesisConfig> = Lazy::new(|| GenesisConfig {
         .unwrap(),
         threshold: 1,
         // Dev multisign account public key is the same as sequencer account
-        participant_public_keys: vec![hex::decode(
-            "026c9e5a00643a706d3826424f766bbbb08adada4dc357c1b279ad4662d2fd1e2e",
-        )
-        .unwrap()],
+        participant_public_keys: vec![
+            hex::decode("026c9e5a00643a706d3826424f766bbbb08adada4dc357c1b279ad4662d2fd1e2e")
+                .unwrap(),
+        ],
     },
     genesis_objects: vec![
         (

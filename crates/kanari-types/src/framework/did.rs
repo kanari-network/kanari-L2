@@ -637,10 +637,12 @@ impl<'a> DIDModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::EXISTS_DID_DOCUMENT_BY_IDENTIFIER_FUNCTION_NAME),
             vec![],
-            vec![MoveString::from_str(identifier)?
-                .to_move_value()
-                .simple_serialize()
-                .unwrap()],
+            vec![
+                MoveString::from_str(identifier)?
+                    .to_move_value()
+                    .simple_serialize()
+                    .unwrap(),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(AccountAddress::ZERO);
         let exists = self
@@ -659,9 +661,11 @@ impl<'a> DIDModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::EXISTS_DID_FOR_ADDRESS_FUNCTION_NAME),
             vec![],
-            vec![move_core_types::value::MoveValue::Address(address)
-                .simple_serialize()
-                .unwrap()],
+            vec![
+                move_core_types::value::MoveValue::Address(address)
+                    .simple_serialize()
+                    .unwrap(),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(AccountAddress::ZERO);
         let exists = self
@@ -680,10 +684,12 @@ impl<'a> DIDModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::GET_DIDS_BY_CONTROLLER_STRING_FUNCTION_NAME),
             vec![],
-            vec![MoveString::from_str(controller_did_str)?
-                .to_move_value()
-                .simple_serialize()
-                .unwrap()],
+            vec![
+                MoveString::from_str(controller_did_str)?
+                    .to_move_value()
+                    .simple_serialize()
+                    .unwrap(),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(AccountAddress::ZERO);
         let dids = self
@@ -702,10 +708,12 @@ impl<'a> DIDModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::GET_DID_DOCUMENT_FUNCTION_NAME),
             vec![],
-            vec![MoveString::from_str(did)?
-                .to_move_value()
-                .simple_serialize()
-                .unwrap()],
+            vec![
+                MoveString::from_str(did)?
+                    .to_move_value()
+                    .simple_serialize()
+                    .unwrap(),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(AccountAddress::ZERO);
         let did_document =
@@ -725,9 +733,11 @@ impl<'a> DIDModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::GET_DID_DOCUMENT_BY_ADDRESS_FUNCTION_NAME),
             vec![],
-            vec![move_core_types::value::MoveValue::Address(address)
-                .simple_serialize()
-                .unwrap()],
+            vec![
+                move_core_types::value::MoveValue::Address(address)
+                    .simple_serialize()
+                    .unwrap(),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(AccountAddress::ZERO);
         let did_document =

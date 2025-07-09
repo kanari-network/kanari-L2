@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{
-    move_types::{random_identity, random_struct_tag, random_type_tag, FunctionId},
+    move_types::{FunctionId, random_identity, random_struct_tag, random_type_tag},
     moveos_std::{
         event::{Event, EventID},
-        object::{ObjectEntity, ObjectID, ObjectMeta, GENESIS_STATE_ROOT},
+        object::{GENESIS_STATE_ROOT, ObjectEntity, ObjectID, ObjectMeta},
         table::TablePlaceholder,
     },
     state::{FieldKey, ObjectChange, ObjectState, StateChangeSet},
@@ -18,8 +17,9 @@ use move_core_types::{
     language_storage::{ModuleId, TypeTag},
 };
 use rand::{
+    Rng,
     distributions::{self, Alphanumeric},
-    thread_rng, Rng,
+    thread_rng,
 };
 
 pub enum MoveActionType {

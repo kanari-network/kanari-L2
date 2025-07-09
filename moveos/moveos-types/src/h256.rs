@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use fastcrypto::hash::{HashFunction, Sha256};
 use once_cell::sync::Lazy;
 pub use primitive_types::H256;

@@ -7,9 +7,9 @@
 use crate::cli_types::CommandAction;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::reroot_path, Move};
 use kanari_types::error::KanariResult;
-use serde_json::{json, Value};
+use move_cli::{Move, base::reroot_path};
+use serde_json::{Value, json};
 
 /// Print address information.
 #[derive(Parser)]

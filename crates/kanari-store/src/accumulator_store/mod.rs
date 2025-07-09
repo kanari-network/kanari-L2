@@ -8,7 +8,7 @@ use crate::TX_ACCUMULATOR_NODE_COLUMN_FAMILY_NAME;
 use accumulator::{AccumulatorNode, AccumulatorTreeStore};
 use anyhow::Result;
 use moveos_types::h256::H256;
-use raw_store::{derive_store, CodecKVStore, StoreInstance};
+use raw_store::{CodecKVStore, StoreInstance, derive_store};
 
 derive_store!(
     TransactionAccumulatorStore,

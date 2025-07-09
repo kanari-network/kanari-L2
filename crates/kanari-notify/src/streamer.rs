@@ -4,16 +4,16 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::subscription_handler::{SubscriptionMetrics, EVENT_DISPATCH_BUFFER_SIZE};
+use crate::subscription_handler::{EVENT_DISPATCH_BUFFER_SIZE, SubscriptionMetrics};
 use anyhow::Result;
 use futures::Stream;
+use kanari_types::error::KanariError;
+use kanari_types::indexer::Filter;
 use metrics::metered_channel::Sender;
 use metrics::spawn_monitored_task;
 use moveos_types::moveos_std::object::ObjectID;
 use parking_lot::RwLock;
 use prometheus::Registry;
-use kanari_types::error::KanariError;
-use kanari_types::indexer::Filter;
 use std::collections::BTreeMap;
 use std::fmt::Debug;
 use std::sync::Arc;

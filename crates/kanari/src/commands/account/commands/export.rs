@@ -7,7 +7,7 @@ use clap::Parser;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_rpc_api::jsonrpc_types::export_view::ExportInfoView;
 use kanari_types::{
-    address::{ParsedAddress, KanariAddress},
+    address::{KanariAddress, ParsedAddress},
     error::{KanariError, KanariResult},
     kanari_key::KANARI_SECRET_KEY_HRP,
 };
@@ -39,7 +39,10 @@ impl CommandAction<Option<ExportInfoView>> for ExportCommand {
             let mapping = context.address_mapping();
             let kanari_address: KanariAddress =
                 self.address.into_kanari_address(&mapping).map_err(|e| {
-                    KanariError::CommandArgumentError(format!("Invalid Kanari address String: {}", e))
+                    KanariError::CommandArgumentError(format!(
+                        "Invalid Kanari address String: {}",
+                        e
+                    ))
                 })?;
             let kp = context.keystore.get_key_pair(&kanari_address, password)?;
             kp.export_private_key().map_err(|e| {

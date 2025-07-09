@@ -1,7 +1,7 @@
 // Copyright (c) K Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{bail, format_err, Result};
+use anyhow::{Result, bail, format_err};
 use move_core_types::language_storage::TypeTag;
 use move_core_types::value::MoveTypeLayout;
 use moveos_types::state::{MoveState, MoveType};

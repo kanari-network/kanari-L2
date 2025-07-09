@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use move_binary_format::errors::PartialVMResult;
 use move_core_types::{language_storage::TypeTag, value::MoveTypeLayout};
 use move_vm_runtime::native_functions::NativeContext;

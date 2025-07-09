@@ -1,14 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use anyhow::Result;
 use function_name::named;
 use jellyfish_merkle::hash::SPARSE_MERKLE_PLACEHOLDER_HASH_VALUE;
 use jellyfish_merkle::{
+    JellyfishMerkleTree, TreeReader,
     iterator::JellyfishMerkleIterator,
     node_type::{Node, NodeKey},
-    JellyfishMerkleTree, TreeReader,
 };
 use parking_lot::RwLock;
 use primitive_types::H256;

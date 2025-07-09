@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 #[macro_export]
 macro_rules! derive_store {
     ($store_type: ident, $key_type: ty, $value_type: ty, $cf_name: expr) => {

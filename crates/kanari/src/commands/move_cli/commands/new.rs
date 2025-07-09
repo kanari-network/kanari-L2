@@ -5,14 +5,14 @@ use crate::cli_types::{CommandAction, WalletContextOptions};
 use crate::commands::move_cli::print_serialized_success;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::new, Move};
-use move_core_types::account_address::AccountAddress;
-use moveos_types::addresses::{
-    MOVEOS_STD_ADDRESS, MOVEOS_STD_ADDRESS_NAME, MOVE_STD_ADDRESS, MOVE_STD_ADDRESS_NAME,
-};
 use kanari_config::KANARI_CLIENT_CONFIG;
 use kanari_framework::{KANARI_FRAMEWORK_ADDRESS, KANARI_FRAMEWORK_ADDRESS_NAME};
 use kanari_types::error::{KanariError, KanariResult};
+use move_cli::{Move, base::new};
+use move_core_types::account_address::AccountAddress;
+use moveos_types::addresses::{
+    MOVE_STD_ADDRESS, MOVE_STD_ADDRESS_NAME, MOVEOS_STD_ADDRESS, MOVEOS_STD_ADDRESS_NAME,
+};
 use serde_json::Value;
 
 const MOVE_STDLIB_PKG_NAME: &str = "MoveStdlib";

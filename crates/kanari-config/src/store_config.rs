@@ -7,8 +7,8 @@
 use crate::BaseConfig;
 use anyhow::Result;
 use clap::Parser;
-use moveos_config::store_config::RocksdbConfig;
 use moveos_config::DataDirPath;
+use moveos_config::store_config::RocksdbConfig;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;

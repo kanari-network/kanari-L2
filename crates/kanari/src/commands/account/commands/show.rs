@@ -4,11 +4,11 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
+use kanari_rpc_api::jsonrpc_types::{AccountAddressView, BitcoinAddressView, StrView};
+use kanari_types::{address::ParsedAddress, error::KanariResult};
 use moveos_types::access_path::AccessPath;
 use moveos_types::moveos_std::account::Account;
 use moveos_types::state::ObjectState;
-use kanari_rpc_api::jsonrpc_types::{AccountAddressView, BitcoinAddressView, StrView};
-use kanari_types::{address::ParsedAddress, error::KanariResult};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use tabled::settings::peaker::PriorityRight;
@@ -17,7 +17,7 @@ use tabled::{
     builder::Builder,
     settings::{Panel, Style},
 };
-use terminal_size::{terminal_size, Height as TerminalHeight, Width as TerminalWidth};
+use terminal_size::{Height as TerminalHeight, Width as TerminalWidth, terminal_size};
 
 /// Show account info (account address and sequence number) on Kanari Network and bitcoin address on Bitcoin. Requires internet connection and works without kanari init.
 #[derive(Debug, Parser)]
@@ -78,7 +78,10 @@ impl CommandAction<Option<ShowResultView>> for ShowCommand {
             })
             .transpose()?
             .map(|account| account.value);
-        let bitcoin_address_opt = client.kanari.resolve_bitcoin_address(kanari_address).await?;
+        let bitcoin_address_opt = client
+            .kanari
+            .resolve_bitcoin_address(kanari_address)
+            .await?;
         let account_address_view = account_opt
             .clone()
             .map(|account| AccountAddressView::from(account.addr));

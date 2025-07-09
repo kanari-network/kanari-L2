@@ -1,16 +1,15 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 pub mod metrics;
 pub mod statedb;
 
 use crate::STATE_NODE_COLUMN_FAMILY_NAME;
 use anyhow::Result;
 use moveos_types::h256::H256;
-use raw_store::rocks::batch::WriteBatch;
 use raw_store::CodecKVStore;
-use raw_store::{derive_store, WriteOp};
+use raw_store::rocks::batch::WriteBatch;
+use raw_store::{WriteOp, derive_store};
 use smt::{NodeReader, NodeWriter};
 use std::collections::BTreeMap;
 

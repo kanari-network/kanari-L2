@@ -3,22 +3,22 @@
 
 use crate::bitcoin::network;
 use crate::crypto::KanariKeyPair;
-use crate::to_bech32::{FromBech32, ToBech32, PREFIX_BECH32_PUBLIC_KEY};
+use crate::to_bech32::{FromBech32, PREFIX_BECH32_PUBLIC_KEY, ToBech32};
 use crate::{
     addresses::KANARI_FRAMEWORK_ADDRESS,
-    multichain_id::{MultiChainID, KanariMultiChainID},
+    multichain_id::{KanariMultiChainID, MultiChainID},
 };
-use anyhow::{bail, Result};
-use bech32::segwit::encode_to_fmt_unchecked;
+use anyhow::{Result, bail};
 use bech32::Bech32m;
+use bech32::segwit::encode_to_fmt_unchecked;
 use bitcoin::address::AddressData;
 use bitcoin::hashes::Hash;
 use bitcoin::params::Params;
-use bitcoin::{
-    address::Address, secp256k1::Secp256k1, Network, PrivateKey, Script, WitnessProgram,
-    WitnessVersion,
-};
 use bitcoin::{CompressedPublicKey, XOnlyPublicKey};
+use bitcoin::{
+    Network, PrivateKey, Script, WitnessProgram, WitnessVersion, address::Address,
+    secp256k1::Secp256k1,
+};
 use ethers::types::H160;
 use fastcrypto::hash::Blake2b256;
 use fastcrypto::hash::HashFunction;
@@ -286,7 +286,7 @@ impl KanariAddress {
 
 impl std::cmp::PartialEq<AccountAddress> for KanariAddress {
     fn eq(&self, other: &AccountAddress) -> bool {
-        &self.0 .0 == other.deref()
+        &self.0.0 == other.deref()
     }
 }
 
@@ -310,7 +310,7 @@ impl From<H256> for KanariAddress {
 
 impl From<KanariAddress> for AccountAddress {
     fn from(address: KanariAddress) -> Self {
-        AccountAddress::from(address.0 .0)
+        AccountAddress::from(address.0.0)
     }
 }
 
@@ -511,7 +511,7 @@ impl FromStr for EthereumAddress {
 
 impl From<EthereumAddress> for H160 {
     fn from(address: EthereumAddress) -> Self {
-        H160::from(address.0 .0)
+        H160::from(address.0.0)
     }
 }
 
@@ -1052,8 +1052,8 @@ impl FromStr for ParsedAddress {
 #[cfg(test)]
 mod test {
     use super::*;
-    use bitcoin::hex::DisplayHex;
     use bitcoin::ScriptBuf;
+    use bitcoin::hex::DisplayHex;
     use std::{fmt::Debug, vec};
 
     #[test]

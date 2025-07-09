@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use anyhow::Result;
-use clap::clap_derive::ValueEnum;
 use clap::Parser;
+use clap::clap_derive::ValueEnum;
 use kanari_open_rpc::Project;
 use kanari_rpc_api::api::btc_api::BtcAPIOpenRpc;
 use kanari_rpc_api::api::kanari_api::KanariAPIOpenRpc;

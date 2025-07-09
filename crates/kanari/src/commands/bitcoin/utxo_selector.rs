@@ -3,15 +3,15 @@
 
 use std::collections::VecDeque;
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use bitcoin::{Address, Amount};
-use moveos_types::moveos_std::object::{ObjectID, GENESIS_STATE_ROOT};
 use kanari_rpc_api::jsonrpc_types::{
-    btc::utxo::{UTXOFilterView, UTXOObjectView, UTXOStateView},
     IndexerStateIDView,
+    btc::utxo::{UTXOFilterView, UTXOObjectView, UTXOStateView},
 };
 use kanari_rpc_client::Client;
 use kanari_types::bitcoin::{types::OutPoint, utxo::derive_utxo_id};
+use moveos_types::moveos_std::object::{GENESIS_STATE_ROOT, ObjectID};
 use tracing::debug;
 
 #[derive(Debug)]
@@ -62,7 +62,11 @@ impl UTXOSelector {
             if !self.skip_seal_check {
                 let minimal_non_dust = self.sender.script_pubkey().minimal_non_dust();
                 if skip_utxo(&utxo_state_view, minimal_non_dust) {
-                    bail!("UTXO {} has seal or tempstate attachment: {:?}, please use --skip-seal-check to skip this check", utxo_state_view.value.outpoint(), utxo_state_view);
+                    bail!(
+                        "UTXO {} has seal or tempstate attachment: {:?}, please use --skip-seal-check to skip this check",
+                        utxo_state_view.value.outpoint(),
+                        utxo_state_view
+                    );
                 }
             }
             if utxo_state_view.metadata.owner_bitcoin_address.is_none() {

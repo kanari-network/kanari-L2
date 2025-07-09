@@ -12,16 +12,16 @@ use moveos_types::{h256::H256, transaction::TransactionOutput};
 use serde::{Deserialize, Serialize};
 
 pub mod authenticator;
-mod ledger_transaction;
 pub mod kanari;
+mod ledger_transaction;
 
 use crate::test_utils::random_accumulator_info;
 pub use authenticator::Authenticator;
+pub use kanari::{KanariTransaction, KanariTransactionData};
 pub use ledger_transaction::{
     L1Block, L1BlockWithBody, L1Transaction, LedgerTransaction, LedgerTxData,
 };
 use moveos_types::test_utils::random_bytes;
-pub use kanari::{KanariTransaction, KanariTransactionData};
 
 pub const TRANSACTION_SEQUENCE_INFO_STR: &str = "TransactionSequenceInfo";
 

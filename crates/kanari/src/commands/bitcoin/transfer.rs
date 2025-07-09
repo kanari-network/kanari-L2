@@ -73,7 +73,7 @@ impl CommandAction<String> for Transfer {
             SignOutput::Psbt(_psbt) => {
                 return Err(KanariError::CommandArgumentError(
                     "The sender address should not be a multisig address".to_string(),
-                ))
+                ));
             }
             SignOutput::Tx(tx) => Ok(client.kanari.broadcast_bitcoin_tx(&tx, None, None).await?),
         }

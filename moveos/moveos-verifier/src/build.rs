@@ -1,19 +1,18 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::metadata::{
-    run_extended_checks, RuntimeModuleMetadataV1, DATA_STRUCT_ATTRIBUTE,
-    DATA_STRUCT_FUNC_ATTRIBUTE, PRIVATE_GENERICS_ATTRIBUTE,
+    DATA_STRUCT_ATTRIBUTE, DATA_STRUCT_FUNC_ATTRIBUTE, PRIVATE_GENERICS_ATTRIBUTE,
+    RuntimeModuleMetadataV1, run_extended_checks,
 };
 use codespan_reporting::diagnostic::Severity;
 use itertools::Itertools;
 use move_binary_format::CompiledModule;
 use move_command_line_common::address::NumericalAddress;
 use move_command_line_common::files::MOVE_COMPILED_EXTENSION;
+use move_compiler::Flags;
 use move_compiler::compiled_unit::CompiledUnit;
 use move_compiler::shared::{NamedAddressMap, PackagePaths};
-use move_compiler::Flags;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::language_storage::ModuleId;
 use move_core_types::metadata::Metadata;

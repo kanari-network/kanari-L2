@@ -1,25 +1,24 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 #![allow(clippy::type_complexity)]
 
-use anyhow::{anyhow, bail, Result};
+use anyhow::{Result, anyhow, bail};
 use clap::Parser;
+use move_binary_format::CompiledModule;
 use move_binary_format::binary_views::BinaryIndexedView;
 use move_binary_format::file_format::CompiledScript;
-use move_binary_format::CompiledModule;
 use move_bytecode_source_map::mapping::SourceMapping;
 use move_command_line_common::address::{NumericalAddress, ParsedAddress};
 use move_command_line_common::env::read_bool_env_var;
 use move_command_line_common::files::{MOVE_EXTENSION, MOVE_IR_EXTENSION};
 use move_command_line_common::testing::add_update_baseline_fix;
-use move_command_line_common::testing::{format_diff, read_env_update_baseline, EXP_EXT};
+use move_command_line_common::testing::{EXP_EXT, format_diff, read_env_update_baseline};
 use move_command_line_common::types::ParsedType;
 use move_command_line_common::values::{ParsableValue, ParsedValue};
+use move_compiler::FullyCompiledProgram;
 use move_compiler::compiled_unit::AnnotatedCompiledUnit;
 use move_compiler::diagnostics::{Diagnostics, FilesSourceText};
-use move_compiler::FullyCompiledProgram;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::identifier::{IdentStr, Identifier};
 use move_core_types::language_storage::{ModuleId, StructTag, TypeTag};
@@ -581,7 +580,9 @@ pub trait MoveOSTestAdapter<'a>: Sized {
                             data_content,
                         )?;
                         match unit {
-                            AnnotatedCompiledUnit::Script(annot_script) => (annot_script.named_script.script, warning_opt),
+                            AnnotatedCompiledUnit::Script(annot_script) => {
+                                (annot_script.named_script.script, warning_opt)
+                            }
                             AnnotatedCompiledUnit::Module(_) => panic!(
                                 "Expected a script text block, not a module, following 'run' starting on lines {}-{}",
                                 start_line, command_lines_stop

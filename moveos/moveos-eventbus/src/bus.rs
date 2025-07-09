@@ -1,11 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use anyhow::{format_err, Error};
+use anyhow::{Error, format_err};
 use coerce::actor::message::{Handler, Message};
 use coerce::actor::{Actor, ActorRefErr, LocalActorRef};
-use crossbeam_channel::{unbounded, Receiver, Sender};
+use crossbeam_channel::{Receiver, Sender, unbounded};
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
@@ -89,7 +88,7 @@ impl EventBus {
                 Err(_) => {
                     return Err(Error::from(EventBusError::LockerReadError(format_err!(
                         "read the locker with poisoned error"
-                    ))))
+                    ))));
                 }
             };
             if let Some(event_senders) = senders.get(&event_type_id) {
@@ -110,7 +109,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
         if let Some(event_callbacks) = callbacks.get(&event_type_id) {
@@ -131,7 +130,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
         if let Some(actors_map) = actors.get(&event_type_id) {
@@ -146,7 +145,7 @@ impl EventBus {
                     Err(_) => {
                         return Err(Error::from(EventBusError::LockerReadError(format_err!(
                             "event actor send message failed"
-                        ))))
+                        ))));
                     }
                 }
             }
@@ -163,7 +162,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
         if let Some(event_receivers) = receivers.get(&event_type_id) {
@@ -205,7 +204,7 @@ impl EventBus {
                 Err(_) => {
                     return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                         "write the locker with poisoned error"
-                    ))))
+                    ))));
                 }
             };
             let event_senders = senders.entry(event_type_id).or_default();
@@ -218,7 +217,7 @@ impl EventBus {
                 Err(_) => {
                     return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                         "write the locker with poisoned error"
-                    ))))
+                    ))));
                 }
             };
             let event_receivers = receivers.entry(event_type_id).or_default();
@@ -248,7 +247,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                     "write the locker with poisoned error"
-                ))))
+                ))));
             }
         };
         let event_callbacks = callbacks.entry(event_type_id).or_default();
@@ -274,7 +273,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                     "write the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -290,7 +289,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -316,7 +315,7 @@ impl EventBus {
                 Err(_) => {
                     return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                         "write the locker with poisoned error"
-                    ))))
+                    ))));
                 }
             };
 
@@ -336,7 +335,7 @@ impl EventBus {
                 Err(_) => {
                     return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                         "write the locker with poisoned error"
-                    ))))
+                    ))));
                 }
             };
 
@@ -356,7 +355,7 @@ impl EventBus {
                 Err(_) => {
                     return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                         "write the locker with poisoned error"
-                    ))))
+                    ))));
                 }
             };
 
@@ -380,7 +379,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                     "write the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -389,7 +388,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                     "write the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -398,7 +397,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerWriteError(format_err!(
                     "write the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -418,7 +417,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -436,7 +435,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -451,7 +450,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -469,7 +468,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 
@@ -485,7 +484,7 @@ impl EventBus {
             Err(_) => {
                 return Err(Error::from(EventBusError::LockerReadError(format_err!(
                     "read the locker with poisoned error"
-                ))))
+                ))));
             }
         };
 

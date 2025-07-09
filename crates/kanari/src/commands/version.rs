@@ -7,7 +7,7 @@ use crate::cli_types::CommandAction;
 use async_trait::async_trait;
 use clap::Parser;
 use kanari_types::error::{KanariError, KanariResult};
-use vergen_pretty::{vergen_pretty_env, PrettyBuilder};
+use vergen_pretty::{PrettyBuilder, vergen_pretty_env};
 
 /// Retrieves events based on their event handle.
 #[derive(Debug, Parser)]

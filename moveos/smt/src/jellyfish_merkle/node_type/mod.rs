@@ -22,7 +22,7 @@ mod node_type_test;
 use super::hash::*;
 use super::nibble::Nibble;
 use crate::{Key, SMTObject, Value};
-use anyhow::{ensure, Context, Result};
+use anyhow::{Context, Result, ensure};
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use num_derive::{FromPrimitive, ToPrimitive};
 use num_traits::cast::FromPrimitive;
@@ -35,7 +35,7 @@ use serde::{Deserialize, Serialize};
 use std::cell::Cell;
 use std::{
     collections::hash_map::HashMap,
-    io::{prelude::*, Cursor, Read, SeekFrom},
+    io::{Cursor, Read, SeekFrom, prelude::*},
     mem::size_of,
 };
 use thiserror::Error;
@@ -205,7 +205,7 @@ impl InternalNode {
                     existing: existence_bitmap,
                     leaves: leaf_bitmap,
                 }
-                .into())
+                .into());
             }
             _ => (),
         }

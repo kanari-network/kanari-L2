@@ -15,7 +15,7 @@ use rpassword::prompt_password;
 use std::str::FromStr;
 use tokio::signal::ctrl_c;
 #[cfg(unix)]
-use tokio::signal::unix::{signal, SignalKind};
+use tokio::signal::unix::{SignalKind, signal};
 use tracing::info;
 
 /// Start service

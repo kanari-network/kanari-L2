@@ -3,14 +3,14 @@
 
 use crate::cli_types::{TransactionOptions, WalletContextOptions};
 use clap::Parser;
-use moveos_types::module_binding::MoveFunctionCaller;
-use moveos_types::move_std::string::MoveString;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_types::{
     address::KanariAddress,
     error::{KanariError, KanariResult},
     framework::session_key::{SessionKey, SessionKeyModule, SessionScope},
 };
+use moveos_types::module_binding::MoveFunctionCaller;
+use moveos_types::move_std::string::MoveString;
 
 /// Create a new session key on-chain
 #[derive(Debug, Parser)]

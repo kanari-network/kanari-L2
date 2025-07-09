@@ -3,9 +3,9 @@
 
 use std::time::Duration;
 
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, criterion_group, criterion_main};
 
-use kanari_benchmarks::config::{configure_criterion, BenchTxConfig};
+use kanari_benchmarks::config::{BenchTxConfig, configure_criterion};
 use kanari_benchmarks::tx::create_l2_tx;
 use kanari_framework_tests::binding_test;
 use kanari_test_transaction_builder::TestTransactionBuilder;

@@ -3,7 +3,7 @@
 
 use crate::cli_types::WalletContextOptions;
 use crate::commands::da::commands::{
-    build_kanari_db, LedgerTxGetter, SequencedTxStore, StateRootFetcher, TxMetaStore,
+    LedgerTxGetter, SequencedTxStore, StateRootFetcher, TxMetaStore, build_kanari_db,
 };
 use crate::utils::derive_builtin_genesis_namespace;
 use anyhow::Context;
@@ -11,19 +11,10 @@ use bitcoin::hashes::Hash;
 use bitcoin_client::actor::client::BitcoinClientConfig;
 use bitcoin_client::proxy::BitcoinClientProxy;
 use clap::Parser;
-use coerce::actor::system::ActorSystem;
 use coerce::actor::IntoActor;
+use coerce::actor::system::ActorSystem;
 use hdrhistogram::Histogram;
-use metrics::RegistryService;
-use moveos_common::utils::to_bytes;
-use moveos_eventbus::bus::EventBus;
-use moveos_store::config_store::STARTUP_INFO_KEY;
-use moveos_store::{MoveOSStore, CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME};
-use moveos_types::startup_info;
-use moveos_types::transaction::{TransactionExecutionInfo, VerifiedMoveOSTransaction};
-use raw_store::rocks::batch::WriteBatch;
-use raw_store::traits::DBStore;
-use kanari_anomalies::{load_tx_anomalies, TxAnomalies};
+use kanari_anomalies::{TxAnomalies, load_tx_anomalies};
 use kanari_common::humanize::parse_bytes;
 use kanari_config::R_OPT_NET_HELP;
 use kanari_db::KanariDB;
@@ -33,8 +24,8 @@ use kanari_executor::proxy::ExecutorProxy;
 use kanari_notify::actor::NotifyActor;
 use kanari_notify::subscription_handler::SubscriptionHandler;
 use kanari_pipeline_processor::actor::processor::is_vm_panic_error;
-use kanari_store::meta_store::SEQUENCER_INFO_KEY;
 use kanari_store::META_SEQUENCER_INFO_COLUMN_FAMILY_NAME;
+use kanari_store::meta_store::SEQUENCER_INFO_KEY;
 use kanari_types::bitcoin::types::Block as BitcoinBlock;
 use kanari_types::error::KanariResult;
 use kanari_types::kanari_network::{BuiltinChainID, KanariChainID};
@@ -42,15 +33,24 @@ use kanari_types::sequencer::SequencerInfo;
 use kanari_types::transaction::{
     L1BlockWithBody, LedgerTransaction, LedgerTxData, TransactionSequenceInfo,
 };
-use std::cmp::{max, min, PartialEq};
+use metrics::RegistryService;
+use moveos_common::utils::to_bytes;
+use moveos_eventbus::bus::EventBus;
+use moveos_store::config_store::STARTUP_INFO_KEY;
+use moveos_store::{CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME, MoveOSStore};
+use moveos_types::startup_info;
+use moveos_types::transaction::{TransactionExecutionInfo, VerifiedMoveOSTransaction};
+use raw_store::rocks::batch::WriteBatch;
+use raw_store::traits::DBStore;
+use std::cmp::{PartialEq, max, min};
 use std::path::PathBuf;
-use std::sync::atomic::AtomicU64;
 use std::sync::Arc;
+use std::sync::atomic::AtomicU64;
 use std::time::Duration;
-#[cfg(unix)]
-use tokio::signal::unix::{signal, SignalKind};
 #[cfg(not(unix))]
 use tokio::signal::ctrl_c;
+#[cfg(unix)]
+use tokio::signal::unix::{SignalKind, signal};
 use tokio::sync::mpsc::Receiver;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::watch;
@@ -207,30 +207,26 @@ impl ExecCommand {
 
         tokio::spawn(async move {
             #[cfg(unix)]
-            {
-                let mut sigterm =
-                    signal(SignalKind::terminate()).expect("Failed to listen for SIGTERM");
-                let mut sigint = signal(SignalKind::interrupt()).expect("Failed to listen for SIGINT");
-
+            let shutdown_signal = async {
+                let mut sigterm = signal(SignalKind::terminate()).unwrap();
+                let mut sigint = signal(SignalKind::interrupt()).unwrap();
                 tokio::select! {
                     _ = sigterm.recv() => {
-                        info!("SIGTERM received, shutting down...");
-                        let _ = shutdown_tx_clone.send(());
-                    }
+                        info!("Received SIGTERM signal");
+                    },
                     _ = sigint.recv() => {
-                        info!("SIGINT received (Ctrl+C), shutting down...");
-                        let _ = shutdown_tx_clone.send(());
-                    }
+                        info!("Received SIGINT signal");
+                    },
                 }
-            }
-            
+            };
+
             #[cfg(not(unix))]
-            {
-                if let Ok(()) = ctrl_c().await {
-                    info!("Ctrl+C received, shutting down...");
-                    let _ = shutdown_tx_clone.send(());
-                }
-            }
+            let shutdown_signal = async {
+                ctrl_c().await.expect("Failed to listen for Ctrl+C signal");
+            };
+
+            shutdown_signal.await;
+            shutdown_tx_clone.send(()).unwrap();
         });
 
         let exec_inner = self.build_exec_inner(shutdown_rx.clone()).await?;
@@ -752,7 +748,7 @@ impl ExecInner {
         }
         if let Some(verify_targets) = self.mode.get_verify_targets_str(self.bypass_verify) {
             info!(
-                "All transactions {} are strictly equal to Kanari Network: [0, {}]",
+                "All transactions {} are strictly equal to KanariNetwork: [0, {}]",
                 verify_targets, executed_tx_order
             );
         }
@@ -819,10 +815,10 @@ impl ExecInner {
                 );
                 Err(error)
             } else {
-                // return error if is state root not equal to Kanari Network
+                // return error if is state root not equal to KanariNetwork
                 if error
                     .to_string()
-                    .contains("Execution state root is not equal to Kanari Network")
+                    .contains("Execution state root is not equal to KanariNetwork")
                 {
                     return Err(error);
                 }
@@ -900,17 +896,23 @@ impl ExecInner {
                     if let Some(last_eq_value) = last_eq_tx_order {
                         let mid_tx_order = (*last_eq_value + tx_order) / 2;
                         self.state_root_fetcher.fetch_and_add(mid_tx_order).await?;
-                        info!("state root of tx_order: {} fetched, it's in the middle of last_eq_tx_order: {} and first not_eq_tx_order: {}", mid_tx_order, *last_eq_value, tx_order);
+                        info!(
+                            "state root of tx_order: {} fetched, it's in the middle of last_eq_tx_order: {} and first not_eq_tx_order: {}",
+                            mid_tx_order, *last_eq_value, tx_order
+                        );
                     }
 
                     return Err(anyhow::anyhow!(
-                        "Execution state root is not equal to Kanari Network: tx_order: {}, exp: {:?}, act: {:?}; act_execution_info: {:?}. Please rollback to last_eq_tx_order: {:?}",
+                        "Execution state root is not equal to KanariNetwork: tx_order: {}, exp: {:?}, act: {:?}; act_execution_info: {:?}. Please rollback to last_eq_tx_order: {:?}",
                         tx_order,
-                        expected_root, root.state_root.unwrap(), execution_info, last_eq_tx_order
+                        expected_root,
+                        root.state_root.unwrap(),
+                        execution_info,
+                        last_eq_tx_order
                     ));
                 }
                 info!(
-                    "Execution state root is equal to Kanari Network: tx_order: {}; last_eq_tx_order: {:?}",
+                    "Execution state root is equal to KanariNetwork: tx_order: {}; last_eq_tx_order: {:?}",
                     tx_order, last_eq_tx_order
                 );
                 *last_eq_tx_order = Some(tx_order);
@@ -959,7 +961,10 @@ async fn build_executor_and_store(
         row_cache_size,
         block_cache_size,
     );
-    let (kanari_store, moveos_store) = (kanari_db.kanari_store.clone(), kanari_db.moveos_store.clone());
+    let (kanari_store, moveos_store) = (
+        kanari_db.kanari_store.clone(),
+        kanari_db.moveos_store.clone(),
+    );
 
     let event_bus = EventBus::new();
     let subscription_handle = Arc::new(SubscriptionHandler::new(

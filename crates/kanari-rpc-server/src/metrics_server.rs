@@ -7,10 +7,10 @@ use std::net::{IpAddr, Ipv4Addr};
 
 pub const METRICS_HOST_PORT: u16 = 9184;
 
+use kanari_indexer::store::metrics::IndexerDBMetrics;
 /// This is an option if you need to use the underlying method
 pub use metrics::start_prometheus_server;
 use raw_store::metrics::DBMetrics;
-use kanari_indexer::store::metrics::IndexerDBMetrics;
 
 /// Use the standard IP (0.0.0.0) and port (9184) to start a new
 /// prometheus server.

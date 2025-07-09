@@ -2,6 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::binding_test;
+use kanari_key::keystore::account_keystore::AccountKeystore;
+use kanari_key::keystore::memory_keystore::InMemKeystore;
+use kanari_types::framework::session_key::SessionKeyModule;
+use kanari_types::framework::session_validator::SessionValidatorModule;
+use kanari_types::framework::timestamp::TimestampModule;
+use kanari_types::{addresses::KANARI_FRAMEWORK_ADDRESS, framework::empty::Empty};
+use kanari_types::{
+    framework::session_key::SessionScope, transaction::kanari::KanariTransactionData,
+};
 use move_core_types::account_address::AccountAddress;
 use move_core_types::ident_str;
 use move_core_types::language_storage::ModuleId;
@@ -11,13 +20,6 @@ use moveos_types::module_binding::MoveFunctionCaller;
 use moveos_types::move_std::string::MoveString;
 use moveos_types::move_types::FunctionId;
 use moveos_types::{module_binding::ModuleBinding, transaction::MoveAction};
-use kanari_key::keystore::account_keystore::AccountKeystore;
-use kanari_key::keystore::memory_keystore::InMemKeystore;
-use kanari_types::framework::session_key::SessionKeyModule;
-use kanari_types::framework::session_validator::SessionValidatorModule;
-use kanari_types::framework::timestamp::TimestampModule;
-use kanari_types::{addresses::KANARI_FRAMEWORK_ADDRESS, framework::empty::Empty};
-use kanari_types::{framework::session_key::SessionScope, transaction::kanari::KanariTransactionData};
 use std::str::FromStr;
 
 #[tokio::test]
@@ -76,9 +78,11 @@ async fn test_session_key_kanari() {
             ident_str!("empty_with_signer").to_owned(),
         ),
         vec![],
-        vec![MoveValue::Address(AccountAddress::random())
-            .simple_serialize()
-            .unwrap()],
+        vec![
+            MoveValue::Address(AccountAddress::random())
+                .simple_serialize()
+                .unwrap(),
+        ],
     );
     let tx_data = KanariTransactionData::new_for_test(sender, sequence_number + 2, action);
     let tx = keystore

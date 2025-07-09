@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use serde;
 use serde::de::Deserializer;
 use serde::ser::Serializer;

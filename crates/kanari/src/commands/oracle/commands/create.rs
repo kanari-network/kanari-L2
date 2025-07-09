@@ -4,11 +4,11 @@
 use crate::cli_types::{CommandAction, TransactionOptions, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
+use kanari_types::error::{KanariError, KanariResult};
+use kanari_types::framework::oracle::{NewOracleEvent, OracleModule};
 use moveos_types::move_std::string::MoveString;
 use moveos_types::moveos_std::object::ObjectID;
 use moveos_types::state::MoveStructType;
-use kanari_types::error::{KanariError, KanariResult};
-use kanari_types::framework::oracle::{NewOracleEvent, OracleModule};
 use serde::{Deserialize, Serialize};
 
 /// Create a SimpleOracle

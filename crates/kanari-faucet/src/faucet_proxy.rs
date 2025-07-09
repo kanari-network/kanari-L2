@@ -4,10 +4,10 @@
 use crate::{ClaimMessage, ClaimWithInviterMessage, Faucet};
 use anyhow::Result;
 use coerce::actor::ActorRef;
-use move_core_types::u256::U256;
-use moveos_types::moveos_std::object::ObjectID;
 use kanari_rpc_api::jsonrpc_types::UnitedAddressView;
 use kanari_types::address::BitcoinAddress;
+use move_core_types::u256::U256;
+use moveos_types::moveos_std::object::ObjectID;
 
 #[derive(Debug, Clone)]
 pub struct FaucetProxy {

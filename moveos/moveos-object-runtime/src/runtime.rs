@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{
+    TypeLayoutLoader,
     resolved_arg::{ObjectArg, ResolvedArg},
     runtime_object::RuntimeObject,
     tx_context::TxContextValue,
-    TypeLayoutLoader,
 };
 use better_any::{Tid, TidAble};
 use move_binary_format::errors::{Location, PartialVMError, PartialVMResult, VMResult};

@@ -1,13 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use codespan_reporting::term::termcolor::{ColorChoice, StandardStream};
-use move_binary_format::{errors::Location, CompiledModule};
+use move_binary_format::{CompiledModule, errors::Location};
 use move_cli::base::reroot_path;
 use move_core_types::account_address::AccountAddress;
 use move_model::model::GlobalEnv;
-use move_package::{compilation::compiled_package::CompiledPackage, BuildConfig, ModelConfig};
+use move_package::{BuildConfig, ModelConfig, compilation::compiled_package::CompiledPackage};
 use moveos_compiler::dependency_order::sort_by_dependency_order;
 use moveos_types::move_std::string::MoveString;
 use moveos_types::moveos_std::module_store::PackageData;
@@ -17,7 +17,7 @@ use std::{
     collections::{HashMap, HashSet},
     env::current_dir,
     fs::{self, File},
-    io::{stderr, Write},
+    io::{Write, stderr},
     path::{Path, PathBuf},
 };
 

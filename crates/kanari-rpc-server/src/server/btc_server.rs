@@ -4,15 +4,15 @@
 use crate::service::rpc_service::RpcService;
 use anyhow::Result;
 use bitcoincore_rpc::bitcoin::Txid;
-use jsonrpsee::{core::async_trait, RpcModule};
+use jsonrpsee::{RpcModule, core::async_trait};
+use kanari_rpc_api::RpcResult;
 use kanari_rpc_api::api::btc_api::BtcAPIServer;
-use kanari_rpc_api::api::{KanariRpcModule, DEFAULT_RESULT_LIMIT_USIZE, MAX_RESULT_LIMIT_USIZE};
+use kanari_rpc_api::api::{DEFAULT_RESULT_LIMIT_USIZE, KanariRpcModule, MAX_RESULT_LIMIT_USIZE};
 use kanari_rpc_api::jsonrpc_types::btc::ord::{InscriptionFilterView, InscriptionStateView};
 use kanari_rpc_api::jsonrpc_types::btc::utxo::{UTXOFilterView, UTXOStateView};
 use kanari_rpc_api::jsonrpc_types::{
     BytesView, IndexerStateIDView, InscriptionPageView, StrView, UTXOPageView,
 };
-use kanari_rpc_api::RpcResult;
 use kanari_types::indexer::state::ObjectStateType;
 use std::cmp::min;
 

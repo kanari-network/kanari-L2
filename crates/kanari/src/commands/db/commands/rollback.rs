@@ -4,19 +4,19 @@
 use crate::utils::{derive_builtin_genesis_namespace_from_kanari_chain_id, open_kanari_db};
 use anyhow::Error;
 use clap::Parser;
-use moveos_common::utils::to_bytes;
-use moveos_store::config_store::STARTUP_INFO_KEY;
-use moveos_store::transaction_store::TransactionStore as TxExecutionInfoStore;
-use moveos_store::CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME;
-use moveos_types::startup_info;
-use raw_store::rocks::batch::WriteBatch;
-use raw_store::traits::DBStore;
 use kanari_config::R_OPT_NET_HELP;
-use kanari_store::meta_store::SEQUENCER_INFO_KEY;
 use kanari_store::META_SEQUENCER_INFO_COLUMN_FAMILY_NAME;
+use kanari_store::meta_store::SEQUENCER_INFO_KEY;
 use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::kanari_network::KanariChainID;
 use kanari_types::sequencer::SequencerInfo;
+use moveos_common::utils::to_bytes;
+use moveos_store::CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME;
+use moveos_store::config_store::STARTUP_INFO_KEY;
+use moveos_store::transaction_store::TransactionStore as TxExecutionInfoStore;
+use moveos_types::startup_info;
+use raw_store::rocks::batch::WriteBatch;
+use raw_store::traits::DBStore;
 use std::path::PathBuf;
 
 /// Rollback the state to a specific transaction order.
@@ -45,8 +45,8 @@ impl RollbackCommand {
         {
             if genesis_namespace == "527d69c3" && tx_order <= 84709879 {
                 return Err(KanariError::from(Error::msg(
-                        "rollback tx order must be greater than 84709879 for genesis namespace 527d69c3",
-                    )));
+                    "rollback tx order must be greater than 84709879 for genesis namespace 527d69c3",
+                )));
             }
         }
 

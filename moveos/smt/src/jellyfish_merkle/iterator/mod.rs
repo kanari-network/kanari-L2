@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -18,14 +17,14 @@ mod iterator_test;
 
 use super::hash::SMTNodeHash;
 use super::{
+    TreeReader,
     hash::SMTHash,
     nibble::Nibble,
     nibble_path::NibblePath,
     node_type::{InternalNode, Node, NodeKey},
-    TreeReader,
 };
 use crate::{Key, SMTObject, Value};
-use anyhow::{format_err, Result};
+use anyhow::{Result, format_err};
 use std::marker::PhantomData;
 
 /// `NodeVisitInfo` keeps track of the status of an internal node during the iteration process. It

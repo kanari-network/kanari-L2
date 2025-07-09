@@ -4,8 +4,8 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-use rand::rngs::StdRng;
 use kanari_open_rpc::ExamplePairing;
+use rand::rngs::StdRng;
 
 // TODO: examples
 

@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::move_std::string::MoveString;
 use crate::moveos_std::object;
 use crate::moveos_std::object::ObjectID;

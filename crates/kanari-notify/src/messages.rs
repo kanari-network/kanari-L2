@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use coerce::actor::message::Message;
+use kanari_types::service_status::ServiceStatus;
+use kanari_types::transaction::TransactionWithInfo;
 use moveos_eventbus::bus::EventNotifier;
 use moveos_types::moveos_std::event::Event;
 use moveos_types::moveos_std::tx_context::TxContext;
-use kanari_types::service_status::ServiceStatus;
-use kanari_types::transaction::TransactionWithInfo;
 
 #[derive(Default, Clone, Debug)]
 pub struct GasUpgradeMessage {}

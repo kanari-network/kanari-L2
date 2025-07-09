@@ -4,15 +4,15 @@
 use crate::cli_types::{CommandAction, TransactionOptions, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::module_binding::MoveFunctionCaller;
-use moveos_types::move_std::string::MoveString;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_rpc_api::jsonrpc_types::TransactionExecutionInfoView;
 use kanari_types::address::KanariAddress;
 use kanari_types::error::KanariResult;
-use kanari_types::framework::did::{DIDModule, VerificationRelationship, DID};
-use kanari_types::transaction::authenticator::SessionAuthenticator;
+use kanari_types::framework::did::{DID, DIDModule, VerificationRelationship};
 use kanari_types::transaction::KanariTransaction;
+use kanari_types::transaction::authenticator::SessionAuthenticator;
+use moveos_types::module_binding::MoveFunctionCaller;
+use moveos_types::move_std::string::MoveString;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -280,7 +280,8 @@ impl CommandAction<ManageOutput> for AddVerificationMethodCommand {
         }
         // For simplicity, use the first controller. In a real scenario, might need to select one.
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         // Check if keystore contains the controller's key
         if !context.keystore.contains_address(&controller_address) {
@@ -369,7 +370,8 @@ impl CommandAction<ManageOutput> for RemoveVerificationMethodCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(
@@ -427,7 +429,8 @@ impl CommandAction<ManageOutput> for AddToRelationshipCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(
@@ -488,7 +491,8 @@ impl CommandAction<ManageOutput> for RemoveFromRelationshipCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(
@@ -549,7 +553,8 @@ impl CommandAction<ManageOutput> for AddServiceCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(
@@ -621,7 +626,8 @@ impl CommandAction<ManageOutput> for UpdateServiceCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(
@@ -689,7 +695,8 @@ impl CommandAction<ManageOutput> for RemoveServiceCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(

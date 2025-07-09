@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::gas::table::AbstractValueSizeGasParameter;
 
 crate::gas::native::define_gas_parameters_for_natives!(AbstractValueSizeGasParameter, "storage", [

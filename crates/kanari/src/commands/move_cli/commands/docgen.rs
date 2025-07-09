@@ -8,8 +8,8 @@ use crate::cli_types::CommandAction;
 use crate::commands::move_cli::serialized_success;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::docgen::Docgen, Move};
 use kanari_types::error::KanariResult;
+use move_cli::{Move, base::docgen::Docgen};
 use serde_json::Value;
 
 /// Generate javadoc style documentation for Move packages

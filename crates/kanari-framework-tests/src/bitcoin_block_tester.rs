@@ -2,20 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{bbn_tx_loader::BBNStakingTxRecord, binding_test::RustBindingTest};
-use anyhow::{anyhow, bail, ensure, Result};
-use bitcoin::{hashes::Hash, Block, OutPoint, TxOut, Txid};
+use anyhow::{Result, anyhow, bail, ensure};
+use bitcoin::{Block, OutPoint, TxOut, Txid, hashes::Hash};
 use bitcoin_client::proxy::BitcoinClientProxy;
 use framework_builder::stdlib_version::StdlibVersion;
-use move_core_types::{account_address::AccountAddress, u256::U256, vm_status::KeptVMStatus};
-use moveos_types::{
-    move_std::string::MoveString,
-    moveos_std::{
-        event::Event, module_store::ModuleStore, object::ObjectMeta,
-        simple_multimap::SimpleMultiMap, timestamp::Timestamp,
-    },
-    state::{MoveState, MoveStructType, MoveType, ObjectChange, ObjectState},
-    state_resolver::StateResolver,
-};
 use kanari_ord::ord_client::Charm;
 use kanari_types::{
     bitcoin::{
@@ -34,7 +24,17 @@ use kanari_types::{
     kanari_network::{BuiltinChainID, KanariNetwork},
     transaction::L1BlockWithBody,
 };
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use move_core_types::{account_address::AccountAddress, u256::U256, vm_status::KeptVMStatus};
+use moveos_types::{
+    move_std::string::MoveString,
+    moveos_std::{
+        event::Event, module_store::ModuleStore, object::ObjectMeta,
+        simple_multimap::SimpleMultiMap, timestamp::Timestamp,
+    },
+    state::{MoveState, MoveStructType, MoveType, ObjectChange, ObjectState},
+    state_resolver::StateResolver,
+};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use std::{
     collections::{BTreeSet, HashMap, HashSet},
     path::{Path, PathBuf},
@@ -203,9 +203,7 @@ impl BitcoinBlockTester {
             })?;
             trace!(
                 "Check utxo: outpoint {}, utxo obj metadata: {:?}, utxo value: {:?}",
-                outpoint,
-                utxo_obj.metadata,
-                utxo_state
+                outpoint, utxo_obj.metadata, utxo_state
             );
             ensure!(
                 utxo_state.value == tx_out.value.to_sat(),
@@ -765,7 +763,10 @@ impl TesterGenesisBuilder {
                 let object_id = utxo.object_id();
                 debug!("Add utxo: {}, {:?}", object_id, utxo);
                 let mut object_meta = ObjectMeta::genesis_meta(object_id, UTXO::type_tag());
-                object_meta.owner = kanari_pre_output.recipient_address.to_kanari_address().into();
+                object_meta.owner = kanari_pre_output
+                    .recipient_address
+                    .to_kanari_address()
+                    .into();
                 let utxo_obj = ObjectState::new_with_struct(object_meta, utxo)?;
 
                 self.utxo_store_change

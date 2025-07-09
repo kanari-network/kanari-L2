@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::log::{CallFrame, ExecutionAndIOCosts, ExecutionGasEvent, FrameName};
 use crate::render::Render;
 use move_core_types::gas_algebra::InternalGas;

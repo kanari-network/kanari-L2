@@ -4,11 +4,11 @@
 use move_core_types::account_address::AccountAddress;
 use move_core_types::vm_status::StatusCode;
 
+use kanari_types::framework::empty::Empty;
 use moveos_types::h256::H256;
 use moveos_types::module_binding::{ModuleBinding, MoveFunctionCaller};
 use moveos_types::moveos_std::tx_context::TxContext;
 use moveos_types::transaction::FunctionCall;
-use kanari_types::framework::empty::Empty;
 
 use crate::binding_test;
 

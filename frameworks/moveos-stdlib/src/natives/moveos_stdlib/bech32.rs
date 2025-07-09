@@ -3,9 +3,9 @@
 
 use crate::natives::helpers::{make_module_natives, make_native};
 use bech32::{
+    Bech32, Bech32m, Fe32, Hrp, NoChecksum,
     primitives::hrp,
     segwit::{self, VERSION_0, VERSION_1},
-    Bech32, Bech32m, Fe32, Hrp, NoChecksum,
 };
 use move_binary_format::errors::PartialVMResult;
 use move_core_types::gas_algebra::{InternalGas, InternalGasPerByte, NumBytes};

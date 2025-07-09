@@ -6,14 +6,14 @@ use crate::actor::messages::{
     QueryLastStateIndexByTxOrderMessage,
 };
 use crate::indexer_reader::IndexerReader;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use async_trait::async_trait;
-use coerce::actor::{context::ActorContext, message::Handler, Actor};
-use moveos_types::moveos_std::object::ObjectID;
+use coerce::actor::{Actor, context::ActorContext, message::Handler};
 use kanari_types::indexer::event::IndexerEvent;
 use kanari_types::indexer::field::IndexerField;
 use kanari_types::indexer::state::IndexerStateID;
 use kanari_types::indexer::transaction::IndexerTransaction;
+use moveos_types::moveos_std::object::ObjectID;
 
 use super::messages::QueryIndexerObjectIdsMessage;
 

@@ -9,11 +9,11 @@ use crate::actor::messages::{
 use anyhow::Result;
 use async_trait::async_trait;
 use bitcoin::Transaction;
-use bitcoincore_rpc::{bitcoin::Txid, json, Auth, Client, RpcApi};
-use coerce::actor::{context::ActorContext, message::Handler, Actor};
+use bitcoincore_rpc::{Auth, Client, RpcApi, bitcoin::Txid, json};
+use coerce::actor::{Actor, context::ActorContext, message::Handler};
 use std::fs;
 use std::path::PathBuf;
-use tokio::time::{sleep, Duration};
+use tokio::time::{Duration, sleep};
 use tracing::warn;
 
 pub struct BitcoinClientActor {
@@ -114,10 +114,12 @@ impl Handler<GetBlockMessage> for BitcoinClientActor {
                 Ok(block_data) => match bitcoin::consensus::encode::deserialize_hex(&block_data) {
                     Ok(block) => Ok(block),
                     Err(err) => {
-                        warn!("Failed to deserialize block from local file ({block_file_path:?}): {err}");
+                        warn!(
+                            "Failed to deserialize block from local file ({block_file_path:?}): {err}"
+                        );
                         Err(anyhow::anyhow!(
-                                "Failed to fetch block: RPC failed with {rpc_err}, local file deserialization failed with {err}"
-                            ))
+                            "Failed to fetch block: RPC failed with {rpc_err}, local file deserialization failed with {err}"
+                        ))
                     }
                 },
                 Err(err) => {

@@ -3,11 +3,11 @@
 
 use crate::schema::utxos;
 use diesel::prelude::*;
+use kanari_types::bitcoin::utxo::UTXO;
+use kanari_types::indexer::state::IndexerObjectState;
 use move_core_types::account_address::AccountAddress;
 use moveos_types::moveos_std::object::{ObjectID, ObjectMeta};
 use moveos_types::state::MoveType;
-use kanari_types::bitcoin::utxo::UTXO;
-use kanari_types::indexer::state::IndexerObjectState;
 use std::str::FromStr;
 
 #[derive(Queryable, QueryableByName, Insertable, Debug, Clone)]

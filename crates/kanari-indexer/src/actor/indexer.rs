@@ -7,22 +7,22 @@ use crate::actor::messages::{
     IndexerTransactionMessage, UpdateIndexerMessage,
 };
 use crate::store::traits::IndexerStoreTrait;
-use crate::{list_field_indexer_keys, IndexerStore};
+use crate::{IndexerStore, list_field_indexer_keys};
 use anyhow::Result;
 use async_trait::async_trait;
-use coerce::actor::{context::ActorContext, message::Handler, Actor, LocalActorRef};
+use coerce::actor::{Actor, LocalActorRef, context::ActorContext, message::Handler};
+use kanari_notify::actor::NotifyActor;
+use kanari_types::indexer::event::IndexerEvent;
+use kanari_types::indexer::field::{IndexerFieldChanges, handle_field_change};
+use kanari_types::indexer::state::{
+    IndexerObjectStateChangeSet, IndexerObjectStatesIndexGenerator, ObjectStateType,
+    handle_object_change, handle_revert_object_change,
+};
+use kanari_types::indexer::transaction::IndexerTransaction;
 use moveos_store::MoveOSStore;
 use moveos_types::moveos_std::object::{ObjectID, ObjectMeta};
 use moveos_types::state_resolver::RootObjectResolver;
 use moveos_types::transaction::MoveAction;
-use kanari_notify::actor::NotifyActor;
-use kanari_types::indexer::event::IndexerEvent;
-use kanari_types::indexer::field::{handle_field_change, IndexerFieldChanges};
-use kanari_types::indexer::state::{
-    handle_object_change, handle_revert_object_change, IndexerObjectStateChangeSet,
-    IndexerObjectStatesIndexGenerator, ObjectStateType,
-};
-use kanari_types::indexer::transaction::IndexerTransaction;
 
 pub struct IndexerActor {
     root: ObjectMeta,

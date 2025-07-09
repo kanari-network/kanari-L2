@@ -3,10 +3,10 @@
 
 use crate::address::BitcoinAddress;
 use crate::addresses::BITCOIN_MOVE_ADDRESS;
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use bitcoin::bip32::{DerivationPath, Fingerprint};
-use bitcoin::key::constants::SCHNORR_PUBLIC_KEY_SIZE;
 use bitcoin::key::Secp256k1;
+use bitcoin::key::constants::SCHNORR_PUBLIC_KEY_SIZE;
 use bitcoin::taproot::{LeafVersion, TaprootBuilder};
 use bitcoin::{PublicKey, ScriptBuf, TapLeafHash, XOnlyPublicKey};
 use move_core_types::{account_address::AccountAddress, ident_str, identifier::IdentStr};
@@ -420,16 +420,15 @@ mod tests {
 
     #[test]
     fn test_create_multisig_script() {
-        let cases = vec![
-            (
-                2,
-                vec![
-                    "0308839c624d3da34ae240086f60196409d619f285365cc3498fdd3a90b72599e4",
-"0338121decf4ea2dbfd2ad1fe05a32a67448e78bf97a18bc107b4da177c27af752",
-"03786e2d94b8aaac17b2846ea908a245ab8b3c9df7ff34be8c75c27beba8e1f579"],
-                "2008839c624d3da34ae240086f60196409d619f285365cc3498fdd3a90b72599e4ac2038121decf4ea2dbfd2ad1fe05a32a67448e78bf97a18bc107b4da177c27af752ba20786e2d94b8aaac17b2846ea908a245ab8b3c9df7ff34be8c75c27beba8e1f579ba52a2"
-            )
-        ];
+        let cases = vec![(
+            2,
+            vec![
+                "0308839c624d3da34ae240086f60196409d619f285365cc3498fdd3a90b72599e4",
+                "0338121decf4ea2dbfd2ad1fe05a32a67448e78bf97a18bc107b4da177c27af752",
+                "03786e2d94b8aaac17b2846ea908a245ab8b3c9df7ff34be8c75c27beba8e1f579",
+            ],
+            "2008839c624d3da34ae240086f60196409d619f285365cc3498fdd3a90b72599e4ac2038121decf4ea2dbfd2ad1fe05a32a67448e78bf97a18bc107b4da177c27af752ba20786e2d94b8aaac17b2846ea908a245ab8b3c9df7ff34be8c75c27beba8e1f579ba52a2",
+        )];
         for (threshold, pubkeys, expected_script) in cases {
             let pubkeys = pubkeys
                 .iter()

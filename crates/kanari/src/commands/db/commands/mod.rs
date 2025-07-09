@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use accumulator::MerkleAccumulator;
-use raw_store::rocks::RocksDB;
 use kanari_config::KanariOpt;
 use kanari_store::KanariStore;
 use kanari_types::kanari_network::KanariChainID;
+use raw_store::rocks::RocksDB;
 use std::collections::HashSet;
 use std::path::PathBuf;
 use tracing::info;

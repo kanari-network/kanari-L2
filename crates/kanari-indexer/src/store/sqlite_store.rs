@@ -16,12 +16,12 @@ use crate::models::events::StoredEvent;
 use crate::models::fields::StoredField;
 use crate::models::inscriptions::StoredInscription;
 use crate::models::states::StoredObjectState;
-use crate::models::transactions::{escape_transaction, StoredTransaction};
+use crate::models::transactions::{StoredTransaction, escape_transaction};
 use crate::models::utxos::StoredUTXO;
 use crate::schema::{events, fields, inscriptions, object_states, transactions, utxos};
 use crate::store::metrics::IndexerDBMetrics;
 use crate::utils::escape_sql_string;
-use crate::{get_sqlite_pool_connection, SqliteConnectionPool};
+use crate::{SqliteConnectionPool, get_sqlite_pool_connection};
 
 #[derive(Clone)]
 pub struct SqliteIndexerStore {

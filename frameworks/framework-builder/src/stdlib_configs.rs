@@ -3,7 +3,7 @@
 
 use std::fs;
 
-use crate::{path_in_crate, release_dir, stdlib_version::StdlibVersion, Stdlib, StdlibBuildConfig};
+use crate::{Stdlib, StdlibBuildConfig, path_in_crate, release_dir, stdlib_version::StdlibVersion};
 use anyhow::Result;
 use move_package::BuildConfig;
 use once_cell::sync::Lazy;

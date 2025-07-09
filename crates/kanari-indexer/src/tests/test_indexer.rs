@@ -1,19 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::IndexerStore;
 use crate::indexer_reader::IndexerReader;
 use crate::store::traits::IndexerStoreTrait;
-use crate::IndexerStore;
 use anyhow::Result;
-use metrics::RegistryService;
-use move_core_types::account_address::AccountAddress;
-use move_core_types::vm_status::KeptVMStatus;
-use moveos_types::h256::H256;
-use moveos_types::moveos_std::object::{ObjectEntity, ObjectID, ObjectMeta};
-use moveos_types::moveos_std::tx_context::TxContext;
-use moveos_types::state::MoveStructType;
-use moveos_types::transaction::{TransactionExecutionInfo, VerifiedMoveOSTransaction};
-use rand::random;
 use kanari_config::store_config::DEFAULT_DB_INDEXER_SUBDIR;
 use kanari_types::framework::coin_store::CoinStore;
 use kanari_types::framework::gas_coin::KARI;
@@ -26,6 +17,15 @@ use kanari_types::test_utils::{
     random_remove_fields, random_remove_fields_by_parent_id, random_remove_object_states,
     random_update_fields, random_update_object_states, random_verified_move_action,
 };
+use metrics::RegistryService;
+use move_core_types::account_address::AccountAddress;
+use move_core_types::vm_status::KeptVMStatus;
+use moveos_types::h256::H256;
+use moveos_types::moveos_std::object::{ObjectEntity, ObjectID, ObjectMeta};
+use moveos_types::moveos_std::tx_context::TxContext;
+use moveos_types::state::MoveStructType;
+use moveos_types::transaction::{TransactionExecutionInfo, VerifiedMoveOSTransaction};
+use rand::random;
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn test_transaction_store() -> Result<()> {

@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{
     h256::{self, H256},
     move_types::FunctionId,
@@ -17,8 +16,8 @@ use move_core_types::{
     vm_status::KeptVMStatus,
 };
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize,
+    de::{self, Visitor},
 };
 use std::fmt::{self, Display, Formatter};
 

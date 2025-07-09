@@ -4,12 +4,12 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::{Parser, Subcommand};
-use move_command_line_common::types::ParsedStructType;
-use moveos_types::moveos_std::object::ObjectID;
 use kanari_rpc_api::jsonrpc_types::{
     EnumStructTagOrObjectID, EnumStructTagOrObjectIDView, EventOptions, EventPageView, StrView,
 };
 use kanari_types::error::{KanariError, KanariResult};
+use move_command_line_common::types::ParsedStructType;
+use moveos_types::moveos_std::object::ObjectID;
 use std::str::FromStr;
 
 /// Tool for interacting with event

@@ -34,11 +34,7 @@ impl NodeIndex {
 
     pub fn to_leaf_index(self) -> Option<u64> {
         let level = self.level();
-        if level != 0 {
-            None
-        } else {
-            Some(self.0 >> 1)
-        }
+        if level != 0 { None } else { Some(self.0 >> 1) }
     }
 
     pub fn to_inorder_index(self) -> u64 {

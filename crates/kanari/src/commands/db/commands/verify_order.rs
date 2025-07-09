@@ -6,12 +6,12 @@ use crate::utils::{derive_builtin_genesis_namespace, open_kanari_db};
 use accumulator::accumulator_info::AccumulatorInfo;
 use accumulator::{Accumulator, MerkleAccumulator};
 use clap::Parser;
-use moveos_types::h256::H256;
-use kanari_anomalies::{load_tx_anomalies, AccumulatorIndexMapper};
+use kanari_anomalies::{AccumulatorIndexMapper, load_tx_anomalies};
 use kanari_config::R_OPT_NET_HELP;
 use kanari_store::KanariStore;
 use kanari_types::error::KanariResult;
 use kanari_types::kanari_network::{BuiltinChainID, KanariChainID};
+use moveos_types::h256::H256;
 use std::path::PathBuf;
 use tracing::info;
 

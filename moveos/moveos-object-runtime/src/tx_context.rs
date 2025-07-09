@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use move_binary_format::errors::PartialVMResult;
 use move_vm_types::values::{GlobalValue, StructRef, Value};
 use moveos_types::{moveos_std::tx_context::TxContext, state::MoveState};

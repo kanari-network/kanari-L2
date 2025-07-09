@@ -1,13 +1,12 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use std::collections::BTreeMap;
 
 // use super::object::Object;
 use super::object::{self, ObjectID, ObjectMeta};
 use crate::{
-    addresses::{MOVEOS_STD_ADDRESS, MOVE_STD_ADDRESS},
+    addresses::{MOVE_STD_ADDRESS, MOVEOS_STD_ADDRESS},
     move_std::string::MoveString,
     moveos_std::simple_map::SimpleMap,
 };

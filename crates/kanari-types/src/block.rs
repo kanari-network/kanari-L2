@@ -1,4 +1,4 @@
-// Copyright (c) Kanari Network 
+// Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
 use moveos_types::h256::H256;

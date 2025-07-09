@@ -1,9 +1,9 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use super::authenticator::{BitcoinAuthenticator, BitcoinMultisignAuthenticator};
 use super::RawTransaction;
-use super::{authenticator::Authenticator, AuthenticatorInfo};
+use super::authenticator::{BitcoinAuthenticator, BitcoinMultisignAuthenticator};
+use super::{AuthenticatorInfo, authenticator::Authenticator};
 use crate::address::KanariAddress;
 use crate::crypto::KanariKeyPair;
 use crate::kanari_network::BuiltinChainID;
@@ -267,7 +267,8 @@ impl KanariTransaction {
             vec![],
         );
 
-        let transaction_data = KanariTransactionData::new_for_test(sender, sequence_number, payload);
+        let transaction_data =
+            KanariTransactionData::new_for_test(sender, sequence_number, payload);
 
         let kp = &KanariKeyPair::generate_secp256k1();
         let auth = Authenticator::bitcoin(kp, &transaction_data);

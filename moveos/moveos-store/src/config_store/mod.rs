@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{CONFIG_GENESIS_COLUMN_FAMILY_NAME, CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME};
 use anyhow::Result;
 use moveos_types::genesis_info::GenesisInfo;
 use moveos_types::startup_info::StartupInfo;
-use raw_store::{derive_store, CodecKVStore, StoreInstance};
+use raw_store::{CodecKVStore, StoreInstance, derive_store};
 use std::string::ToString;
 
 pub const STARTUP_INFO_KEY: &str = "startup_info";

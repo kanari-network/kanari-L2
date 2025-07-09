@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -13,7 +12,7 @@ use crate::moveos_std::object::{self, ObjectID};
 use crate::moveos_std::tx_context::TxContext;
 use crate::state::MoveStructType;
 use crate::transaction::FunctionCall;
-use anyhow::{ensure, Error, Result};
+use anyhow::{Error, Result, ensure};
 use move_core_types::account_address::AccountAddress;
 use move_core_types::identifier::IdentStr;
 use move_core_types::language_storage::TypeTag;

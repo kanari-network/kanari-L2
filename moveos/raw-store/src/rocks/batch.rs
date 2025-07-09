@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{CodecWriteBatch, WriteOp};
 use anyhow::Result;
 use moveos_common::utils::to_bytes;
-use serde::de::DeserializeOwned;
 use serde::Serialize;
+use serde::de::DeserializeOwned;
 use std::convert::TryFrom;
 
 #[derive(Debug, Default, Clone)]

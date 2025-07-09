@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::log::ExecutionAndIOCosts;
 use crate::log::ExecutionGasEvent;
 use crate::render::Render;
 use move_core_types::gas_algebra::{GasQuantity, InternalGas};
-use std::collections::{btree_map, BTreeMap};
+use std::collections::{BTreeMap, btree_map};
 
 /// Represents an aggregation of execution gas events, including the count and total gas costs for each type of event.
 ///

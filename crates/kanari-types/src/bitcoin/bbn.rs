@@ -3,13 +3,13 @@
 
 use super::types;
 use crate::{addresses::BITCOIN_MOVE_ADDRESS, into_address::IntoAddress};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use bitcoin::{
+    Address, Amount, Network, PublicKey, Script, ScriptBuf, TapLeafHash, TxOut, XOnlyPublicKey,
     key::Secp256k1,
     opcodes::all::*,
     script::Builder,
     taproot::{LeafVersion, TaprootBuilder, TaprootBuilderError, TaprootSpendInfo},
-    Address, Amount, Network, PublicKey, Script, ScriptBuf, TapLeafHash, TxOut, XOnlyPublicKey,
 };
 use bitcoin::{Transaction, Txid};
 use move_core_types::{

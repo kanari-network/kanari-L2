@@ -4,15 +4,18 @@
 use clap::Parser;
 use codespan_reporting::diagnostic::Severity;
 use codespan_reporting::term::termcolor::Buffer;
-use move_command_line_common::files::{extension_equals, find_filenames, MOVE_EXTENSION};
+use kanari_genesis::{FrameworksGasParameters, KanariGenesisV2};
+use kanari_types::framework::auth_validator::TxValidateResult;
+use kanari_types::function_arg::FunctionArg;
+use move_command_line_common::files::{MOVE_EXTENSION, extension_equals, find_filenames};
 use move_command_line_common::parser::NumberFormat;
 use move_command_line_common::{
     address::{NumericalAddress, ParsedAddress},
     files::verify_and_create_named_address_mapping,
     values::ParsableValue,
 };
-use move_compiler::shared::PackagePaths;
 use move_compiler::FullyCompiledProgram;
+use move_compiler::shared::PackagePaths;
 use move_core_types::{identifier::Identifier, language_storage::ModuleId};
 use move_package::BuildConfig;
 use move_transactional_test_runner::{
@@ -40,9 +43,6 @@ use moveos_verifier::build::build_model;
 use moveos_verifier::metadata::run_extended_checks;
 use once_cell::sync::Lazy;
 use regex::Regex;
-use kanari_genesis::{FrameworksGasParameters, KanariGenesisV2};
-use kanari_types::framework::auth_validator::TxValidateResult;
-use kanari_types::function_arg::FunctionArg;
 use std::path::PathBuf;
 use std::{collections::BTreeMap, path::Path};
 use tracing::debug;

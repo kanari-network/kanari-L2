@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use bech32::{decode, Hrp};
+use bech32::{Hrp, decode};
 use bitcoin::{
     hex::{Case, DisplayHex},
     secp256k1::SecretKey,

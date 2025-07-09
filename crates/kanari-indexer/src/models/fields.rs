@@ -3,11 +3,11 @@
 
 use crate::schema::fields;
 use diesel::prelude::*;
+use kanari_types::indexer::field::IndexerField;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::language_storage::TypeTag;
 use moveos_types::moveos_std::object::{ObjectID, ObjectMeta};
 use moveos_types::state::FieldKey;
-use kanari_types::indexer::field::IndexerField;
 use std::str::FromStr;
 
 #[derive(Queryable, QueryableByName, Insertable, Debug, Clone)]

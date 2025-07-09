@@ -6,7 +6,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader, Read};
 use std::path::PathBuf;
 use std::sync::mpsc::{Receiver, SyncSender};
-use std::sync::{mpsc, Arc};
+use std::sync::{Arc, mpsc};
 use std::thread;
 use std::time::SystemTime;
 
@@ -14,19 +14,19 @@ use clap::Parser;
 use rustc_hash::FxHashSet;
 use tokio::time::Instant;
 
-use moveos_store::MoveOSStore;
-use moveos_types::h256::H256;
-use moveos_types::moveos_std::object::GENESIS_STATE_ROOT;
-use moveos_types::state::{FieldKey, ObjectState};
 use kanari_common::fs::FileCacheManager;
 use kanari_config::R_OPT_NET_HELP;
 use kanari_types::error::KanariResult;
 use kanari_types::kanari_network::KanariChainID;
+use moveos_store::MoveOSStore;
+use moveos_types::h256::H256;
+use moveos_types::moveos_std::object::GENESIS_STATE_ROOT;
+use moveos_types::state::{FieldKey, ObjectState};
 use smt::UpdateSet;
 
 use crate::commands::statedb::commands::utxo::UTXORawData;
 use crate::commands::statedb::commands::{
-    apply_fields, apply_nodes, init_kanari_db, OutpointInscriptionsMap,
+    OutpointInscriptionsMap, apply_fields, apply_nodes, init_kanari_db,
 };
 
 /// Import UTXO & kanari_address:BTC_address mapping only for genesis in development and testing env
@@ -231,12 +231,14 @@ pub(crate) fn apply_address_updates(
             address_mapping_count,
             cnt,
             loop_start_time.elapsed().unwrap(),
-            gen_nodes_cost, apply_nodes_cost
+            gen_nodes_cost,
+            apply_nodes_cost
         );
 
         tracing::debug!(
             "last_kanari_to_bitcoin_address_mapping_state_root: {:?}, new kanari_to_bitcoin_address_mapping_state_root: {:?}",
-            last_kanari_to_bitcoin_address_mapping_state_root,kanari_to_bitcoin_address_mapping_state_root
+            last_kanari_to_bitcoin_address_mapping_state_root,
+            kanari_to_bitcoin_address_mapping_state_root
         );
 
         last_kanari_to_bitcoin_address_mapping_state_root =

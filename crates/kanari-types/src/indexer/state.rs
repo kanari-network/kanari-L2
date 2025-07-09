@@ -9,7 +9,7 @@ use move_core_types::account_address::AccountAddress;
 use move_core_types::effects::Op;
 use move_core_types::language_storage::{StructTag, TypeTag};
 use moveos_types::move_types::type_tag_match;
-use moveos_types::moveos_std::object::{is_dynamic_field_type, ObjectID, ObjectMeta};
+use moveos_types::moveos_std::object::{ObjectID, ObjectMeta, is_dynamic_field_type};
 use moveos_types::state::{MoveStructType, MoveType, ObjectChange, StateChangeSet};
 use once_cell::sync::Lazy;
 use schemars::JsonSchema;

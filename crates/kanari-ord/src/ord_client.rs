@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use anyhow::{Error, Result};
-use reqwest::{header, Client, StatusCode};
 use kanari_types::bitcoin::ord::{InscriptionID, SatPoint};
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use tokio::time::{sleep, Duration};
+use reqwest::{Client, StatusCode, header};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
+use tokio::time::{Duration, sleep};
 use tracing::debug;
 use tracing::warn;
 

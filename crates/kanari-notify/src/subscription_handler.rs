@@ -8,18 +8,18 @@ use anyhow::Result;
 use std::sync::Arc;
 
 use crate::streamer::Streamer;
-use moveos_types::moveos_std::event::Event;
-use moveos_types::moveos_std::tx_context::TxContext;
-use prometheus::{
-    register_int_counter_vec_with_registry, register_int_gauge_vec_with_registry, IntCounterVec,
-    IntGaugeVec, Registry,
-};
 use kanari_rpc_api::jsonrpc_types::event_view::{EventFilterView, IndexerEventView};
 use kanari_rpc_api::jsonrpc_types::transaction_view::{
     TransactionFilterView, TransactionWithInfoView,
 };
 use kanari_types::indexer::event::IndexerEvent;
 use kanari_types::transaction::TransactionWithInfo;
+use moveos_types::moveos_std::event::Event;
+use moveos_types::moveos_std::tx_context::TxContext;
+use prometheus::{
+    IntCounterVec, IntGaugeVec, Registry, register_int_counter_vec_with_registry,
+    register_int_gauge_vec_with_registry,
+};
 use tokio_stream::Stream;
 use tracing::{error, trace};
 
@@ -118,13 +118,15 @@ impl SubscriptionHandler {
             }
         }
         Ok(())
-    }    pub fn subscribe_events(
+    }
+    pub fn subscribe_events(
         &self,
         filter: EventFilterView,
     ) -> impl Stream<Item = IndexerEventView> + use<'_> {
         // pub fn subscribe_events(&self, filter: EventFilterView) -> ReceiverStream<IndexerEventView> {
         self.event_streamer.subscribe(filter)
-    }    pub fn subscribe_transactions(
+    }
+    pub fn subscribe_transactions(
         &self,
         filter: TransactionFilterView,
     ) -> impl Stream<Item = TransactionWithInfoView> + use<'_> {

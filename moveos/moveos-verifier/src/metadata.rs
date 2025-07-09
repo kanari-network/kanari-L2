@@ -1433,8 +1433,13 @@ fn check_func_data_struct(
                 }
             }
 
-            (false, format!("The type argument {} of #[data_struct] for function {} in the module {} is not allowed.",
-            full_struct_name, func_name, full_module_name))
+            (
+                false,
+                format!(
+                    "The type argument {} of #[data_struct] for function {} in the module {} is not allowed.",
+                    full_struct_name, func_name, full_module_name
+                ),
+            )
         }
         SignatureToken::StructInstantiation(struct_handle_index, ty_args) => {
             let shandle = view.struct_handle_at(*struct_handle_index);
@@ -1458,8 +1463,13 @@ fn check_func_data_struct(
                 }
             }
 
-            (false, format!("The type argument {} of #[data_struct] for function {} in the module {} is not allowed.",
-            full_struct_name, func_name, full_module_name))
+            (
+                false,
+                format!(
+                    "The type argument {} of #[data_struct] for function {} in the module {} is not allowed.",
+                    full_struct_name, func_name, full_module_name
+                ),
+            )
         }
         // #[data_struct(T)] supports not only structs, but also primitive types and vectors.
         SignatureToken::Vector(item_type) => {
@@ -1477,8 +1487,13 @@ fn check_func_data_struct(
             // Only when the view is a Script, will view.self_id() return None.
             // However, in our case, we are dealing with a CompiledModule, so it won't be None here.
             let module_id = view.self_id().unwrap().to_string();
-            (false, format!("The type argument of #[data_struct] for function {} in the module {} is not allowed.",
-            func_name, module_id))
+            (
+                false,
+                format!(
+                    "The type argument of #[data_struct] for function {} in the module {} is not allowed.",
+                    func_name, module_id
+                ),
+            )
         }
     }
 }

@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright 2014 The Prometheus Authors
 // Copyright 2019 TiKV Project Authors. Licensed under Apache-2.0.
 
@@ -11,8 +10,8 @@
 // TODO: add example usage once constructor macros are implemented.
 // (For now, look at tests for an example.)
 
-use anyhow::anyhow;
 use anyhow::Result;
+use anyhow::anyhow;
 use prometheus::core;
 use prometheus::proto;
 

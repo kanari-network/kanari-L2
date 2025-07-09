@@ -1,10 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
+use rand;
 use std::collections::BTreeMap;
 use std::ops::Deref;
 use std::sync::{Arc, Mutex, OnceLock};
-use rand;
 use tracing::{debug, error, warn};
 use wasmer::Value::I32;
 use wasmer::*;

@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::address::{BitcoinAddress, MultiChainAddress, KanariAddress};
+use crate::address::{BitcoinAddress, KanariAddress, MultiChainAddress};
 use crate::addresses::KANARI_FRAMEWORK_ADDRESS;
 use anyhow::{Ok, Result};
 use move_core_types::value::MoveTypeLayout;

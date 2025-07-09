@@ -3,8 +3,8 @@
 
 use anyhow::anyhow;
 use kanari_config::settings::KANARI_BATCH_INTERVAL;
-use kanari_store::da_store::DAMetaStore;
 use kanari_store::KanariStore;
+use kanari_store::da_store::DAMetaStore;
 
 struct InProgressBatch {
     tx_order_start: u64,

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::indexer::Filter;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use move_core_types::effects::Op;
 use move_core_types::language_storage::TypeTag;
 use move_core_types::u256::U256;
 use moveos_types::moveos_std::object::{
-    get_bcs_slice, is_dynamic_field_type, parse_dynamic_field_type_tags, ObjectID, ObjectMeta,
-    RawField,
+    ObjectID, ObjectMeta, RawField, get_bcs_slice, is_dynamic_field_type,
+    parse_dynamic_field_type_tags,
 };
 use moveos_types::state::{FieldKey, ObjectChange, ObjectState};
 use serde::{Deserialize, Serialize};

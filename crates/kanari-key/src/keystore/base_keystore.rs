@@ -3,7 +3,7 @@
 
 use super::types::{LocalAccount, LocalSessionKey};
 use crate::keystore::account_keystore::AccountKeystore;
-use anyhow::{ensure, Ok};
+use anyhow::{Ok, ensure};
 use kanari_types::framework::session_key::SessionKey;
 use kanari_types::key_struct::{MnemonicData, MnemonicResult};
 use kanari_types::to_bech32::ToBech32;

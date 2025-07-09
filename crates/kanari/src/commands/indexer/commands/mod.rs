@@ -5,11 +5,11 @@ use std::path::PathBuf;
 
 use anyhow::Result;
 
-use metrics::RegistryService;
 use kanari_config::KanariOpt;
-use kanari_indexer::indexer_reader::IndexerReader;
 use kanari_indexer::IndexerStore;
+use kanari_indexer::indexer_reader::IndexerReader;
 use kanari_types::kanari_network::KanariChainID;
+use metrics::RegistryService;
 
 pub mod bench;
 pub mod rebuild;

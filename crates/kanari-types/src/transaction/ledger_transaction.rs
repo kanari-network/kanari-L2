@@ -5,7 +5,7 @@ use super::{KanariTransaction, TransactionSequenceInfo};
 use crate::crypto::{KanariKeyPair, Signature};
 use crate::{
     address::KanariAddress,
-    multichain_id::{MultiChainID, KanariMultiChainID},
+    multichain_id::{KanariMultiChainID, MultiChainID},
 };
 use accumulator::accumulator_info::AccumulatorInfo;
 use anyhow::Result;

@@ -4,7 +4,7 @@
 use bitcoin::hashes::Hash;
 use clap::Parser;
 use kanari_types::da::chunk::chunk_from_segments;
-use kanari_types::da::segment::{segment_from_bytes, Segment};
+use kanari_types::da::segment::{Segment, segment_from_bytes};
 use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::transaction::{LedgerTransaction, LedgerTxData};
 use std::collections::HashSet;

@@ -4,13 +4,13 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::module_binding::MoveFunctionCaller;
-use moveos_types::moveos_std::object::ObjectID;
-use moveos_types::state::MoveStructType;
 use kanari_rpc_client::Client;
 use kanari_types::address::KanariAddress;
 use kanari_types::error::KanariResult;
 use kanari_types::framework::did::{DIDDocument, DIDModule};
+use moveos_types::module_binding::MoveFunctionCaller;
+use moveos_types::moveos_std::object::ObjectID;
+use moveos_types::state::MoveStructType;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 

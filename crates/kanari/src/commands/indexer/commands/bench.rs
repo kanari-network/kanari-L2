@@ -6,15 +6,15 @@ use std::time::Instant;
 
 use clap::Parser;
 
-use moveos_types::state::MoveStructType;
 use kanari_config::R_OPT_NET_HELP;
-use kanari_indexer::indexer_reader::IndexerReader;
 use kanari_indexer::IndexerStore;
+use kanari_indexer::indexer_reader::IndexerReader;
 use kanari_types::bitcoin::ord::Inscription;
 use kanari_types::bitcoin::utxo::UTXO;
 use kanari_types::error::KanariResult;
 use kanari_types::indexer::state::{IndexerStateID, ObjectStateFilter, ObjectStateType};
 use kanari_types::kanari_network::KanariChainID;
+use moveos_types::state::MoveStructType;
 
 use crate::commands::indexer::commands::init_indexer;
 

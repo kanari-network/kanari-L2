@@ -4,7 +4,7 @@
 use super::types::{OutPoint, Transaction};
 use crate::addresses::BITCOIN_MOVE_ADDRESS;
 use crate::into_address::{FromAddress, IntoAddress};
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use bitcoin::constants::MAX_SCRIPT_ELEMENT_SIZE;
 use bitcoin::{opcodes, script};
 use move_core_types::language_storage::{StructTag, TypeTag};

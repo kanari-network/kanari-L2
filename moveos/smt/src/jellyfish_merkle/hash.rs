@@ -1,15 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use bitcoin_hashes::{hex::FromHex, sha256t_hash_newtype, HashEngine};
+use bitcoin_hashes::{HashEngine, hex::FromHex, sha256t_hash_newtype};
 use bytes::Bytes;
 use more_asserts::debug_assert_lt;
 use once_cell::sync::Lazy;
 use primitive_types::H256;
 #[cfg(any(test, feature = "fuzzing"))]
 use proptest::prelude::*;
-use rand::{rngs::OsRng, Rng};
+use rand::{Rng, rngs::OsRng};
 use std::fmt::{self, Debug};
 
 pub(crate) use bitcoin_hashes::Hash;

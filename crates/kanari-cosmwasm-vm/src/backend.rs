@@ -13,8 +13,8 @@ use move_core_types::vm_status::StatusCode;
 use move_vm_types::loaded_data::runtime_types::Type;
 use move_vm_types::values::Value;
 
-use moveos_object_runtime::runtime_object::RuntimeObject;
 use moveos_object_runtime::TypeLayoutLoader;
+use moveos_object_runtime::runtime_object::RuntimeObject;
 use moveos_types::h256;
 use moveos_types::state::FieldKey;
 use moveos_types::state::MoveState;
@@ -219,7 +219,7 @@ impl<'a> Storage for MoveStorage<'a> {
                 return (
                     Err(BackendError::IteratorDoesNotExist { id: iterator_id }),
                     GasInfo::new(1, 0),
-                )
+                );
             }
         };
 
@@ -360,7 +360,7 @@ impl Storage for MockStorage {
                 return (
                     Err(BackendError::IteratorDoesNotExist { id: iterator_id }),
                     GasInfo::free(),
-                )
+                );
             }
         };
 

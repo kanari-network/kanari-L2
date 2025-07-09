@@ -1,9 +1,9 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use argon2::password_hash::{PasswordHash, PasswordHasher, SaltString};
 use argon2::Argon2;
 use argon2::PasswordVerifier;
+use argon2::password_hash::{PasswordHash, PasswordHasher, SaltString};
 use bip32::{ChildNumber, DerivationPath, XPrv};
 use bip39::{Language, Mnemonic, MnemonicType, Seed};
 use fastcrypto::secp256k1::{Secp256k1KeyPair, Secp256k1PrivateKey};
@@ -32,7 +32,7 @@ pub fn verify_password(
             return Err(KanariError::InvalidPasswordError(format!(
                 "PasswordHash error: {}",
                 err
-            )))
+            )));
         }
     };
     Ok(Argon2::default()
@@ -41,8 +41,8 @@ pub fn verify_password(
 }
 
 pub fn hash_password(nonce: &[u8], password: Option<String>) -> Result<String, KanariError> {
-    let salt =
-        SaltString::encode_b64(nonce).map_err(|e| KanariError::KeyConversionError(e.to_string()))?;
+    let salt = SaltString::encode_b64(nonce)
+        .map_err(|e| KanariError::KeyConversionError(e.to_string()))?;
     let argon2 = Argon2::default();
     let password_hash = argon2
         .hash_password(password.unwrap_or_default().as_bytes(), &salt)

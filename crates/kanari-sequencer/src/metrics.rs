@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use metrics::metrics_util::LATENCY_SEC_BUCKETS;
-use prometheus::{register_histogram_vec_with_registry, HistogramVec, Registry};
+use prometheus::{HistogramVec, Registry, register_histogram_vec_with_registry};
 
 #[derive(Debug)]
 pub struct SequencerMetrics {

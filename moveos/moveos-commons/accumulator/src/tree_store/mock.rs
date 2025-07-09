@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{AccumulatorNode, AccumulatorTreeStore};
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use moveos_types::h256::H256;
 use parking_lot::Mutex;
 use std::collections::HashMap;

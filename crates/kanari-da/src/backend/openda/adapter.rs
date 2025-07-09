@@ -5,8 +5,8 @@ use crate::backend::openda::avail::{
     AvailFusionClientConfig, DEFAULT_AVAIL_MAX_RETRIES, DEFAULT_AVAIL_MAX_SEGMENT_SIZE,
 };
 use crate::backend::openda::celestia::{
-    CelestiaAdapter, WrappedNamespace, DEFAULT_CELESTIA_MAX_RETRIES,
-    DEFAULT_CELESTIA_MAX_SEGMENT_SIZE,
+    CelestiaAdapter, DEFAULT_CELESTIA_MAX_RETRIES, DEFAULT_CELESTIA_MAX_SEGMENT_SIZE,
+    WrappedNamespace,
 };
 use crate::backend::openda::opendal::OpenDalAdapter;
 use anyhow::anyhow;
@@ -350,7 +350,10 @@ mod tests {
         map_config.remove("credential_path");
 
         let result3 = check_scheme_config(scheme, &mut map_config, TEST_NAMESPACE.to_string());
-        assert!(result3.is_err(), "GCS scheme should return Err if neither 'credential' nor 'credential_path' are provided");
+        assert!(
+            result3.is_err(),
+            "GCS scheme should return Err if neither 'credential' nor 'credential_path' are provided"
+        );
 
         assert_eq!(map_config.get("default_storage_class").unwrap(), "STANDARD");
     }

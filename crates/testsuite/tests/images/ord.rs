@@ -4,8 +4,8 @@
 use std::collections::HashMap;
 
 use testcontainers::{
-    core::{ContainerState, ExecCommand, WaitFor},
     Image, ImageArgs,
+    core::{ContainerState, ExecCommand, WaitFor},
 };
 
 const NAME: &str = "bitseed/ord";

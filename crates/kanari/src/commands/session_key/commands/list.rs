@@ -4,11 +4,11 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::module_binding::MoveFunctionCaller;
 use kanari_rpc_api::jsonrpc_types::{StateOptions, StatePageView};
 use kanari_types::address::ParsedAddress;
 use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::framework::session_key::SessionKeyModule;
+use moveos_types::module_binding::MoveFunctionCaller;
 
 /// List all session keys by address
 #[derive(Debug, Parser)]

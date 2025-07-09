@@ -4,7 +4,6 @@
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
-use move_core_types::account_address::AccountAddress;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_rpc_api::jsonrpc_types::KanariAddressView;
 use kanari_types::address::ParsedAddress;
@@ -12,6 +11,7 @@ use kanari_types::{
     address::KanariAddress,
     error::{KanariError, KanariResult},
 };
+use move_core_types::account_address::AccountAddress;
 use std::fmt::Debug;
 
 /// Nullify a keypair from a selected coin id with a Kanari address in kanari.keystore

@@ -1,13 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use futures_util::{SinkExt, Stream, StreamExt};
-use moveos_types::moveos_std::object::ObjectID;
 use kanari_rpc_api::jsonrpc_types::KeptVMStatusView;
 use kanari_rpc_client::wallet_context::WalletContext;
 use kanari_types::address::KanariAddress;
 use kanari_types::framework::oracle::OracleModule;
+use moveos_types::moveos_std::object::ObjectID;
 use serde_json::Value;
 use std::time::Duration;
 use tokio::sync::mpsc;
@@ -152,7 +152,9 @@ pub fn subscribe_http_stream(url: String) -> impl Stream<Item = Result<Value>> {
                                                         );
                                                     }
                                                     TrySendError::Closed(_) => {
-                                                        warn!("Receiver dropped, stopping WebSocket connection");
+                                                        warn!(
+                                                            "Receiver dropped, stopping WebSocket connection"
+                                                        );
                                                         return;
                                                     }
                                                 }

@@ -25,10 +25,12 @@ pub fn verify_and_binding_twitter_account_function_call(
             VERIFY_AND_BINDING_TWITTER_ACCOUNT_FUNCTION.to_owned(),
         ),
         ty_args: vec![],
-        args: vec![MoveString::from(tweet_id)
-            .to_move_value()
-            .simple_serialize()
-            .unwrap()],
+        args: vec![
+            MoveString::from(tweet_id)
+                .to_move_value()
+                .simple_serialize()
+                .unwrap(),
+        ],
     }
 }
 
@@ -42,10 +44,12 @@ pub fn check_binding_tweet_function_call(
             CHECK_BINDING_TWEET_FUNCTION_CALL.to_owned(),
         ),
         ty_args: vec![],
-        args: vec![MoveString::from(tweet_id)
-            .to_move_value()
-            .simple_serialize()
-            .unwrap()],
+        args: vec![
+            MoveString::from(tweet_id)
+                .to_move_value()
+                .simple_serialize()
+                .unwrap(),
+        ],
     }
 }
 

@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::binding_test;
-use moveos_types::module_binding::MoveFunctionCaller;
-use rand::Rng;
 use kanari_types::{
     bitcoin::multisign_account::{self, MultisignAccountModule},
     crypto::KanariKeyPair,
     genesis_config::G_TEST_CONFIG,
     transaction::KanariTransactionData,
 };
+use moveos_types::module_binding::MoveFunctionCaller;
+use rand::Rng;
 
 #[tokio::test]
 async fn test_multisign_account() {
@@ -63,15 +63,21 @@ async fn test_multisign_account() {
     binding_test.execute(tx).unwrap();
 
     let account_module = binding_test.as_module_binding::<MultisignAccountModule>();
-    assert!(account_module
-        .is_participant(multisign_address.into(), u1.into())
-        .unwrap());
-    assert!(account_module
-        .is_participant(multisign_address.into(), u2.into())
-        .unwrap());
-    assert!(account_module
-        .is_participant(multisign_address.into(), u3.into())
-        .unwrap());
+    assert!(
+        account_module
+            .is_participant(multisign_address.into(), u1.into())
+            .unwrap()
+    );
+    assert!(
+        account_module
+            .is_participant(multisign_address.into(), u2.into())
+            .unwrap()
+    );
+    assert!(
+        account_module
+            .is_participant(multisign_address.into(), u3.into())
+            .unwrap()
+    );
 }
 
 #[tokio::test]

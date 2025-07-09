@@ -3,9 +3,9 @@
 
 use crate::cli_types::WalletContextOptions;
 use crate::utils::get_sequencer_keypair;
-use moveos_types::h256::H256;
 use kanari_types::error::KanariResult;
 use kanari_types::transaction::LedgerTransaction;
+use moveos_types::h256::H256;
 
 /// Get transactions by hashes
 #[derive(Debug, clap::Parser)]

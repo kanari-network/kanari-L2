@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::log::FrameName;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::identifier::IdentStr;
@@ -33,13 +32,13 @@ impl<'a> Display for Render<'a, ModuleId> {
 
 impl<'a> Display for Render<'a, (&'a ModuleId, &'a IdentStr, &'a [TypeTag])> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}::{}", Render(self.0 .0), self.0 .1)?;
-        if !self.0 .2.is_empty() {
+        write!(f, "{}::{}", Render(self.0.0), self.0.1)?;
+        if !self.0.2.is_empty() {
             write!(
                 f,
                 "<{}>",
                 self.0
-                     .2
+                    .2
                     .iter()
                     .map(|ty| format!("{}", ty))
                     .collect::<Vec<_>>()

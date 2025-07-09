@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use super::moveos_vm::MoveOSSession;
 use anyhow::bail;
 use move_binary_format::errors::{Location, PartialVMError, PartialVMResult, VMResult};
@@ -12,12 +11,12 @@ use move_vm_runtime::data_cache::TransactionCache;
 use move_vm_runtime::session::{LoadedFunctionInstantiation, Session};
 use move_vm_types::loaded_data::runtime_types::{StructType, Type};
 use moveos_common::types::{ClassifiedGasMeter, SwitchableGasMeter};
-use moveos_object_runtime::resolved_arg::ResolvedArg;
 use moveos_object_runtime::TypeLayoutLoader;
+use moveos_object_runtime::resolved_arg::ResolvedArg;
 use moveos_types::state::ObjectState;
 use moveos_types::{
     move_std::{ascii::MoveAsciiString, string::MoveString},
-    moveos_std::object::{is_object_struct, ObjectID},
+    moveos_std::object::{ObjectID, is_object_struct},
     state::MoveState,
 };
 use moveos_types::{

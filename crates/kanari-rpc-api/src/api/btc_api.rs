@@ -1,12 +1,12 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::RpcResult;
 use crate::jsonrpc_types::btc::ord::InscriptionFilterView;
 use crate::jsonrpc_types::btc::utxo::UTXOFilterView;
 use crate::jsonrpc_types::{
     BytesView, IndexerStateIDView, InscriptionPageView, StrView, UTXOPageView,
 };
-use crate::RpcResult;
 use jsonrpsee::proc_macros::rpc;
 use kanari_open_rpc_macros::open_rpc;
 

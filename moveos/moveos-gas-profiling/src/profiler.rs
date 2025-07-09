@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::log::{CallFrame, ExecutionAndIOCosts, ExecutionGasEvent, FrameName, TransactionGasLog};
 use move_binary_format::file_format::CodeOffset;
 use move_binary_format::file_format_common::Opcodes;

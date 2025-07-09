@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use tabled::{
     builder::Builder,
-    settings::{object::Columns, Modify, Style, Width},
+    settings::{Modify, Style, Width, object::Columns},
 };
 
 /// List all keys by its Kanari address, Base64 encoded public key

@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 #[allow(dead_code)]
 pub mod data_cache;
 pub mod moveos_vm;

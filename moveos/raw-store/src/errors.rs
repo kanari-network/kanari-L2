@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use anyhow::Error;
 
 #[derive(thiserror::Error, Debug)]

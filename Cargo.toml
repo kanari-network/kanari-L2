@@ -228,7 +228,7 @@ smallvec = "1.15.1"
 thiserror = "1.0.69"
 tiny-keccak = { version = "2", features = ["keccak", "sha3"] }
 tiny-bip39 = "2.0.0"
-tokio = { version = "1.45.1", features = ["full"] }
+tokio = { version = "1.46.1", features = ["full"] }
 tokio-tungstenite = { version = "0.24.0", features = ["native-tls"] }
 tokio-stream = "0.1.17"
 tracing = "0.1.41"
@@ -344,8 +344,6 @@ uuid = { version = "1.16.0", features = ["v4", "fast-rng"] }
 protobuf = { version = "3.7.2", features = ["with-bytes"] }
 # windows no longer supports jemalloc, so we need to use tikv-jemallocator
 rocksdb = { version = "0.23.0", features = ["lz4", "mt_static"] }
-# Use jemalloc for Linux and MacOS
-# rocksdb = { version = "0.23.0", features = ["lz4", "mt_static", "jemalloc"] }
 
 # we need to use the bundled version of libsqlite3-sys for Windows
 libsqlite3-sys = { version = "0.33.0", features = ["bundled"] }
@@ -360,11 +358,11 @@ vergen-pretty = "0.3.9"
 crossbeam-channel = "0.5.15"
 inferno = "0.11.21"
 handlebars = "4.2.2"
-indexmap = "2.9.0"
+indexmap = "2.10.0"
 tikv-jemallocator = { git = "https://github.com/jamesatomc/jemallocator.git", features = [
     "unprefixed_malloc_on_supported_platforms",
     "profiling",
-] }
+], rev = "49db433eb9620bdad0bc88a35bf7af28c1cabcf4" }
 mimalloc = { version = "0.1.47" }
 multibase = "0.9.0"
 terminal_size = "0.4.2"

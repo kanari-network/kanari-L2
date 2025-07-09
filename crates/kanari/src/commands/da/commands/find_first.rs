@@ -51,9 +51,9 @@ impl FindFirstCommand {
                     let action = kanari_tx.data.action.clone().to_string();
                     if action.contains(&self.function_id) {
                         println!(
-                                "Found tx with function id {}: tx_order: {}, tx_hash: {:?}, block_number: {}",
-                                self.function_id, tx_order, tx_hash, block_number
-                            );
+                            "Found tx with function id {}: tx_order: {}, tx_hash: {:?}, block_number: {}",
+                            self.function_id, tx_order, tx_hash, block_number
+                        );
                         return Ok(());
                     }
                 };

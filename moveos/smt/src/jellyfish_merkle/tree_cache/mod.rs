@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -78,14 +77,14 @@ mod tree_cache_test;
 
 use super::hash::{SMTNodeHash, SPARSE_MERKLE_PLACEHOLDER_HASH_VALUE};
 use super::{
+    StaleNodeIndex, TreeReader, TreeUpdateBatch,
     hash::SMTHash,
     node_type::{Node, NodeKey},
-    StaleNodeIndex, TreeReader, TreeUpdateBatch,
 };
 use crate::{Key, Value};
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use std::{
-    collections::{hash_map::Entry, BTreeMap, BTreeSet, HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet, HashMap, HashSet, hash_map::Entry},
     convert::Into,
 };
 

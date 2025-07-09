@@ -3,8 +3,8 @@
 
 use serde_json::Value;
 use tabled::{
-    settings::{object::Rows, Disable, Panel, Style},
     Table, Tabled,
+    settings::{Disable, Panel, Style, object::Rows},
 };
 
 // Define the `json_to_table` function to be used by external callers

@@ -3,10 +3,10 @@
 
 use crate::schema::object_states;
 use diesel::prelude::*;
+use kanari_types::indexer::state::{IndexerObjectState, IndexerStateID};
 use move_core_types::account_address::AccountAddress;
 use move_core_types::language_storage::TypeTag;
 use moveos_types::moveos_std::object::{ObjectID, ObjectMeta};
-use kanari_types::indexer::state::{IndexerObjectState, IndexerStateID};
 use std::str::FromStr;
 
 #[derive(Queryable, QueryableByName, Insertable, Debug, Clone)]

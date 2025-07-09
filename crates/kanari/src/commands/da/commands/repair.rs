@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::cli_types::WalletContextOptions;
-use crate::commands::da::commands::{write_down_segments, LedgerTxGetter};
+use crate::commands::da::commands::{LedgerTxGetter, write_down_segments};
 use crate::utils::{get_sequencer_keypair, open_inner_rocks, open_kanari_db};
 use accumulator::accumulator_info::AccumulatorInfo;
 use accumulator::tree_store::rocks::RocksAccumulatorStore;
 use accumulator::{Accumulator, MerkleAccumulator};
 use clap::Parser;
-use moveos_types::h256::H256;
 use kanari_config::R_OPT_NET_HELP;
 use kanari_store::{KanariStore, TX_ACCUMULATOR_NODE_COLUMN_FAMILY_NAME};
 use kanari_types::crypto::KanariKeyPair;
 use kanari_types::kanari_network::KanariChainID;
 use kanari_types::transaction::{LedgerTransaction, TransactionSequenceInfo};
+use moveos_types::h256::H256;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -102,7 +102,8 @@ impl InnerRepair {
             .unwrap_or_else(|| panic!("tx_order: {} not found", first_tx_order - 1));
         let min_timestamp = tx_opt.sequence_info.tx_timestamp;
 
-        let tx_accumulator = Self::build_accumulator(first_tx_order, kanari_store.clone(), db_path)?;
+        let tx_accumulator =
+            Self::build_accumulator(first_tx_order, kanari_store.clone(), db_path)?;
 
         Ok(Self {
             chunk_id,

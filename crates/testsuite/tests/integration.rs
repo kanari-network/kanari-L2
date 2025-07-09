@@ -3,15 +3,15 @@
 
 mod images;
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use clap::Parser;
-use cucumber::{given, then, World as _};
+use cucumber::{World as _, given, then};
 use images::bitcoin::BitcoinD;
 use images::bitseed::Bitseed;
 use images::ord::Ord;
 use jpst::TemplateContext;
 use kanari::KanariCli;
-use kanari_config::{KanariOpt, ServerOpt, KANARI_CONFIG_DIR};
+use kanari_config::{KANARI_CONFIG_DIR, KanariOpt, ServerOpt};
 use kanari_rpc_client::wallet_context::WalletContext;
 use kanari_rpc_server::Service;
 use kanari_types::crypto::KanariKeyPair;
@@ -19,9 +19,9 @@ use serde_json::Value;
 use std::time::Duration;
 use std::{path::Path, vec};
 use testcontainers::{
+    RunnableImage,
     clients::Cli,
     core::{Container, ExecCommand, WaitFor},
-    RunnableImage,
 };
 use tracing::{debug, error, info, trace};
 use uuid::Uuid;

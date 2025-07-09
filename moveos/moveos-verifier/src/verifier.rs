@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use std::cmp::max;
 use std::collections::BTreeMap;
 use std::ops::Deref;
@@ -13,7 +12,7 @@ use move_binary_format::file_format::{
     FunctionInstantiation, FunctionInstantiationIndex, Signature, SignatureToken, StructDefinition,
     StructFieldInformation, StructHandleIndex, Visibility,
 };
-use move_binary_format::{access::ModuleAccess, CompiledModule};
+use move_binary_format::{CompiledModule, access::ModuleAccess};
 use move_core_types::identifier::Identifier;
 use move_core_types::language_storage::ModuleId;
 use move_core_types::resolver::ModuleResolver;
@@ -58,7 +57,7 @@ where
             Ok(_) => {}
             Err(_) => {
                 return Err(PartialVMError::new(StatusCode::VALUE_SERIALIZATION_ERROR)
-                    .finish(Location::Undefined))
+                    .finish(Location::Undefined));
             }
         }
         let budget = 2048 + module_bytes.len() as u64 * 5;
@@ -520,7 +519,10 @@ where
                                         None => {
                                             return generate_vm_error(
                                                 ErrorCode::NOT_ENOUGH_PARAMETERS,
-                                                format!("the function {} does not have enough type arguments.", full_path_func_name),
+                                                format!(
+                                                    "the function {} does not have enough type arguments.",
+                                                    full_path_func_name
+                                                ),
                                                 None,
                                                 module,
                                             );
@@ -664,9 +666,9 @@ pub fn verify_gas_free_function(module: &CompiledModule) -> VMResult<bool> {
                     let full_path_module_name = generate_full_module_name(func_handle_index, view);
 
                     let err_msg = format!(
-                            "function {:?} in module {:?} with incorrect number of parameters or return values.",
-                            gas_validate_function, full_path_module_name
-                        );
+                        "function {:?} in module {:?} with incorrect number of parameters or return values.",
+                        gas_validate_function, full_path_module_name
+                    );
 
                     return generate_vm_error(
                         ErrorCode::TOO_MANY_PARAMETERS,
@@ -926,7 +928,10 @@ where
                                         None => {
                                             return generate_vm_error(
                                                 ErrorCode::NOT_ENOUGH_PARAMETERS,
-                                                format!("the function {} does not have enough type arguments.", full_path_func_name),
+                                                format!(
+                                                    "the function {} does not have enough type arguments.",
+                                                    full_path_func_name
+                                                ),
                                                 None,
                                                 caller_module,
                                             );
@@ -2119,7 +2124,7 @@ pub fn check_metadata_compatibility(
                     "data struct in module is not compatibility with the old one.".to_string(),
                     None,
                     new_module,
-                )
+                );
             }
             Some(v) => {
                 if *v != *is_data_struct {
@@ -2144,7 +2149,7 @@ pub fn check_metadata_compatibility(
                     "data struct func in module is not compatibility with the old one.".to_string(),
                     None,
                     new_module,
-                )
+                );
             }
             Some(v) => {
                 if *v != *data_struct_type_parameters_indicies {
@@ -2172,7 +2177,7 @@ pub fn check_metadata_compatibility(
                     "private generics in module is not compatibility with the old one.".to_string(),
                     None,
                     new_module,
-                )
+                );
             }
             Some(v) => {
                 if *v != *private_generics_type_parameters_indicies {

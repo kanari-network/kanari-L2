@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::jsonrpc_types::{
-    AnnotatedMoveStructView, H256View, HumanReadableDisplay, ObjectIDView, KanariAddressView,
+    AnnotatedMoveStructView, H256View, HumanReadableDisplay, KanariAddressView, ObjectIDView,
     StrView, StructTagView, UnitedAddressView,
+};
+use kanari_types::address::KanariAddress;
+use kanari_types::indexer::Filter;
+use kanari_types::indexer::event::{
+    AnnotatedIndexerEvent, EventFilter, IndexerEvent, IndexerEventID,
 };
 use moveos_types::moveos_std::{
     event::{AnnotatedEvent, Event, EventID},
     object::ObjectID,
 };
-use kanari_types::address::KanariAddress;
-use kanari_types::indexer::event::{
-    AnnotatedIndexerEvent, EventFilter, IndexerEvent, IndexerEventID,
-};
-use kanari_types::indexer::Filter;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

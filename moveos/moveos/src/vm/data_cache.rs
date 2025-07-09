@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use move_vm_runtime::loader::Loader;
 
 use move_binary_format::errors::{Location, PartialVMError, PartialVMResult, VMResult};
@@ -19,7 +18,7 @@ use move_vm_types::{
     loaded_data::runtime_types::Type,
     values::{GlobalValue, Value},
 };
-use moveos_object_runtime::{runtime::ObjectRuntime, TypeLayoutLoader};
+use moveos_object_runtime::{TypeLayoutLoader, runtime::ObjectRuntime};
 use moveos_types::state::{FieldKey, StateChangeSet};
 use moveos_types::{moveos_std::tx_context::TxContext, state_resolver::MoveOSResolver};
 use parking_lot::RwLock;

@@ -7,7 +7,7 @@ use crate::bitcoin::multisign_account;
 use crate::crypto::KanariKeyPair;
 use crate::framework::chain_id::ChainID;
 use crate::genesis_config::{self, GenesisConfig};
-use anyhow::{bail, format_err, Result};
+use anyhow::{Result, bail, format_err};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt;

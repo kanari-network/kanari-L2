@@ -3,10 +3,10 @@
 
 use super::{DataSource, OracleDecimalData, Ticker};
 use crate::data_process;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use futures_util::Stream;
 use move_core_types::u256::U256;
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 use std::pin::Pin;
 use tokio_stream::StreamExt;
 

@@ -52,7 +52,7 @@ impl CommandAction<SFT> for ViewCommand {
                 return Err(KanariError::CommandArgumentError(format!(
                     "Inscription {} is not a valid SFT record",
                     self.sft_inscription_id
-                )))
+                )));
             }
         };
 

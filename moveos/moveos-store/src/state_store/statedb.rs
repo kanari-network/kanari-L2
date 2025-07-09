@@ -1,9 +1,8 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use crate::state_store::metrics::StateDBMetrics;
 use crate::state_store::NodeDBStore;
+use crate::state_store::metrics::StateDBMetrics;
 use anyhow::{Error, Ok, Result};
 use function_name::named;
 use move_core_types::account_address::AccountAddress;

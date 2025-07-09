@@ -3,12 +3,12 @@
 
 use crate::schema::events;
 use diesel::prelude::*;
+use kanari_types::indexer::event::{IndexerEvent, IndexerEventID};
 use move_core_types::account_address::AccountAddress;
 use move_core_types::language_storage::StructTag;
 use moveos_types::h256::H256;
 use moveos_types::moveos_std::event::EventID;
 use moveos_types::moveos_std::object::ObjectID;
-use kanari_types::indexer::event::{IndexerEvent, IndexerEventID};
 use std::str::FromStr;
 
 #[derive(Queryable, QueryableByName, Insertable, Debug, Clone)]

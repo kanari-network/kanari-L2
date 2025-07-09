@@ -1,14 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use std::{cell::Cell, fmt};
 
 use anyhow::Result;
 use primitive_types::H256;
 use serde::{
-    de::{self, DeserializeOwned},
     Deserialize, Serialize,
+    de::{self, DeserializeOwned},
 };
 
 use crate::jellyfish_merkle::hash::{SMTHash, SMTNodeHash};

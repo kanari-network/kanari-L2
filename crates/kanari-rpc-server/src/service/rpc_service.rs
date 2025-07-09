@@ -1,26 +1,12 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{bail, format_err, Result};
+use anyhow::{Result, bail, format_err};
 use bitcoin_client::proxy::BitcoinClientProxy;
 use bitcoincore_rpc::bitcoin::Txid;
 use futures::{Stream, StreamExt};
-use jsonrpsee::core::SubscriptionResult;
 use jsonrpsee::PendingSubscriptionSink;
-use metrics::spawn_monitored_task;
-use move_core_types::account_address::AccountAddress;
-use move_core_types::language_storage::ModuleId;
-use moveos_types::access_path::AccessPath;
-use moveos_types::function_return_value::AnnotatedFunctionResult;
-use moveos_types::h256::H256;
-use moveos_types::module_binding::MoveFunctionCaller;
-use moveos_types::move_types::type_tag_match;
-use moveos_types::moveos_std::display::{get_object_display_id, RawDisplay};
-use moveos_types::moveos_std::event::{AnnotatedEvent, Event, EventID};
-use moveos_types::moveos_std::object::{ObjectID, MAX_OBJECT_IDS_PER_QUERY};
-use moveos_types::state::{AnnotatedState, FieldKey, ObjectState, StateChangeSet};
-use moveos_types::state_resolver::{AnnotatedStateKV, StateKV};
-use moveos_types::transaction::{FunctionCall, TransactionExecutionInfo};
+use jsonrpsee::core::SubscriptionResult;
 use kanari_da::proxy::DAServerProxy;
 use kanari_executor::actor::messages::DryRunTransactionResult;
 use kanari_executor::proxy::ExecutorProxy;
@@ -31,27 +17,41 @@ use kanari_rpc_api::jsonrpc_types::event_view::EventFilterView;
 use kanari_rpc_api::jsonrpc_types::field_view::IndexerFieldView;
 use kanari_rpc_api::jsonrpc_types::transaction_view::TransactionFilterView;
 use kanari_rpc_api::jsonrpc_types::{
-    BitcoinStatus, DisplayFieldsView, IndexerObjectStateView, ObjectMetaView, KanariStatus, Status,
+    BitcoinStatus, DisplayFieldsView, IndexerObjectStateView, KanariStatus, ObjectMetaView, Status,
 };
 use kanari_sequencer::proxy::SequencerProxy;
 use kanari_types::address::{BitcoinAddress, KanariAddress};
-use kanari_types::bitcoin::pending_block::PendingBlockModule;
 use kanari_types::bitcoin::BitcoinModule;
+use kanari_types::bitcoin::pending_block::PendingBlockModule;
 use kanari_types::framework::address_mapping::KanariToBitcoinAddressMapping;
 use kanari_types::indexer::event::{
     AnnotatedIndexerEvent, EventFilter, IndexerEvent, IndexerEventID,
 };
 use kanari_types::indexer::field::{FieldFilter, IndexerField};
 use kanari_types::indexer::state::{
-    IndexerObjectState, IndexerStateID, ObjectStateFilter, ObjectStateType, INSCRIPTION_TYPE_TAG,
+    INSCRIPTION_TYPE_TAG, IndexerObjectState, IndexerStateID, ObjectStateFilter, ObjectStateType,
     UTXO_TYPE_TAG,
 };
 use kanari_types::indexer::transaction::{IndexerTransaction, TransactionFilter};
 use kanari_types::repair::{RepairIndexerParams, RepairIndexerType};
 use kanari_types::state::{StateChangeSetWithTxOrder, SyncStateFilter};
 use kanari_types::transaction::{
-    ExecuteTransactionResponse, LedgerTransaction, KanariTransaction, KanariTransactionData,
+    ExecuteTransactionResponse, KanariTransaction, KanariTransactionData, LedgerTransaction,
 };
+use metrics::spawn_monitored_task;
+use move_core_types::account_address::AccountAddress;
+use move_core_types::language_storage::ModuleId;
+use moveos_types::access_path::AccessPath;
+use moveos_types::function_return_value::AnnotatedFunctionResult;
+use moveos_types::h256::H256;
+use moveos_types::module_binding::MoveFunctionCaller;
+use moveos_types::move_types::type_tag_match;
+use moveos_types::moveos_std::display::{RawDisplay, get_object_display_id};
+use moveos_types::moveos_std::event::{AnnotatedEvent, Event, EventID};
+use moveos_types::moveos_std::object::{MAX_OBJECT_IDS_PER_QUERY, ObjectID};
+use moveos_types::state::{AnnotatedState, FieldKey, ObjectState, StateChangeSet};
+use moveos_types::state_resolver::{AnnotatedStateKV, StateKV};
+use moveos_types::transaction::{FunctionCall, TransactionExecutionInfo};
 use serde::Serialize;
 use std::collections::{BTreeMap, HashMap};
 use std::sync::Arc;
@@ -981,15 +981,15 @@ impl RpcService {
     ) -> SubscriptionResult {
         let permit = self.acquire_subscribe_permit()?;
         let handler = self.subscription_handler.clone();
-        
+
         spawn_monitored_task!(async move {
             let Ok(sink) = sink.accept().await else {
                 return;
             };
             let _permit = permit;
-            
+
             let mut stream = handler.subscribe_events(filter);
-            
+
             while let Some(item) = stream.next().await {
                 let Ok(message) = jsonrpsee::server::SubscriptionMessage::from_json(&item) else {
                     break;
@@ -999,7 +999,7 @@ impl RpcService {
                 };
             }
         });
-        
+
         Ok(())
     }
 
@@ -1010,15 +1010,15 @@ impl RpcService {
     ) -> SubscriptionResult {
         let permit = self.acquire_subscribe_permit()?;
         let handler = self.subscription_handler.clone();
-        
+
         spawn_monitored_task!(async move {
             let Ok(sink) = sink.accept().await else {
                 return;
             };
             let _permit = permit;
-            
+
             let mut stream = handler.subscribe_transactions(filter);
-            
+
             while let Some(item) = stream.next().await {
                 let Ok(message) = jsonrpsee::server::SubscriptionMessage::from_json(&item) else {
                     break;
@@ -1028,8 +1028,7 @@ impl RpcService {
                 };
             }
         });
-        
+
         Ok(())
     }
-    
 }

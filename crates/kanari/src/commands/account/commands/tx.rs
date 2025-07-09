@@ -5,18 +5,18 @@ use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
 use bitcoin::hex::DisplayHex;
 use clap::Parser;
-use moveos_types::transaction::MoveAction;
 use kanari_rpc_api::jsonrpc_types::{
+    H256View, KanariAddressView, KeptVMStatusView, MoveActionTypeView, UnitedAddressView,
     transaction_view::{LedgerTxDataView, TransactionFilterView, TransactionWithInfoView},
-    H256View, KeptVMStatusView, MoveActionTypeView, KanariAddressView, UnitedAddressView,
 };
 use kanari_types::{address::ParsedAddress, error::KanariResult};
+use moveos_types::transaction::MoveAction;
 use std::collections::HashMap;
 use tabled::{
     builder::Builder,
-    settings::{peaker::PriorityRight, Height, Panel, Style, Width},
+    settings::{Height, Panel, Style, Width, peaker::PriorityRight},
 };
-use terminal_size::{terminal_size, Height as TerminalHeight, Width as TerminalWidth};
+use terminal_size::{Height as TerminalHeight, Width as TerminalWidth, terminal_size};
 
 /// List transactions of a holding account on Kanari Network. Requires internet connection and works without kanari init.
 #[derive(Debug, Parser)]

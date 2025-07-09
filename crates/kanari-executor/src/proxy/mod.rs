@@ -16,8 +16,13 @@ use crate::actor::{
         StatesMessage, ValidateL2TxMessage,
     },
 };
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use coerce::actor::ActorRef;
+use kanari_types::bitcoin::network::BitcoinNetwork;
+use kanari_types::framework::chain_id::ChainID;
+use kanari_types::transaction::{
+    KanariTransaction, KanariTransactionData, L1BlockWithBody, L1Transaction,
+};
 use move_core_types::account_address::AccountAddress;
 use moveos_types::function_return_value::{AnnotatedFunctionResult, FunctionResult};
 use moveos_types::h256::H256;
@@ -35,11 +40,6 @@ use moveos_types::{access_path::AccessPath, transaction::VerifiedMoveOSTransacti
 use moveos_types::{
     moveos_std::event::AnnotatedEvent,
     state::{AnnotatedState, ObjectState},
-};
-use kanari_types::bitcoin::network::BitcoinNetwork;
-use kanari_types::framework::chain_id::ChainID;
-use kanari_types::transaction::{
-    L1BlockWithBody, L1Transaction, KanariTransaction, KanariTransactionData,
 };
 use tokio::runtime::Handle;
 

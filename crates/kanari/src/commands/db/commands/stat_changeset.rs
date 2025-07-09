@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::utils::{open_inner_rocks, TxSizeHist};
+use crate::utils::{TxSizeHist, open_inner_rocks};
 use clap::Parser;
 use kanari_store::STATE_CHANGE_SET_COLUMN_FAMILY_NAME;
 use kanari_types::error::KanariResult;

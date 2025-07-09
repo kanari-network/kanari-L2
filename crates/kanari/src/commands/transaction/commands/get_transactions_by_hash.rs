@@ -3,9 +3,9 @@
 
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use async_trait::async_trait;
-use moveos_types::h256::H256;
 use kanari_rpc_api::jsonrpc_types::transaction_view::TransactionWithInfoView;
 use kanari_types::error::KanariResult;
+use moveos_types::h256::H256;
 
 /// Get transactions by hashes
 #[derive(Debug, clap::Parser)]

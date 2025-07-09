@@ -1,14 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::Stdlib;
 use crate::release_dir;
 use crate::stdlib_configs::build_stdlib;
 use crate::stdlib_version::StdlibVersion;
-use crate::Stdlib;
-use anyhow::{bail, ensure, Result};
+use anyhow::{Result, bail, ensure};
 use framework_types::addresses::KANARI_NURSERY_ADDRESS;
 use itertools::Itertools;
-use move_binary_format::{compatibility::Compatibility, errors::PartialVMResult, CompiledModule};
+use move_binary_format::{CompiledModule, compatibility::Compatibility, errors::PartialVMResult};
 use moveos_types::moveos_std::module_store::PackageData;
 use std::collections::HashMap;
 use tracing::{debug, info, warn};

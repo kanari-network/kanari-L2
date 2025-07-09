@@ -20,7 +20,7 @@ use move_vm_types::{
     loaded_data::runtime_types::Type,
     natives::function::NativeResult,
     pop_arg,
-    values::{values_impl::Reference, Struct, Value as MoveValue, Vector},
+    values::{Struct, Value as MoveValue, Vector, values_impl::Reference},
 };
 use tracing::debug;
 
@@ -345,7 +345,7 @@ fn serialize_move_value_to_cbor_value(
         }
         (L::Address, MoveValue::Address(addr)) => CborValue::Bytes(addr.to_vec()),
         (L::Signer, MoveValue::Signer(_a)) => {
-            return Err(anyhow::anyhow!("Do not support Signer type"))
+            return Err(anyhow::anyhow!("Do not support Signer type"));
         }
         (L::Vector(vec_layout), MoveValue::Vector(vec)) => {
             let layout = vec_layout.as_ref();
@@ -374,7 +374,7 @@ fn serialize_move_value_to_cbor_value(
         _ => {
             return Err(anyhow::anyhow!(
                 "Invalid combination of MoveStructLayout and MoveStruct"
-            ))
+            ));
         }
     };
 
@@ -497,7 +497,7 @@ fn serialize_move_struct_to_cbor_value(
                                     _ => {
                                         return Err(anyhow::anyhow!(
                                             "Invalid element in SimpleMap data"
-                                        ))
+                                        ));
                                     }
                                 };
 
@@ -540,7 +540,7 @@ fn serialize_move_struct_to_cbor_value(
         _ => {
             return Err(anyhow::anyhow!(
                 "Invalid combination of MoveStructLayout and MoveStruct"
-            ))
+            ));
         }
     };
 

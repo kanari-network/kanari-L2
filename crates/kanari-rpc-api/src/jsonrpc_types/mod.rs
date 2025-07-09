@@ -6,9 +6,9 @@
 mod str_view;
 mod execute_tx_response;
 mod function_return_value_view;
+mod kanari_types;
 mod module_abi_view;
 mod move_types;
-mod kanari_types;
 mod rpc_options;
 mod state_view;
 mod status;

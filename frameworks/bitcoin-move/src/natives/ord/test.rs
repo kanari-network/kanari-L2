@@ -3,10 +3,10 @@
 
 use super::{inscription::Inscription, inscription_id::InscriptionId};
 use bitcoin::{
+    Address, Amount, BlockHash, OutPoint, ScriptBuf, Sequence, TxIn, TxOut, Txid, Witness,
     address::NetworkUnchecked,
     opcodes,
     script::{self, PushBytesBuf},
-    Address, Amount, BlockHash, OutPoint, ScriptBuf, Sequence, TxIn, TxOut, Txid, Witness,
 };
 
 #[macro_export]

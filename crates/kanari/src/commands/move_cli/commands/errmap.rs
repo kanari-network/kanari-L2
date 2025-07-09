@@ -8,9 +8,9 @@ use crate::cli_types::CommandAction;
 use crate::commands::move_cli::print_serialized_success;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::errmap::Errmap, base::reroot_path, Move};
-use move_package::ModelConfig;
 use kanari_types::error::{KanariError, KanariResult};
+use move_cli::{Move, base::errmap::Errmap, base::reroot_path};
+use move_package::ModelConfig;
 use serde_json::Value;
 
 /// Generate error map for the package and its dependencies at `path` for use by the Move

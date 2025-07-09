@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -78,10 +77,7 @@ impl fmt::Display for AccumulatorInfo {
         write!(
             f,
             "AccumulatorInfo[accumulator_root: {:?}, frozen_subtree_roots: {:?}, num_leaves: {}, num_nodes: {}]",
-            self.accumulator_root,
-            self.frozen_subtree_roots,
-            self.num_leaves,
-            self.num_nodes
+            self.accumulator_root, self.frozen_subtree_roots, self.num_leaves, self.num_nodes
         )
     }
 }

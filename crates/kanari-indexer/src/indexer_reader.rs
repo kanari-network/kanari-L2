@@ -10,24 +10,24 @@ use crate::models::transactions::StoredTransaction;
 use crate::schema::{events, transactions};
 use crate::utils::escape_sql_string;
 use crate::{
-    IndexerResult, IndexerStoreMeta, IndexerTableName, SqliteConnectionConfig,
-    SqliteConnectionPoolConfig, SqlitePoolConnection, DEFAULT_BUSY_TIMEOUT,
-    INDEXER_EVENTS_TABLE_NAME, INDEXER_FIELDS_TABLE_NAME, INDEXER_OBJECT_STATES_TABLE_NAME,
+    DEFAULT_BUSY_TIMEOUT, INDEXER_EVENTS_TABLE_NAME, INDEXER_FIELDS_TABLE_NAME,
     INDEXER_OBJECT_STATE_INSCRIPTIONS_TABLE_NAME, INDEXER_OBJECT_STATE_UTXOS_TABLE_NAME,
-    INDEXER_TRANSACTIONS_TABLE_NAME,
+    INDEXER_OBJECT_STATES_TABLE_NAME, INDEXER_TRANSACTIONS_TABLE_NAME, IndexerResult,
+    IndexerStoreMeta, IndexerTableName, SqliteConnectionConfig, SqliteConnectionPoolConfig,
+    SqlitePoolConnection,
 };
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use diesel::{
-    r2d2::ConnectionManager, Connection, ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection,
+    Connection, ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection, r2d2::ConnectionManager,
 };
 use function_name::named;
-use move_core_types::language_storage::StructTag;
-use moveos_types::moveos_std::object::ObjectID;
-use prometheus::Registry;
 use kanari_types::indexer::event::{EventFilter, IndexerEvent, IndexerEventID};
 use kanari_types::indexer::field::{FieldFilter, IndexerField};
 use kanari_types::indexer::state::{IndexerStateID, ObjectStateFilter, ObjectStateType};
 use kanari_types::indexer::transaction::{IndexerTransaction, TransactionFilter};
+use move_core_types::language_storage::StructTag;
+use moveos_types::moveos_std::object::ObjectID;
+use prometheus::Registry;
 use std::collections::HashMap;
 use std::ops::DerefMut;
 use std::path::PathBuf;
@@ -810,8 +810,14 @@ mod test {
             "0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000::custom::CustomZZZ";
         let (first_bound, second_bound, upper_bound) =
             optimize_object_type_like_query(object_type2);
-        assert_eq!(first_bound, "0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000::custom::CustomZZZ<");
-        assert_eq!(second_bound, "0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000::custom::CustomZZZ=");
+        assert_eq!(
+            first_bound,
+            "0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000::custom::CustomZZZ<"
+        );
+        assert_eq!(
+            second_bound,
+            "0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000::custom::CustomZZZ="
+        );
         assert_eq!(
             upper_bound,
             "0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000::custom::CustomZZ["

@@ -31,7 +31,9 @@ pub static ERROR_DESCRIPTIONS: Lazy<BTreeMap<AccountAddress, ErrorMapping>> = La
     let kanari_framework_err: ErrorMapping = bcs::from_bytes(
         STATIC_FRAMEWORK_DIR
             .get_file("latest/kanari_framework_error_description.errmap")
-            .expect("Failed to find kanari_framework_error_description.errmap in STATIC_FRAMEWORK_DIR")
+            .expect(
+                "Failed to find kanari_framework_error_description.errmap in STATIC_FRAMEWORK_DIR",
+            )
             .contents(),
     )
     .expect("Failed to deserialize kanari_framework_error_description.errmap");
@@ -51,7 +53,9 @@ pub static ERROR_DESCRIPTIONS: Lazy<BTreeMap<AccountAddress, ErrorMapping>> = La
     let kanari_nursery_err: ErrorMapping = bcs::from_bytes(
         STATIC_FRAMEWORK_DIR
             .get_file("latest/kanari_nursery_error_description.errmap")
-            .expect("Failed to find kanari_nursery_error_description.errmap in STATIC_FRAMEWORK_DIR")
+            .expect(
+                "Failed to find kanari_nursery_error_description.errmap in STATIC_FRAMEWORK_DIR",
+            )
             .contents(),
     )
     .expect("Failed to deserialize kanari_nursery_error_description.errmap");

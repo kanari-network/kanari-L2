@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use prometheus::IntGauge;
 use std::future::Future;
 use std::pin::Pin;

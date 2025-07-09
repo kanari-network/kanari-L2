@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -12,8 +11,8 @@ use super::super::hash::{SMTNodeHash, SPARSE_MERKLE_PLACEHOLDER_HASH_VALUE};
 use super::super::nibble_path::NibblePath;
 use super::*;
 use crate::{
-    jellyfish_merkle::mock_tree_store::{TestKey, TestValue},
     EncodeToObject,
+    jellyfish_merkle::mock_tree_store::{TestKey, TestValue},
 };
 use proptest::prelude::*;
 use std::{panic, rc::Rc};

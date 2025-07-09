@@ -1,10 +1,9 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use crate::vm::data_cache::{into_change_set, MoveosDataCache};
+use crate::vm::data_cache::{MoveosDataCache, into_change_set};
 #[cfg(test)]
-use crate::vm::unit_tests::vm_arguments_tests::{make_script_function, RemoteStore};
+use crate::vm::unit_tests::vm_arguments_tests::{RemoteStore, make_script_function};
 use move_binary_format::file_format::{Signature, SignatureToken};
 use move_vm_runtime::data_cache::TransactionCache;
 use move_vm_runtime::move_vm::MoveVM;

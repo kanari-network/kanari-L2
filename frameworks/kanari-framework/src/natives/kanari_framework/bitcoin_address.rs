@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use bitcoin::{
+    KnownHrp, PublicKey, TapNodeHash, XOnlyPublicKey,
     address::{Address, AddressType},
     hashes::Hash,
     hex::DisplayHex,
     secp256k1::Secp256k1,
-    KnownHrp, PublicKey, TapNodeHash, XOnlyPublicKey,
 };
+use kanari_types::address::BitcoinAddress;
 use move_binary_format::errors::{PartialVMError, PartialVMResult};
 use move_core_types::{
     account_address::AccountAddress,
@@ -26,7 +27,6 @@ use moveos_types::{
     move_std::option::MoveOption,
     state::{MoveState, MoveStructState},
 };
-use kanari_types::address::BitcoinAddress;
 use smallvec::smallvec;
 use std::{collections::VecDeque, str::FromStr};
 

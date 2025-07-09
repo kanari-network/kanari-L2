@@ -3,11 +3,11 @@
 
 use anyhow::Result;
 use coerce::actor::message::Message;
-use moveos_types::h256::H256;
 use kanari_types::{
     sequencer::SequencerInfo,
     transaction::{LedgerTransaction, LedgerTxData},
 };
+use moveos_types::h256::H256;
 use serde::{Deserialize, Serialize};
 
 /// Transaction Sequence Message

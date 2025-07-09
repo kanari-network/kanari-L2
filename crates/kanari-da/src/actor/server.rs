@@ -10,20 +10,20 @@ use crate::backend::{DABackend, DABackends};
 use crate::batcher::BatchMaker;
 use anyhow::anyhow;
 use async_trait::async_trait;
+use coerce::actor::Actor;
 use coerce::actor::context::ActorContext;
 use coerce::actor::message::Handler;
-use coerce::actor::Actor;
 use kanari_common::vec::validate_and_extract;
 use kanari_config::da_config::{DAConfig, DEFAULT_DA_BACKGROUND_SUBMIT_INTERVAL};
+use kanari_store::KanariStore;
 use kanari_store::da_store::DAMetaStore;
 use kanari_store::transaction_store::TransactionStore;
-use kanari_store::KanariStore;
 use kanari_types::crypto::KanariKeyPair;
 use kanari_types::da::batch::{BlockRange, DABatch, SignedDABatchMeta};
 use kanari_types::da::status::DAServerStatus;
 use kanari_types::transaction::LedgerTransaction;
-use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::time;
 use std::time::{Duration, SystemTime};
 use tokio::sync::broadcast;
@@ -448,14 +448,17 @@ impl BackgroundSubmitter {
         }
 
         if done_count == 0 {
-            tracing::warn!("da: background submitting job failed: no blocks submitted after checking, should not happen");
+            tracing::warn!(
+                "da: background submitting job failed: no blocks submitted after checking, should not happen"
+            );
         } else {
             self.update_cursor(max_block_number_submitted)
                 .map_err(SubmitBatchError::Recoverable)?;
             tracing::info!(
-            "da: background submitting job done: {} blocks submitted, new avail block number: {}",
-            done_count,
-            max_block_number_submitted);
+                "da: background submitting job done: {} blocks submitted, new avail block number: {}",
+                done_count,
+                max_block_number_submitted
+            );
         }
 
         Ok(())

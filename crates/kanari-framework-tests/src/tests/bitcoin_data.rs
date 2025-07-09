@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use bitcoin::{
-    absolute::LockTime, consensus::deserialize, hex::FromHex, transaction::Version, Amount, Block,
-    Sequence, Transaction, Txid, Witness,
+    Amount, Block, Sequence, Transaction, Txid, Witness, absolute::LockTime,
+    consensus::deserialize, hex::FromHex, transaction::Version,
 };
-use include_dir::{include_dir, Dir};
+use include_dir::{Dir, include_dir};
 use kanari_types::bitcoin::network::Network;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;

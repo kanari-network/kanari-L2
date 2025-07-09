@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use primitive_types::H256;
 use serde::{Deserialize, Serialize};
 use std::fmt;

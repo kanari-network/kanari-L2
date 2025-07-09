@@ -6,17 +6,12 @@ use crate::store::sqlite_store::SqliteIndexerStore;
 use crate::store::traits::IndexerStoreTrait;
 use crate::utils::create_all_tables_if_not_exists;
 use anyhow::Result;
+use diesel::ConnectionError::BadConnection;
+use diesel::RunQueryDsl;
 use diesel::connection::SimpleConnection;
 use diesel::r2d2::ConnectionManager;
 use diesel::sqlite::SqliteConnection;
-use diesel::ConnectionError::BadConnection;
-use diesel::RunQueryDsl;
 use errors::IndexerError;
-use moveos_store::MoveOSStore;
-use moveos_types::moveos_std::object::{is_dynamic_field_type, DynamicField, ObjectID};
-use moveos_types::state_resolver::{RootObjectResolver, StateResolver};
-use once_cell::sync::Lazy;
-use prometheus::Registry;
 use kanari_types::framework::indexer::{FieldIndexerData, IndexerModule};
 use kanari_types::indexer::event::IndexerEvent;
 use kanari_types::indexer::field::{IndexerField, IndexerFieldChanges};
@@ -24,6 +19,11 @@ use kanari_types::indexer::state::{
     IndexerObjectState, IndexerObjectStateChangeSet, IndexerObjectStateChanges, ObjectStateType,
 };
 use kanari_types::indexer::transaction::IndexerTransaction;
+use moveos_store::MoveOSStore;
+use moveos_types::moveos_std::object::{DynamicField, ObjectID, is_dynamic_field_type};
+use moveos_types::state_resolver::{RootObjectResolver, StateResolver};
+use once_cell::sync::Lazy;
+use prometheus::Registry;
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter};
 use std::path::PathBuf;
@@ -409,7 +409,7 @@ impl diesel::r2d2::CustomizeConnection<SqliteConnection, diesel::r2d2::Error>
         }
         // The mmap_size in SQLite is primarily associated with the database file, not the connection.
         pragma_builder.push_str("PRAGMA mmap_size = 1073741824"); // 1GB
-                                                                  // pragma_builder.push_str("PRAGMA mmap_size = 536870912"); // 512MB
+        // pragma_builder.push_str("PRAGMA mmap_size = 536870912"); // 512MB
         conn.batch_execute(&pragma_builder)
             .map_err(diesel::r2d2::Error::QueryError)?;
 

@@ -67,9 +67,9 @@ impl BuiltinAuthValidator {
     }
 
     pub fn from_flag(flag: &str) -> Result<BuiltinAuthValidator, KanariError> {
-        let byte_int = flag
-            .parse::<u8>()
-            .map_err(|_| KanariError::KeyConversionError("Invalid key auth validator".to_owned()))?;
+        let byte_int = flag.parse::<u8>().map_err(|_| {
+            KanariError::KeyConversionError("Invalid key auth validator".to_owned())
+        })?;
         Self::from_flag_byte(byte_int)
     }
 

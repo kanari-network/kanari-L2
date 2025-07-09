@@ -7,18 +7,18 @@ use async_trait::async_trait;
 use bitcoin::{Block, BlockHash};
 use bitcoin_client::proxy::BitcoinClientProxy;
 use bitcoincore_rpc::bitcoincore_rpc_json::GetBlockHeaderResult;
-use coerce::actor::{context::ActorContext, message::Handler, Actor};
+use coerce::actor::{Actor, context::ActorContext, message::Handler};
 use indexmap::IndexMap;
-use moveos_types::module_binding::MoveFunctionCaller;
 use kanari_config::BitcoinRelayerConfig;
 use kanari_executor::proxy::ExecutorProxy;
 use kanari_types::bitcoin::types::BlockHeightHash;
 use kanari_types::into_address::{FromAddress, IntoAddress};
 use kanari_types::{
-    bitcoin::{pending_block::PendingBlockModule, BitcoinModule},
+    bitcoin::{BitcoinModule, pending_block::PendingBlockModule},
     multichain_id::KanariMultiChainID,
     transaction::{L1BlockWithBody, L1Transaction},
 };
+use moveos_types::module_binding::MoveFunctionCaller;
 use std::io::Write;
 use std::path::PathBuf;
 use tracing::{debug, error, info};

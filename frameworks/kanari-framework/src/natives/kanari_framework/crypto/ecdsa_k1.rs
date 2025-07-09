@@ -4,17 +4,17 @@
 // TODO: rename ecdsa_k1 to secp256k1 due to signature types change
 use crate::natives::helpers::{make_module_natives, make_native};
 use bitcoin::{
+    XOnlyPublicKey,
     secp256k1::{
+        Message,
         constants::{PUBLIC_KEY_SIZE, SCHNORR_PUBLIC_KEY_SIZE},
         schnorr::Signature,
-        Message,
     },
-    XOnlyPublicKey,
 };
 use fastcrypto::{
     hash::{Keccak256, Sha256},
     secp256k1::{
-        recoverable::Secp256k1RecoverableSignature, Secp256k1PublicKey, Secp256k1Signature,
+        Secp256k1PublicKey, Secp256k1Signature, recoverable::Secp256k1RecoverableSignature,
     },
     traits::{RecoverableSignature, ToFromBytes},
 };

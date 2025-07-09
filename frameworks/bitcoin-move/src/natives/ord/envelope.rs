@@ -305,7 +305,7 @@ impl RawEnvelope {
 
 #[cfg(test)]
 mod tests {
-    use bitcoin::{transaction::Version, OutPoint, ScriptBuf, Sequence, TxIn, Witness};
+    use bitcoin::{OutPoint, ScriptBuf, Sequence, TxIn, Witness, transaction::Version};
     use {super::super::test::*, super::*, bitcoin::absolute::LockTime};
 
     fn parse(witnesses: &[Witness]) -> Vec<ParsedEnvelope> {

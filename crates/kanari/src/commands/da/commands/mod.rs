@@ -7,12 +7,6 @@ use anyhow::anyhow;
 use heed::byteorder::BigEndian;
 use heed::types::{SerdeBincode, U64};
 use heed::{Database, Env, EnvOpenOptions};
-use metrics::RegistryService;
-use moveos_store::transaction_store::{TransactionDBStore, TransactionStore};
-use moveos_types::h256::H256;
-use moveos_types::moveos_std::object::ObjectMeta;
-use moveos_types::transaction::TransactionExecutionInfo;
-use reqwest::StatusCode;
 use kanari_anomalies::TxAnomalies;
 use kanari_config::KanariOpt;
 use kanari_db::KanariDB;
@@ -20,11 +14,17 @@ use kanari_rpc_client::Client;
 use kanari_store::KanariStore;
 use kanari_types::crypto::KanariKeyPair;
 use kanari_types::da::batch::DABatch;
-use kanari_types::da::chunk::{chunk_from_segments, Chunk, ChunkV0};
-use kanari_types::da::segment::{segment_from_bytes, SegmentID};
+use kanari_types::da::chunk::{Chunk, ChunkV0, chunk_from_segments};
+use kanari_types::da::segment::{SegmentID, segment_from_bytes};
 use kanari_types::kanari_network::KanariChainID;
 use kanari_types::sequencer::SequencerInfo;
 use kanari_types::transaction::{LedgerTransaction, TransactionSequenceInfo};
+use metrics::RegistryService;
+use moveos_store::transaction_store::{TransactionDBStore, TransactionStore};
+use moveos_types::h256::H256;
+use moveos_types::moveos_std::object::ObjectMeta;
+use moveos_types::transaction::TransactionExecutionInfo;
+use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
 use std::cmp::min;
 use std::collections::HashMap;
@@ -35,7 +35,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 use std::sync::Arc;
 use std::time::Duration;
-use tokio::sync::{watch, RwLock};
+use tokio::sync::{RwLock, watch};
 use tokio::time;
 use tracing::{error, info, warn};
 
@@ -267,7 +267,8 @@ pub(crate) fn build_kanari_db(
     opt.store.row_cache_size = row_cache_size;
     opt.store.block_cache_size = block_cache_size;
     let registry_service = RegistryService::default();
-    let kanari_db = KanariDB::init(opt.store_config(), &registry_service.default_registry()).unwrap();
+    let kanari_db =
+        KanariDB::init(opt.store_config(), &registry_service.default_registry()).unwrap();
     let root = kanari_db.latest_root().unwrap().unwrap();
     (root, kanari_db)
 }

@@ -8,8 +8,8 @@ use crate::jsonrpc_types::{
 };
 use bitcoin::hashes::Hash;
 use kanari_types::address::KanariAddress;
-use kanari_types::indexer::transaction::TransactionFilter;
 use kanari_types::indexer::Filter;
+use kanari_types::indexer::transaction::TransactionFilter;
 use kanari_types::transaction::{
     L1Block, L1Transaction, LedgerTransaction, LedgerTxData, TransactionWithInfo,
 };

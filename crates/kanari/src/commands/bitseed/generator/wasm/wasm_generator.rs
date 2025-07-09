@@ -441,8 +441,8 @@ mod tests {
     use crate::commands::bitseed::operation::deploy_args_cbor_encode;
 
     use super::*;
-    use bitcoin::hashes::sha256d;
     use bitcoin::Txid;
+    use bitcoin::hashes::sha256d;
     use bitcoin::{Address, Network};
     use sft::Content;
     use std::str::FromStr;
@@ -627,7 +627,11 @@ mod tests {
         let cbor_bytes = inscribe_output_to_cbor(output);
         let output_hex = hex::encode(cbor_bytes);
 
-        assert!(output_hex == "a366616d6f756e74016a61747472696275746573a2666865696768741901bc6269646f74657374207573657220696e70757467636f6e74656e74a26c636f6e74656e745f747970656a746578742f706c61696e64626f64794c68656c6c6f20776f726c6421", "The inscribe output should be valid");
+        assert!(
+            output_hex
+                == "a366616d6f756e74016a61747472696275746573a2666865696768741901bc6269646f74657374207573657220696e70757467636f6e74656e74a26c636f6e74656e745f747970656a746578742f706c61696e64626f64794c68656c6c6f20776f726c6421",
+            "The inscribe output should be valid"
+        );
     }
 
     #[test]
@@ -652,6 +656,10 @@ mod tests {
         let cbor_bytes = inscribe_output_to_cbor(output);
         let output_hex = hex::encode(cbor_bytes);
 
-        assert!(output_hex == "a366616d6f756e74016a61747472696275746573a2666865696768741901bc6269646f74657374207573657220696e70757467636f6e74656e74a0", "The inscribe output should be valid");
+        assert!(
+            output_hex
+                == "a366616d6f756e74016a61747472696275746573a2666865696768741901bc6269646f74657374207573657220696e70757467636f6e74656e74a0",
+            "The inscribe output should be valid"
+        );
     }
 }

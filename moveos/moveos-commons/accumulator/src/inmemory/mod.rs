@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -20,8 +19,8 @@
 use crate::node_index::NodeIndex;
 use crate::proof::AccumulatorProof;
 use crate::{LeafCount, MAX_ACCUMULATOR_LEAVES};
-use anyhow::{ensure, format_err, Result};
-use moveos_types::h256::{sha3_256_of, ACCUMULATOR_PLACEHOLDER_HASH, H256};
+use anyhow::{Result, ensure, format_err};
+use moveos_types::h256::{ACCUMULATOR_PLACEHOLDER_HASH, H256, sha3_256_of};
 
 /// The Accumulator implementation.
 pub struct InMemoryAccumulator {

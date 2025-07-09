@@ -1,8 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use bech32::{Bech32m, Hrp};
 use move_core_types::account_address::AccountAddress;
 

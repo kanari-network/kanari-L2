@@ -1,7 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
+use move_binary_format::CompiledModule;
 use move_binary_format::binary_views::BinaryIndexedView;
 use move_binary_format::errors::{PartialVMError, PartialVMResult};
 use move_binary_format::file_format::{Bytecode, CompiledScript, StructFieldInformation};
@@ -9,10 +9,9 @@ use move_binary_format::file_format::{
     CodeUnit, FieldInstantiationIndex, FunctionInstantiationIndex, IdentifierIndex,
     ModuleHandleIndex, SignatureIndex, SignatureToken, StructDefInstantiationIndex, TableIndex,
 };
-use move_binary_format::CompiledModule;
 use move_core_types::vm_status::StatusCode;
 use std::cell::RefCell;
-use std::collections::{btree_map, BTreeMap};
+use std::collections::{BTreeMap, btree_map};
 
 const COST_PER_TYPE_NODE: u64 = 8;
 const COST_PER_IDENT_BYTE: u64 = 1;

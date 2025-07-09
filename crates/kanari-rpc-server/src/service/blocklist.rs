@@ -4,18 +4,18 @@
 use crate::service::error::ErrorHandler;
 use axum::body::Body;
 use dashmap::DashMap;
-use http::{request::Request, response::Response, StatusCode};
+use http::{StatusCode, request::Request, response::Response};
 use jsonrpsee::types::ErrorCode;
 use pin_project::pin_project;
 use std::future::Future;
 use std::net::IpAddr;
 use std::pin::Pin;
 use std::sync::Arc;
-use std::task::{ready, Context, Poll};
+use std::task::{Context, Poll, ready};
 use std::time::{Duration, SystemTime};
 use tower::{Layer, Service};
-use tower_governor::key_extractor::{KeyExtractor, SmartIpKeyExtractor};
 use tower_governor::GovernorError;
+use tower_governor::key_extractor::{KeyExtractor, SmartIpKeyExtractor};
 
 type Blocklist = Arc<DashMap<IpAddr, SystemTime>>;
 type RejectionMap = Arc<DashMap<IpAddr, Rejection>>;

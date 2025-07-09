@@ -68,7 +68,10 @@ pub fn tx_exec_benchmark(c: &mut Criterion) {
 
             let heights = find_block_height(&btc_blk_dir).unwrap();
             if heights.is_empty() {
-                panic!("No btc block data found in {:?}, please set the btc rpc config to prepare the data.", btc_blk_dir);
+                panic!(
+                    "No btc block data found in {:?}, please set the btc rpc config to prepare the data.",
+                    btc_blk_dir
+                );
             }
             for (cnt, height) in heights.into_iter().enumerate() {
                 if cnt >= tx_cnt {

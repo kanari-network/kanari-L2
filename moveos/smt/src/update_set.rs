@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{Key, SMTObject, Value};
 use std::collections::BTreeMap;
 

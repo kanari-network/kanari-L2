@@ -1,8 +1,8 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::{release_dir, Stdlib};
-use anyhow::{anyhow, Result};
+use crate::{Stdlib, release_dir};
+use anyhow::{Result, anyhow};
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::fmt::Formatter;

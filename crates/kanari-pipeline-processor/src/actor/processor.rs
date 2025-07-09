@@ -5,19 +5,12 @@ use super::messages::{
     ExecuteL1BlockMessage, ExecuteL1TxMessage, ExecuteL2TxMessage, GetServiceStatusMessage,
 };
 use crate::metrics::PipelineProcessorMetrics;
-use anyhow::{anyhow, Error, Result};
+use anyhow::{Error, Result, anyhow};
 use async_trait::async_trait;
 use bitcoin::hashes::Hash;
 use bitcoin_client::proxy::BitcoinClientProxy;
-use coerce::actor::{context::ActorContext, message::Handler, Actor, LocalActorRef};
+use coerce::actor::{Actor, LocalActorRef, context::ActorContext, message::Handler};
 use function_name::named;
-use moveos::moveos::VMPanicError;
-use moveos_types::h256::H256;
-use moveos_types::moveos_std::event::Event;
-use moveos_types::moveos_std::tx_context::TxContext;
-use moveos_types::state::StateChangeSetExt;
-use moveos_types::transaction::VerifiedMoveOSTransaction;
-use prometheus::Registry;
 use kanari_da::actor::messages::{AppendTransactionMessage, RevertTransactionMessage};
 use kanari_da::proxy::DAServerProxy;
 use kanari_db::KanariDB;
@@ -31,10 +24,17 @@ use kanari_types::transaction::TransactionWithInfo;
 use kanari_types::{
     service_status::ServiceStatus,
     transaction::{
-        ExecuteTransactionResponse, L1BlockWithBody, L1Transaction, LedgerTransaction,
-        LedgerTxData, KanariTransaction,
+        ExecuteTransactionResponse, KanariTransaction, L1BlockWithBody, L1Transaction,
+        LedgerTransaction, LedgerTxData,
     },
 };
+use moveos::moveos::VMPanicError;
+use moveos_types::h256::H256;
+use moveos_types::moveos_std::event::Event;
+use moveos_types::moveos_std::tx_context::TxContext;
+use moveos_types::state::StateChangeSetExt;
+use moveos_types::transaction::VerifiedMoveOSTransaction;
+use prometheus::Registry;
 use std::io;
 use std::sync::Arc;
 use tracing::{debug, info};
@@ -139,7 +139,8 @@ impl PipelineProcessorActor {
                         }
                         None => {
                             return Err(anyhow::anyhow!(
-                                "The bitcoin client proxy should be initialized before processing the sequenced l1_block_tx(block: {:?}) on startup", block
+                                "The bitcoin client proxy should be initialized before processing the sequenced l1_block_tx(block: {:?}) on startup",
+                                block
                             ));
                         }
                     }
@@ -156,7 +157,9 @@ impl PipelineProcessorActor {
                         Err(err) => {
                             tracing::error!(
                                 "Execute L2 Tx failed while VM panic occurred in process_sequenced_tx_on_startup. error: {:?}; tx_order: {}, tx_hash {:?}",
-                                err, tx_order, tx_hash
+                                err,
+                                tx_order,
+                                tx_hash
                             );
                             return Err(err);
                         }
@@ -231,13 +234,13 @@ impl PipelineProcessorActor {
     ) {
         if is_vm_panic_error(err) {
             tracing::error!(
-                    "Execute {} failed while VM panic occurred. error: {:?}, tx_order: {}, tx_hash: {:?}, {}",
-                    tx_type,
-                    err,
-                    tx_order,
-                    tx_hash,
-                    details.unwrap_or("")
-                );
+                "Execute {} failed while VM panic occurred. error: {:?}, tx_order: {}, tx_hash: {:?}, {}",
+                tx_type,
+                err,
+                tx_order,
+                tx_hash,
+                details.unwrap_or("")
+            );
             if tx_type != "L2Tx" {
                 let _ = self.update_service_status(ServiceStatus::Maintenance).await; // okay to ignore
                 info!("set service to Maintenance mode and pause the relayer");
@@ -254,9 +257,9 @@ impl PipelineProcessorActor {
         let ret = self.kanari_db.revert_tx(tx_hash);
         if let Err(e) = ret {
             tracing::error!(
-                    "Revert tx failed, set service to Maintenance mode and pause the relayer. error: {:?}",
-                    e,
-                );
+                "Revert tx failed, set service to Maintenance mode and pause the relayer. error: {:?}",
+                e,
+            );
             self.update_service_status(ServiceStatus::Maintenance).await;
         }
     }

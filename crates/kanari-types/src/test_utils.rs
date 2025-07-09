@@ -10,7 +10,7 @@ use ethers::types::H256;
 use move_core_types::account_address::AccountAddress;
 use moveos_types::moveos_std::object::ObjectID;
 use moveos_types::state::FieldKey;
-use rand::{thread_rng, Rng};
+use rand::{Rng, thread_rng};
 
 use crate::crypto::KanariKeyPair;
 use crate::indexer::field::IndexerField;
@@ -45,7 +45,9 @@ pub fn random_ledger_transaction_with_order(
     LedgerTransaction::new_l2_tx(kanari_transaction, random_sequence_info)
 }
 
-pub fn random_kanari_transaction_with_move_action(move_action: MoveActionType) -> KanariTransaction {
+pub fn random_kanari_transaction_with_move_action(
+    move_action: MoveActionType,
+) -> KanariTransaction {
     let mut rng = thread_rng();
     let sequence_number = rng.gen_range(1..=100);
     let tx_data = KanariTransactionData::new_for_test(

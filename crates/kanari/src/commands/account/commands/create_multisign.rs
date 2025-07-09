@@ -5,13 +5,13 @@ use crate::cli_types::{CommandAction, TransactionOptions, WalletContextOptions};
 use anyhow::Result;
 use async_trait::async_trait;
 use clap::Parser;
-use moveos_types::module_binding::MoveFunctionCaller;
 use kanari_rpc_api::jsonrpc_types::BytesView;
 use kanari_types::{
     address::KanariAddress,
     bitcoin::multisign_account::{self, MultisignAccountModule},
     error::KanariResult,
 };
+use moveos_types::module_binding::MoveFunctionCaller;
 use serde::{Deserialize, Serialize};
 
 /// Create a new multisigin account on-chain.

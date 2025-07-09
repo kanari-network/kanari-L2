@@ -1,14 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use std::fmt;
 use std::sync::{Arc, Mutex};
 
 use wasmer::wasmparser::Operator;
 use wasmer::{LocalFunctionIndex, MiddlewareError, MiddlewareReaderState, ModuleMiddleware, Type};
 use wasmer_types::{
-    entity::PrimaryMap, ExportIndex, FunctionIndex, FunctionType, ImportIndex, ImportKey,
+    ExportIndex, FunctionIndex, FunctionType, ImportIndex, ImportKey, entity::PrimaryMap,
 };
 
 type CostFunction = dyn Fn(&Operator) -> u64 + Send + Sync;

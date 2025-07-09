@@ -1,14 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 use super::hash::*;
 use super::node_type::{SparseMerkleInternalNode, SparseMerkleLeafNode};
 use crate::{Key, Value};
-use anyhow::{bail, ensure, Result};
+use anyhow::{Result, bail, ensure};
 use primitive_types::H256;
 use serde::{Deserialize, Serialize};
 

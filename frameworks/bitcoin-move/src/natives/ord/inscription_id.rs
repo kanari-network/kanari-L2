@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Code from https://github.com/ordinals/ord/
 
-use bitcoin::{hashes::Hash, Txid};
+use bitcoin::{Txid, hashes::Hash};
 use kanari_types::into_address::IntoAddress;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::{

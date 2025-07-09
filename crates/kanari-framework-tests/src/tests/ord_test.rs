@@ -3,14 +3,14 @@
 
 use crate::{
     binding_test,
-    tests::bitcoin_data::{bitcoin_tx_from_hex, load_tx, load_tx_info, TxInfo},
+    tests::bitcoin_data::{TxInfo, bitcoin_tx_from_hex, load_tx, load_tx_info},
 };
 use bitcoin::Transaction;
-use moveos_types::module_binding::MoveFunctionCaller;
 use kanari_types::bitcoin::{
     network::Network,
     ord::{Envelope, InscriptionRecord},
 };
+use moveos_types::module_binding::MoveFunctionCaller;
 use tracing::debug;
 
 fn decode_inscription(
@@ -110,9 +110,13 @@ async fn test_local_tx() {
     let _ = tracing_subscriber::fmt::try_init();
     let mut binding_test = binding_test::RustBindingTest::new().unwrap();
     //commit tx
-    let btx_tx = bitcoin_tx_from_hex("01000000000101303a8b5191266d37103f6c4c6033019b59d98ac468e07f61ddbc6f50b204a7eb0000000000fdffffff029b270000000000002251201d44f728e28f6ffa0b0094edabefb466a348e1e7adbf2ff0e7e70abd2ed8871bcbd0029500000000225120ae68b97d450930db183dede9c33fbb1c147a69672ecc3100a75f9be25c50f0cf014064cf4601628581d59a8dc482f10c67106ffad818869e733d9cabbdab73240da556aa4d04afd5fa1e72d5ca1ea4fa151385e3e8a7596ebd3959212c2a57696c8400000000");
+    let btx_tx = bitcoin_tx_from_hex(
+        "01000000000101303a8b5191266d37103f6c4c6033019b59d98ac468e07f61ddbc6f50b204a7eb0000000000fdffffff029b270000000000002251201d44f728e28f6ffa0b0094edabefb466a348e1e7adbf2ff0e7e70abd2ed8871bcbd0029500000000225120ae68b97d450930db183dede9c33fbb1c147a69672ecc3100a75f9be25c50f0cf014064cf4601628581d59a8dc482f10c67106ffad818869e733d9cabbdab73240da556aa4d04afd5fa1e72d5ca1ea4fa151385e3e8a7596ebd3959212c2a57696c8400000000",
+    );
     decode_inscription(&mut binding_test, btx_tx);
     //reveal tx
-    let btc_tx = bitcoin_tx_from_hex("010000000001019cea25cbdacc895f9dbb85e4bfb7aa51d04cc69cc7f75ed49da3ff3f442f2e7f0000000000fdffffff01102700000000000022512036646c76dd6505025341c7cc1cf6c22fcc638c47454945da1948a4637a86f9200340e7f99517f921be44b83854b05d7eb98f7c1a9a0cd373ade7e29c1bcc321190bef1766976726641b69ccc61f9ea62ea55b97e644ec47a15481d3b70b0c44d008f4c207f6ef96528b25ace707fe33f4a23113c824da971dab921a2ad311c309edf0944ac0063036f7264010118746578742f706c61696e3b636861727365743d7574662d38000668656c6c6f0a6821c17f6ef96528b25ace707fe33f4a23113c824da971dab921a2ad311c309edf094400000000");
+    let btc_tx = bitcoin_tx_from_hex(
+        "010000000001019cea25cbdacc895f9dbb85e4bfb7aa51d04cc69cc7f75ed49da3ff3f442f2e7f0000000000fdffffff01102700000000000022512036646c76dd6505025341c7cc1cf6c22fcc638c47454945da1948a4637a86f9200340e7f99517f921be44b83854b05d7eb98f7c1a9a0cd373ade7e29c1bcc321190bef1766976726641b69ccc61f9ea62ea55b97e644ec47a15481d3b70b0c44d008f4c207f6ef96528b25ace707fe33f4a23113c824da971dab921a2ad311c309edf0944ac0063036f7264010118746578742f706c61696e3b636861727365743d7574662d38000668656c6c6f0a6821c17f6ef96528b25ace707fe33f4a23113c824da971dab921a2ad311c309edf094400000000",
+    );
     decode_inscription(&mut binding_test, btc_tx);
 }

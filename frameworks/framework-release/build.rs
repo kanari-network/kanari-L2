@@ -110,8 +110,12 @@ fn main() {
                 // On Windows, if we get a stack overflow or similar error,
                 // we should still try to continue the build process
                 if cfg!(windows) {
-                    println!("cargo:warning=Framework build failed on Windows, this may cause runtime issues");
-                    println!("cargo:warning=Consider building on a non-Windows platform for full functionality");
+                    println!(
+                        "cargo:warning=Framework build failed on Windows, this may cause runtime issues"
+                    );
+                    println!(
+                        "cargo:warning=Consider building on a non-Windows platform for full functionality"
+                    );
                 }
             }
         }

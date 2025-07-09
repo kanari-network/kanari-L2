@@ -4,7 +4,7 @@
 use crate::cli_types::CommandAction;
 use anyhow::Result;
 use async_trait::async_trait;
-use bitcoin::{consensus::Encodable, Psbt, Transaction, Txid};
+use bitcoin::{Psbt, Transaction, Txid, consensus::Encodable};
 use broadcast_tx::BroadcastTx;
 use build_tx::BuildTx;
 use clap::{Parser, Subcommand};

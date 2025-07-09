@@ -5,9 +5,9 @@ use crate::natives::helpers::{make_module_natives, make_native};
 use better_any::{Tid, TidAble};
 use itertools::zip_eq;
 use move_binary_format::{
+    CompiledModule,
     compatibility::Compatibility,
     errors::{PartialVMError, PartialVMResult},
-    CompiledModule,
 };
 use move_core_types::u256::U256;
 use move_core_types::{

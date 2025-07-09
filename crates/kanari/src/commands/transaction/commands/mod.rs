@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use anyhow::Result;
-use moveos_types::h256::H256;
 use kanari_types::transaction::{
-    kanari::PartiallySignedKanariTransaction, KanariTransaction, KanariTransactionData,
+    KanariTransaction, KanariTransactionData, kanari::PartiallySignedKanariTransaction,
 };
+use moveos_types::h256::H256;
 use serde::{Deserialize, Serialize};
 use std::{env, fs::File, io::Write, path::PathBuf};
 
@@ -36,7 +36,9 @@ impl FileOutputData {
         match self {
             FileOutputData::KanariTransactionData(data) => data.sender.to_bech32(),
             FileOutputData::SignedKanariTransaction(data) => data.sender().to_bech32(),
-            FileOutputData::PartiallySignedKanariTransaction(data) => data.signatories().to_string(),
+            FileOutputData::PartiallySignedKanariTransaction(data) => {
+                data.signatories().to_string()
+            }
         }
     }
 

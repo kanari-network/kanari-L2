@@ -1,15 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use moveos_types::h256::{sha3_256_of, ACCUMULATOR_PLACEHOLDER_HASH, H256};
+use moveos_types::h256::{ACCUMULATOR_PLACEHOLDER_HASH, H256, sha3_256_of};
 
 use crate::{
-    node_index::NodeIndex, tree_store::mock::MockAccumulatorStore, Accumulator, AccumulatorNode,
-    AccumulatorTreeStore, LeafCount, MerkleAccumulator,
+    Accumulator, AccumulatorNode, AccumulatorTreeStore, LeafCount, MerkleAccumulator,
+    node_index::NodeIndex, tree_store::mock::MockAccumulatorStore,
 };
 use std::time::SystemTime;
 use std::{collections::HashMap, sync::Arc};

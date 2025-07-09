@@ -1,21 +1,18 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::client_config::{ClientConfig, DEFAULT_EXPIRATION_SECS};
 use crate::Client;
-use anyhow::{anyhow, Result};
+use crate::client_config::{ClientConfig, DEFAULT_EXPIRATION_SECS};
+use anyhow::{Result, anyhow};
+use bitcoin::PrivateKey;
 use bitcoin::key::Secp256k1;
 use bitcoin::psbt::{GetKey, KeyRequest};
 use bitcoin::secp256k1::Signing;
-use bitcoin::PrivateKey;
-use move_core_types::account_address::AccountAddress;
-use moveos_types::moveos_std::gas_schedule::GasScheduleConfig;
-use moveos_types::transaction::MoveAction;
 use kanari_config::config::{Config, PersistedConfig};
-use kanari_config::{kanari_config_dir, KANARI_CLIENT_CONFIG};
+use kanari_config::{KANARI_CLIENT_CONFIG, kanari_config_dir};
+use kanari_key::keystore::Keystore;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_key::keystore::file_keystore::FileBasedKeystore;
-use kanari_key::keystore::Keystore;
 use kanari_rpc_api::jsonrpc_types::{ExecuteTransactionResponseView, KeptVMStatusView, TxOptions};
 use kanari_types::address::KanariAddress;
 use kanari_types::address::{BitcoinAddress, ParsedAddress};
@@ -26,6 +23,9 @@ use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
 use kanari_types::transaction::kanari::{KanariTransaction, KanariTransactionData};
 use kanari_types::{addresses, crypto};
+use move_core_types::account_address::AccountAddress;
+use moveos_types::moveos_std::gas_schedule::GasScheduleConfig;
+use moveos_types::transaction::MoveAction;
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -75,7 +75,10 @@ impl WalletContext {
                     .addresses()
                     .pop()
                     .ok_or_else(|| anyhow!("No address in the keystore"))?;
-                info!("The active address {} is not in the keystore, auto change the active address to the first address in the keystore: {}", active_address, first_address);
+                info!(
+                    "The active address {} is not in the keystore, auto change the active address to the first address in the keystore: {}",
+                    active_address, first_address
+                );
                 client_config.active_address = Some(first_address);
                 client_config.save()?;
                 first_address

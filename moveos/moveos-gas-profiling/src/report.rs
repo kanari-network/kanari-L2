@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::log::TransactionGasLog;
 use anyhow::Result;
 use handlebars::Handlebars;
 use move_core_types::gas_algebra::InternalGas;
-use serde_json::{json, Map, Value};
+use serde_json::{Map, Value, json};
 use std::fmt::Write;
 use std::path::Path;
 use std::{fmt, fs};

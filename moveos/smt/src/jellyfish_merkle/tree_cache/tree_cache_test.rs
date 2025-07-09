@@ -1,14 +1,13 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use super::super::{node_type::Node, NodeKey};
+use super::super::{NodeKey, node_type::Node};
 use super::*;
 use crate::jellyfish_merkle::mock_tree_store::{MockTestStore, TestKey, TestValue};
 

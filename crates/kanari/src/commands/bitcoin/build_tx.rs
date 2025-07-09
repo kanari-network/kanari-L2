@@ -1,18 +1,18 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use super::transaction_builder::TransactionBuilder;
 use super::FileOutput;
+use super::transaction_builder::TransactionBuilder;
 use crate::cli_types::{CommandAction, WalletContextOptions};
 use crate::commands::bitcoin::FileOutputData;
 use async_trait::async_trait;
 use bitcoin::absolute::LockTime;
 use bitcoin::{Amount, FeeRate, OutPoint};
 use clap::Parser;
-use moveos_types::moveos_std::object::ObjectID;
 use kanari_types::address::ParsedAddress;
 use kanari_types::bitcoin::utxo::derive_utxo_id;
 use kanari_types::error::{KanariError, KanariResult};
+use moveos_types::moveos_std::object::ObjectID;
 use std::str::FromStr;
 use tracing::debug;
 
@@ -57,9 +57,9 @@ impl FromStr for ParsedOutput {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let (addr_part, amount_part) = s
-            .split_once(':')
-            .ok_or_else(|| KanariError::CommandArgumentError("Invalid output format".to_string()))?;
+        let (addr_part, amount_part) = s.split_once(':').ok_or_else(|| {
+            KanariError::CommandArgumentError("Invalid output format".to_string())
+        })?;
         let address = ParsedAddress::parse(addr_part)?;
         let amount = u64::from_str(amount_part)?;
         Ok(ParsedOutput {

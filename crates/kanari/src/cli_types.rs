@@ -3,7 +3,6 @@
 
 use async_trait::async_trait;
 use clap::{ArgGroup, Parser};
-use moveos_types::h256::H256;
 use kanari_key::key_derive::verify_password;
 use kanari_key::keystore::account_keystore::AccountKeystore;
 use kanari_rpc_client::wallet_context::WalletContext;
@@ -11,6 +10,7 @@ use kanari_types::address::ParsedAddress;
 use kanari_types::authentication_key::AuthenticationKey;
 use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::transaction::authenticator::Authenticator;
+use moveos_types::h256::H256;
 use rpassword::prompt_password;
 use serde::Serialize;
 use std::env;

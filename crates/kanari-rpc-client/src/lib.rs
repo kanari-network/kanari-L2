@@ -1,9 +1,10 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use anyhow::{ensure, Error, Result};
+use anyhow::{Error, Result, ensure};
 use jsonrpsee::core::client::ClientT;
 use jsonrpsee::http_client::{HttpClient, HttpClientBuilder};
+use kanari_client::KanariRpcClient;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::language_storage::{ModuleId, StructTag};
 use move_core_types::metadata::Metadata;
@@ -20,7 +21,6 @@ use moveos_types::{
     function_return_value::FunctionResult, module_binding::MoveFunctionCaller,
     moveos_std::tx_context::TxContext, transaction::FunctionCall,
 };
-use kanari_client::KanariRpcClient;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::runtime::Handle;

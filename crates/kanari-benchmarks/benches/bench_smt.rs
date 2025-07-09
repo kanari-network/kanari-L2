@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use criterion::measurement::WallTime;
-use criterion::{criterion_group, criterion_main, BenchmarkGroup, BenchmarkId, Criterion};
+use criterion::{BenchmarkGroup, BenchmarkId, Criterion, criterion_group, criterion_main};
 use ethers::types::H256;
-use moveos_types::moveos_std::object::GENESIS_STATE_ROOT;
-use kanari_benchmarks::smt::{gen_kv_from_seed, prepare_change_set, Blob};
+use kanari_benchmarks::smt::{Blob, gen_kv_from_seed, prepare_change_set};
 use kanari_framework_tests::binding_test;
+use moveos_types::moveos_std::object::GENESIS_STATE_ROOT;
 use smt::{InMemoryNodeStore, NodeReader, NodeWriter, SMTree, TreeChangeSet};
 
 fn bench_get_with_proof(c: &mut Criterion) {

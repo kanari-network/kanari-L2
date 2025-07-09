@@ -3,7 +3,7 @@
 
 use std::collections::HashMap;
 
-use testcontainers::{core::WaitFor, Image, ImageArgs};
+use testcontainers::{Image, ImageArgs, core::WaitFor};
 
 const NAME: &str = "bitseed/bitseed";
 const TAG: &str = "0.1.8";

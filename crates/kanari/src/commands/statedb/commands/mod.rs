@@ -1,11 +1,17 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::commands::statedb::commands::inscription::{derive_inscription_ids, InscriptionSource};
+use crate::commands::statedb::commands::inscription::{InscriptionSource, derive_inscription_ids};
 use anyhow::{Error, Result};
-use bitcoin::hashes::Hash;
 use bitcoin::OutPoint;
+use bitcoin::hashes::Hash;
 use csv::Writer;
+use kanari_common::fs::FileCacheManager;
+use kanari_config::KanariOpt;
+use kanari_db::KanariDB;
+use kanari_types::bitcoin::ord::{Inscription, InscriptionID};
+use kanari_types::error::KanariError;
+use kanari_types::kanari_network::KanariChainID;
 use metrics::RegistryService;
 use moveos_store::MoveOSStore;
 use moveos_types::h256::H256;
@@ -14,12 +20,6 @@ use moveos_types::move_std::string::MoveString;
 use moveos_types::moveos_std::object::{ObjectID, ObjectMeta};
 use moveos_types::moveos_std::simple_multimap::{Element, SimpleMultiMap};
 use moveos_types::state::{FieldKey, MoveType, ObjectState};
-use kanari_common::fs::FileCacheManager;
-use kanari_config::KanariOpt;
-use kanari_db::KanariDB;
-use kanari_types::bitcoin::ord::{Inscription, InscriptionID};
-use kanari_types::error::KanariError;
-use kanari_types::kanari_network::KanariChainID;
 use smt::{TreeChangeSet, UpdateSet};
 use std::collections::BTreeMap;
 use std::fmt::{Debug, Display};
@@ -506,8 +506,8 @@ mod tests {
 
     use super::*;
     use bitcoin::Txid;
-    use rand::Rng;
     use kanari_types::into_address::IntoAddress;
+    use rand::Rng;
     use tempfile::tempdir;
 
     impl OutpointInscriptionsMap {
@@ -525,7 +525,7 @@ mod tests {
 
     fn random_outpoint() -> OutPoint {
         let mut rng = rand::thread_rng();
-        let txid: Txid = Txid::from_slice(&rng. r#gen::<[u8; 32]>()).unwrap();
+        let txid: Txid = Txid::from_slice(&rng.r#gen::<[u8; 32]>()).unwrap();
         let vout: u32 = rng.r#gen();
 
         OutPoint { txid, vout }

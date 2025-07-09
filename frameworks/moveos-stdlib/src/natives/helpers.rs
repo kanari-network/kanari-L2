@@ -25,9 +25,9 @@ pub fn make_module_natives(
 pub fn make_native<G>(
     gas_params: G,
     func: impl Fn(&G, &mut NativeContext, Vec<Type>, VecDeque<Value>) -> PartialVMResult<NativeResult>
-        + Sync
-        + Send
-        + 'static,
+    + Sync
+    + Send
+    + 'static,
 ) -> NativeFunction
 where
     G: Send + Sync + 'static,

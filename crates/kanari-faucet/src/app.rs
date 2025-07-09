@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{
-    faucet_proxy::FaucetProxy, DiscordConfig, FaucetError, FaucetRequest, FaucetRequestWithInviter,
+    DiscordConfig, FaucetError, FaucetRequest, FaucetRequestWithInviter, faucet_proxy::FaucetProxy,
 };
-use move_core_types::u256::U256;
 use kanari_rpc_api::jsonrpc_types::UnitedAddressView;
-use std::sync::{atomic::AtomicBool, Arc};
-use tokio::sync::{mpsc::Receiver, RwLock};
+use move_core_types::u256::U256;
+use std::sync::{Arc, atomic::AtomicBool};
+use tokio::sync::{RwLock, mpsc::Receiver};
 
 #[derive(Clone, Debug)]
 pub struct App {

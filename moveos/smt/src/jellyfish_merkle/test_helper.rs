@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -10,8 +9,8 @@
 
 use super::hash::*;
 use super::{
-    mock_tree_store::{MockTestStore, TestKey, TestValue},
     JellyfishMerkleTree,
+    mock_tree_store::{MockTestStore, TestKey, TestValue},
 };
 use crate::EncodeToObject;
 use std::collections::HashMap;

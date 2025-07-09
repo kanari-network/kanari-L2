@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::addresses::MOVEOS_STD_ADDRESS;
 use crate::state::{MoveStructState, MoveStructType};
 use move_core_types::{account_address::AccountAddress, ident_str, identifier::IdentStr};

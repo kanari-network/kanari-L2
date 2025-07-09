@@ -3,10 +3,30 @@
 
 use accumulator::accumulator_info::AccumulatorInfo;
 use accumulator::{Accumulator, MerkleAccumulator};
-use anyhow::{ensure, Result};
-use framework_builder::stdlib_version::StdlibVersion;
+use anyhow::{Result, ensure};
 use framework_builder::Stdlib;
-use include_dir::{include_dir, Dir};
+use framework_builder::stdlib_version::StdlibVersion;
+use include_dir::{Dir, include_dir};
+use kanari_db::KanariDB;
+use kanari_framework::KANARI_FRAMEWORK_ADDRESS;
+use kanari_framework::natives::gas_parameter::gas_member::{
+    FromOnChainGasSchedule, InitialGasSchedule, ToOnChainGasSchedule,
+};
+use kanari_indexer::store::traits::IndexerStoreTrait;
+use kanari_store::state_store::StateStore;
+use kanari_types::bitcoin::genesis::BitcoinGenesisContext;
+use kanari_types::error::GenesisError;
+use kanari_types::framework::chain_id::ChainID;
+use kanari_types::indexer::event::IndexerEvent;
+use kanari_types::indexer::state::{
+    IndexerObjectStateChangeSet, IndexerObjectStatesIndexGenerator, handle_object_change,
+};
+use kanari_types::indexer::transaction::IndexerTransaction;
+use kanari_types::into_address::IntoAddress;
+use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
+use kanari_types::sequencer::SequencerInfo;
+use kanari_types::transaction::kanari::KanariTransaction;
+use kanari_types::transaction::{LedgerTransaction, LedgerTxData};
 use move_core_types::gas_algebra::{InternalGas, InternalGasPerArg};
 use move_core_types::value::MoveTypeLayout;
 use move_core_types::{account_address::AccountAddress, identifier::Identifier};
@@ -28,26 +48,6 @@ use moveos_types::transaction::{
 };
 use moveos_types::{h256, state_resolver};
 use once_cell::sync::Lazy;
-use kanari_db::KanariDB;
-use kanari_framework::natives::gas_parameter::gas_member::{
-    FromOnChainGasSchedule, InitialGasSchedule, ToOnChainGasSchedule,
-};
-use kanari_framework::KANARI_FRAMEWORK_ADDRESS;
-use kanari_indexer::store::traits::IndexerStoreTrait;
-use kanari_store::state_store::StateStore;
-use kanari_types::bitcoin::genesis::BitcoinGenesisContext;
-use kanari_types::error::GenesisError;
-use kanari_types::framework::chain_id::ChainID;
-use kanari_types::indexer::event::IndexerEvent;
-use kanari_types::indexer::state::{
-    handle_object_change, IndexerObjectStateChangeSet, IndexerObjectStatesIndexGenerator,
-};
-use kanari_types::indexer::transaction::IndexerTransaction;
-use kanari_types::into_address::IntoAddress;
-use kanari_types::kanari_network::{BuiltinChainID, KanariNetwork};
-use kanari_types::sequencer::SequencerInfo;
-use kanari_types::transaction::kanari::KanariTransaction;
-use kanari_types::transaction::{LedgerTransaction, LedgerTxData};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -717,18 +717,18 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use move_core_types::identifier::Identifier;
-    use move_core_types::language_storage::ModuleId;
-    use move_core_types::resolver::{ModuleResolver, MoveResolver};
-    use moveos_types::moveos_std::module_store::{ModuleStore, Package};
-    use moveos_types::state::MoveStructType;
-    use moveos_types::state_resolver::{RootObjectResolver, StateResolver};
     use kanari_config::KanariOpt;
     use kanari_db::KanariDB;
     use kanari_framework::KANARI_FRAMEWORK_ADDRESS;
     use kanari_types::bitcoin::multisign_account::MultisignAccountInfo;
     use kanari_types::bitcoin::network::BitcoinNetwork;
     use kanari_types::kanari_network::KanariNetwork;
+    use move_core_types::identifier::Identifier;
+    use move_core_types::language_storage::ModuleId;
+    use move_core_types::resolver::{ModuleResolver, MoveResolver};
+    use moveos_types::moveos_std::module_store::{ModuleStore, Package};
+    use moveos_types::state::MoveStructType;
+    use moveos_types::state_resolver::{RootObjectResolver, StateResolver};
     use state_resolver::StateReaderExt;
     use tracing::info;
 
@@ -871,11 +871,15 @@ mod tests {
 
     #[test]
     fn test_genesis_load_from_binary() {
-        assert!(load_genesis_from_binary(BuiltinChainID::Test)
-            .unwrap()
-            .is_some());
-        assert!(load_genesis_from_binary(BuiltinChainID::Main)
-            .unwrap()
-            .is_some());
+        assert!(
+            load_genesis_from_binary(BuiltinChainID::Test)
+                .unwrap()
+                .is_some()
+        );
+        assert!(
+            load_genesis_from_binary(BuiltinChainID::Main)
+                .unwrap()
+                .is_some()
+        );
     }
 }

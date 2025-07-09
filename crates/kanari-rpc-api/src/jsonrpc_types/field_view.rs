@@ -4,8 +4,8 @@
 use crate::jsonrpc_types::{
     AnnotatedMoveStructView, FieldKeyView, ObjectIDVecView, ObjectStateView, StrView,
 };
-use moveos_types::state::{AnnotatedState, ObjectState};
 use kanari_types::indexer::field::{FieldFilter, IndexerField};
+use moveos_types::state::{AnnotatedState, ObjectState};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

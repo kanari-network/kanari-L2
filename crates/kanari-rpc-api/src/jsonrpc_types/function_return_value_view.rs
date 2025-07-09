@@ -3,8 +3,8 @@
 
 use super::{AbortLocationView, BytesView};
 use crate::jsonrpc_types::{
-    move_types::{AnnotatedMoveValueView, TypeTagView},
     StrView,
+    move_types::{AnnotatedMoveValueView, TypeTagView},
 };
 use move_core_types::vm_status::{StatusCode, VMStatus};
 use moveos_types::function_return_value::{

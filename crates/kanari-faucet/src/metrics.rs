@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use prometheus::{
-    register_histogram_with_registry, register_int_counter_with_registry, Histogram, IntCounter,
-    Registry,
+    Histogram, IntCounter, Registry, register_histogram_with_registry,
+    register_int_counter_with_registry,
 };
 
 /// Prometheus metrics which can be displayed in Grafana, queried and alerted on

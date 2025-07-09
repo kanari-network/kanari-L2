@@ -7,16 +7,16 @@ mod tests {
     use crate::indexer_reader::IndexerReader;
     use crate::models::events::StoredEvent;
     use crate::schema::events;
-    use crate::{get_sqlite_pool_connection, IndexerStore, INDEXER_EVENTS_TABLE_NAME};
+    use crate::{INDEXER_EVENTS_TABLE_NAME, IndexerStore, get_sqlite_pool_connection};
     use anyhow::Result;
     use diesel::RunQueryDsl;
+    use kanari_config::store_config::DEFAULT_DB_INDEXER_SUBDIR;
+    use kanari_types::indexer::event::IndexerEvent;
+    use kanari_types::test_utils::random_ledger_transaction;
     use metrics::RegistryService;
     use move_core_types::account_address::AccountAddress;
     use moveos_types::moveos_std::tx_context::TxContext;
     use moveos_types::test_utils::random_event;
-    use kanari_config::store_config::DEFAULT_DB_INDEXER_SUBDIR;
-    use kanari_types::indexer::event::IndexerEvent;
-    use kanari_types::test_utils::random_ledger_transaction;
     use std::thread;
     use std::time::Duration;
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::commands::bitseed::operation::{MintRecord, SplitRecord};
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use ciborium::Value;
 use serde::{Deserialize, Serialize};
 

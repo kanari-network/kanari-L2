@@ -5,7 +5,7 @@ use anyhow::Result;
 use coerce::actor::message::Message;
 use kanari_types::{
     service_status::ServiceStatus,
-    transaction::{ExecuteTransactionResponse, L1BlockWithBody, L1Transaction, KanariTransaction},
+    transaction::{ExecuteTransactionResponse, KanariTransaction, L1BlockWithBody, L1Transaction},
 };
 
 #[derive(Clone)]

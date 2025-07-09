@@ -9,10 +9,7 @@ use anyhow::Result;
 use async_trait::async_trait;
 use bitcoin_client::actor::client::BitcoinClientActor;
 use bitcoin_client::proxy::BitcoinClientProxy;
-use coerce::actor::{context::ActorContext, message::Handler, Actor, LocalActorRef};
-use move_core_types::vm_status::KeptVMStatus;
-use moveos_eventbus::bus::EventData;
-use moveos_types::module_binding::MoveFunctionCaller;
+use coerce::actor::{Actor, LocalActorRef, context::ActorContext, message::Handler};
 use kanari_config::{BitcoinRelayerConfig, EthereumRelayerConfig};
 use kanari_executor::proxy::ExecutorProxy;
 use kanari_notify::actor::NotifyActor;
@@ -24,6 +21,9 @@ use kanari_types::error::KanariError;
 use kanari_types::multichain_id::KanariMultiChainID;
 use kanari_types::service_status::ServiceStatus;
 use kanari_types::transaction::{L1BlockWithBody, L1Transaction};
+use move_core_types::vm_status::KeptVMStatus;
+use moveos_eventbus::bus::EventData;
+use moveos_types::module_binding::MoveFunctionCaller;
 use std::ops::Deref;
 use tracing::{debug, error, info, warn};
 
@@ -143,7 +143,10 @@ impl RelayerActor {
             Err(error) => {
                 // Handle specific KanariError::L1TxAlreadyExecuted case
                 if error.downcast_ref::<KanariError>() == Some(&KanariError::L1TxAlreadyExecuted) {
-                    info!("Relayer has skip execute relay tx(txid: {}) due to it has been already executed", txid);
+                    info!(
+                        "Relayer has skip execute relay tx(txid: {}) due to it has been already executed",
+                        txid
+                    );
                 } else {
                     error!(
                         "Relayer execute relay tx(txid: {}) failed, error: {}",

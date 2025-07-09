@@ -1,15 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::moveos_std::account::Account;
 use crate::moveos_std::module_store::Package;
 use crate::state::FieldKey;
 use crate::{
     move_types::{random_identity, random_struct_tag},
-    moveos_std::object::{ObjectID, MAX_OBJECT_IDS_PER_QUERY},
+    moveos_std::object::{MAX_OBJECT_IDS_PER_QUERY, ObjectID},
 };
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use move_core_types::language_storage::ModuleId;
 use move_core_types::{
     account_address::AccountAddress, identifier::Identifier, language_storage::StructTag,
@@ -464,7 +463,9 @@ mod tests {
             "/resource/0x1/0x2::m::S<0x2::m1::S1,0x2::m1::S1>,0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>",
         );
         test_path_roundtrip("/resource/0x1/0x2::m::S<0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>>");
-        test_path_roundtrip("/resource/0x1/0x2::m::S<0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>>,0x2::m::S<0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>>");
+        test_path_roundtrip(
+            "/resource/0x1/0x2::m::S<0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>>,0x2::m::S<0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>>",
+        );
         test_path_roundtrip("/resource/0x1/0x2::m1::S1,0x3::m2::S2");
         test_path_roundtrip(
             "/resource/0x1/0x2::m::S<0x2::m1::S1,0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>>,0x2::m1::S1<0x1::m1::S1,0x1::m1::S1>,0x2::m1::S1<0x1::m1::S1,0x1::m1::S1<0x1::m1::S1,0x1::m1::S1>>",
@@ -476,6 +477,8 @@ mod tests {
         test_path_roundtrip(
             "/fields/0x1/0x2159d0daf46fb5a9e6f75e3ec0a892c1d7d3f447aec35e48674e19bbb080a2ca",
         );
-        test_path_roundtrip("/fields/0x1/0x2159d0daf46fb5a9e6f75e3ec0a892c1d7d3f447aec35e48674e19bbb080a2ca,0x5a193b3014eac29d5f06d815046d905a92b90e64a1881af023e7853e204bfb63");
+        test_path_roundtrip(
+            "/fields/0x1/0x2159d0daf46fb5a9e6f75e3ec0a892c1d7d3f447aec35e48674e19bbb080a2ca,0x5a193b3014eac29d5f06d815046d905a92b90e64a1881af023e7853e204bfb63",
+        );
     }
 }

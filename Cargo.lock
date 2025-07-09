@@ -187,7 +187,7 @@ dependencies = [
  "derive_more 1.0.0",
  "foldhash",
  "hashbrown 0.15.2",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "itoa",
  "k256",
  "keccak-asm",
@@ -383,7 +383,7 @@ dependencies = [
  "blake2",
  "derivative",
  "digest 0.10.7",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -1208,7 +1208,7 @@ dependencies = [
  "rand_core 0.6.4",
  "ripemd",
  "secp256k1 0.27.0",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "subtle",
  "zeroize",
 ]
@@ -1598,7 +1598,7 @@ version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bf88ba1141d185c399bee5288d850d63b8369520c1eafc32a0430b5b6c287bf4"
 dependencies = [
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "tinyvec",
 ]
 
@@ -1836,7 +1836,7 @@ dependencies = [
  "ruint",
  "serde 1.0.219",
  "serde_repr",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "tendermint",
  "tendermint-proto",
  "thiserror 1.0.69",
@@ -2129,7 +2129,7 @@ dependencies = [
  "hmac",
  "k256",
  "serde 1.0.219",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 1.0.69",
 ]
 
@@ -2145,7 +2145,7 @@ dependencies = [
  "once_cell",
  "pbkdf2 0.12.2",
  "rand 0.8.5",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 1.0.69",
 ]
 
@@ -2164,7 +2164,7 @@ dependencies = [
  "ripemd",
  "serde 1.0.219",
  "serde_derive",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "sha3 0.10.8",
  "thiserror 1.0.69",
 ]
@@ -2370,7 +2370,7 @@ dependencies = [
  "p256",
  "rand_core 0.6.4",
  "rayon",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 1.0.69",
 ]
 
@@ -2401,7 +2401,7 @@ dependencies = [
  "schemars",
  "serde 1.0.219",
  "serde-json-wasm",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "static_assertions",
  "thiserror 1.0.69",
 ]
@@ -2424,7 +2424,7 @@ dependencies = [
  "schemars",
  "serde 1.0.219",
  "serde_json",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "strum 0.26.3",
  "thiserror 1.0.69",
  "tracing",
@@ -3553,7 +3553,7 @@ dependencies = [
  "hashbrown 0.14.5",
  "hex",
  "rand_core 0.6.4",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "zeroize",
 ]
 
@@ -3785,7 +3785,7 @@ dependencies = [
  "scrypt 0.10.0",
  "serde 1.0.219",
  "serde_json",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "sha3 0.10.8",
  "thiserror 1.0.69",
  "uuid 0.8.2",
@@ -4112,7 +4112,7 @@ dependencies = [
  "eth-keystore",
  "ethers-core",
  "rand 0.8.5",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 1.0.69",
  "tracing",
 ]
@@ -4332,7 +4332,7 @@ dependencies = [
  "serde 1.0.219",
  "serde_json",
  "serde_with 3.9.0",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "sha3 0.10.8",
  "signature",
  "static_assertions",
@@ -5013,7 +5013,7 @@ dependencies = [
  "futures-sink",
  "futures-util",
  "http 0.2.12",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "slab",
  "tokio",
  "tokio-util",
@@ -5032,7 +5032,7 @@ dependencies = [
  "futures-core",
  "futures-sink",
  "http 1.3.1",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "slab",
  "tokio",
  "tokio-util",
@@ -5829,9 +5829,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cea70ddb795996207ad57735b50c5982d8844f38ba9ee5f1aedcfb708a2aa11e"
+checksum = "fe4cd85333e22411419a0bcae1297d25e58c9443848b11dc6a86fefe8c78a661"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.2",
@@ -5850,7 +5850,7 @@ dependencies = [
  "crossbeam-utils",
  "dashmap 6.1.0",
  "env_logger",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "is-terminal",
  "itoa",
  "log",
@@ -5906,6 +5906,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab08d7cd2c5897f2c949e5383ea7c7db03fb19130ffcfbf7eda795137ae3cb83"
 dependencies = [
  "rustversion",
+]
+
+[[package]]
+name = "io-uring"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b86e202f00093dcba4275d4636b93ef9dd75d025ae560d2521b45ea28ab49013"
+dependencies = [
+ "bitflags 2.9.1",
+ "cfg-if",
+ "libc",
 ]
 
 [[package]]
@@ -6422,7 +6433,7 @@ dependencies = [
  "ecdsa",
  "elliptic-curve",
  "once_cell",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "signature",
 ]
 
@@ -7097,7 +7108,7 @@ dependencies = [
  "coerce",
  "ethers",
  "hex",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "kanari-config",
  "kanari-executor",
  "kanari-notify",
@@ -7505,7 +7516,7 @@ dependencies = [
  "hkdf",
  "multihash",
  "quick-protobuf",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 2.0.12",
  "tracing",
 ]
@@ -8955,7 +8966,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e787133eafbd0f386dc4e26828a50f7595d6d7213ea0e8244c1ca6b9a9648c30"
 dependencies = [
  "bytes",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -9404,7 +9415,7 @@ dependencies = [
  "ecdsa",
  "elliptic-curve",
  "primeorder",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -9621,7 +9632,7 @@ dependencies = [
  "digest 0.10.7",
  "hmac",
  "password-hash 0.4.2",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -9746,7 +9757,7 @@ checksum = "d7a240022f37c361ec1878d646fc5b7d7c4d28d5946e1a80ad5a7a4f4ca0bdcd"
 dependencies = [
  "once_cell",
  "pest",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -9766,7 +9777,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b4c5cc86750666a3ed20bdaf5ca2a0344f9c67674cae0515bec2da16fbaa47db"
 dependencies = [
  "fixedbitset 0.4.2",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
 ]
 
 [[package]]
@@ -9923,7 +9934,7 @@ dependencies = [
  "der 0.7.9",
  "pbkdf2 0.12.2",
  "scrypt 0.11.0",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "spki 0.7.3",
 ]
 
@@ -10954,7 +10965,7 @@ dependencies = [
  "serde 1.0.219",
  "serde_json",
  "sha1",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -11071,7 +11082,7 @@ dependencies = [
  "revm-primitives",
  "ripemd",
  "secp256k1 0.29.0",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "substrate-bn",
 ]
 
@@ -11247,7 +11258,7 @@ dependencies = [
  "pkcs1 0.4.1",
  "pkcs8 0.9.0",
  "rand_core 0.6.4",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "signature",
  "subtle",
  "zeroize",
@@ -11267,7 +11278,7 @@ dependencies = [
  "pkcs1 0.7.5",
  "pkcs8 0.10.2",
  "rand_core 0.6.4",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "signature",
  "spki 0.7.3",
  "subtle",
@@ -11663,7 +11674,7 @@ dependencies = [
  "hmac",
  "pbkdf2 0.11.0",
  "salsa20",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -11674,7 +11685,7 @@ checksum = "0516a385866c09368f0b5bcd1caff3366aace790fcd46e2bb032697bb172fd1f"
 dependencies = [
  "pbkdf2 0.12.2",
  "salsa20",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -11988,7 +11999,7 @@ version = "1.0.140"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20068b6e96dc6c9bd23e01df8827e6c7e1f2fddd43c21810382803c136b99373"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "itoa",
  "memchr",
  "ryu",
@@ -12083,7 +12094,7 @@ dependencies = [
  "chrono",
  "hex",
  "indexmap 1.9.3",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "serde 1.0.219",
  "serde_derive",
  "serde_json",
@@ -12145,7 +12156,7 @@ version = "0.9.34+deprecated"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a8b1a1a2ebf674015cc02edccce75287f1a0130d394307b36743c2f5d504b47"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "itoa",
  "ryu",
  "serde 1.0.219",
@@ -12222,9 +12233,9 @@ dependencies = [
 
 [[package]]
 name = "sha2"
-version = "0.10.8"
+version = "0.10.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "793db75ad2bcafc3ffa7c68b215fee268f537982cd901d132f89c6343f3a3dc8"
+checksum = "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283"
 dependencies = [
  "cfg-if",
  "cpufeatures",
@@ -12700,7 +12711,7 @@ dependencies = [
  "semver 1.0.23",
  "serde 1.0.219",
  "serde_json",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 1.0.69",
  "url",
  "zip",
@@ -12950,7 +12961,7 @@ dependencies = [
  "serde_bytes",
  "serde_json",
  "serde_repr",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "signature",
  "subtle",
  "subtle-encoding",
@@ -13047,7 +13058,7 @@ dependencies = [
  "rand 0.8.5",
  "serde 1.0.219",
  "serde_json",
- "sha2 0.10.8",
+ "sha2 0.10.9",
 ]
 
 [[package]]
@@ -13071,7 +13082,7 @@ dependencies = [
  "kanari-types",
  "rand 0.8.5",
  "serde_json",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "testcontainers",
  "tokio",
  "tracing",
@@ -13151,7 +13162,7 @@ dependencies = [
 [[package]]
 name = "tikv-jemalloc-sys"
 version = "0.6.0+5.3.0-1-ge13ca993e8ccb9ba9847cc330696e02839f328f7"
-source = "git+https://github.com/jamesatomc/jemallocator.git#49db433eb9620bdad0bc88a35bf7af28c1cabcf4"
+source = "git+https://github.com/jamesatomc/jemallocator.git?rev=49db433eb9620bdad0bc88a35bf7af28c1cabcf4#49db433eb9620bdad0bc88a35bf7af28c1cabcf4"
 dependencies = [
  "cc",
  "libc",
@@ -13161,7 +13172,7 @@ dependencies = [
 [[package]]
 name = "tikv-jemallocator"
 version = "0.6.0"
-source = "git+https://github.com/jamesatomc/jemallocator.git#49db433eb9620bdad0bc88a35bf7af28c1cabcf4"
+source = "git+https://github.com/jamesatomc/jemallocator.git?rev=49db433eb9620bdad0bc88a35bf7af28c1cabcf4#49db433eb9620bdad0bc88a35bf7af28c1cabcf4"
 dependencies = [
  "libc",
  "tikv-jemalloc-sys",
@@ -13227,7 +13238,7 @@ dependencies = [
  "pbkdf2 0.12.2",
  "rand 0.8.5",
  "rustc-hash 1.1.0",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "thiserror 1.0.69",
  "unicode-normalization",
  "wasm-bindgen",
@@ -13280,17 +13291,19 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.45.1"
+version = "1.46.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75ef51a33ef1da925cea3e4eb122833cb377c61439ca401b770f54902b806779"
+checksum = "0cc3a2344dafbe23a245241fe8b09735b521110d30fcefbbd5feb1797ca35d17"
 dependencies = [
  "backtrace",
  "bytes",
+ "io-uring",
  "libc",
  "mio 1.0.1",
  "parking_lot 0.12.4",
  "pin-project-lite",
  "signal-hook-registry",
+ "slab",
  "socket2",
  "tokio-macros",
  "tracing",
@@ -13484,7 +13497,7 @@ version = "0.19.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1b5bb770da30e5cbfde35a2d7b9b8a2c4b8ef89548a7a6aeab5c9a576e3e7421"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "serde 1.0.219",
  "serde_spanned",
  "toml_datetime",
@@ -13497,7 +13510,7 @@ version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a8534fd7f78b5405e860340ad6575217ce99f38d4d5c8f2442cb5ecb50090e1"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "toml_datetime",
  "winnow 0.5.40",
 ]
@@ -13508,7 +13521,7 @@ version = "0.22.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "41fe8c660ae4257887cf66394862d21dbca4a6ddd26f04a3560410406a2f819a"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "serde 1.0.219",
  "serde_spanned",
  "toml_datetime",
@@ -13546,7 +13559,7 @@ dependencies = [
  "futures-core",
  "futures-util",
  "hdrhistogram",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "pin-project-lite",
  "slab",
  "sync_wrapper 1.0.1",
@@ -14443,7 +14456,7 @@ dependencies = [
  "bytesize",
  "derive_builder 0.12.0",
  "hex",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "schemars",
  "semver 1.0.23",
  "serde 1.0.219",
@@ -14492,7 +14505,7 @@ dependencies = [
  "indexmap 1.9.3",
  "more-asserts 0.2.2",
  "rkyv",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "target-lexicon",
  "thiserror 1.0.69",
  "webc",
@@ -14534,7 +14547,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9dbe55c8f9d0dbd25d9447a5a889ff90c0cc3feaa7395310d3d826b2c703eaab"
 dependencies = [
  "bitflags 2.9.1",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "semver 1.0.23",
 ]
 
@@ -14588,7 +14601,7 @@ dependencies = [
  "serde 1.0.219",
  "serde_cbor",
  "serde_json",
- "sha2 0.10.8",
+ "sha2 0.10.9",
  "shared-buffer",
  "tar",
  "tempfile",

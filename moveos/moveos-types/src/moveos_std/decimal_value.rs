@@ -1,12 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::{
     addresses::MOVEOS_STD_ADDRESS,
     state::{MoveStructState, MoveStructType},
 };
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use move_core_types::u256::U256;
 use move_core_types::{account_address::AccountAddress, ident_str, identifier::IdentStr};
 use move_resource_viewer::{AnnotatedMoveStruct, AnnotatedMoveValue};

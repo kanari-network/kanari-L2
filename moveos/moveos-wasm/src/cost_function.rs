@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use wasmer::wasmparser::Operator;
 
 pub fn cost_function(operator: &Operator) -> u64 {

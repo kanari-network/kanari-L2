@@ -1,11 +1,11 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use jsonrpsee::types::Params;
 use jsonrpsee::MethodKind;
+use jsonrpsee::types::Params;
 use prometheus::{
-    register_histogram_vec_with_registry, register_int_counter_vec_with_registry,
-    register_int_gauge_vec_with_registry, HistogramVec, IntCounterVec, IntGaugeVec,
+    HistogramVec, IntCounterVec, IntGaugeVec, register_histogram_vec_with_registry,
+    register_int_counter_vec_with_registry, register_int_gauge_vec_with_registry,
 };
 use std::collections::HashSet;
 use tokio::time::Instant;

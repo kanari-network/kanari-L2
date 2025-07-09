@@ -20,10 +20,12 @@ pub fn fetch_tweet_function_call(module_address: AccountAddress, tweet_id: Strin
             FETCH_TWEET_FUNCTION.to_owned(),
         ),
         ty_args: vec![],
-        args: vec![MoveString::from(tweet_id)
-            .to_move_value()
-            .simple_serialize()
-            .unwrap()],
+        args: vec![
+            MoveString::from(tweet_id)
+                .to_move_value()
+                .simple_serialize()
+                .unwrap(),
+        ],
     }
 }
 

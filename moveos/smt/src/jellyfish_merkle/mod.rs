@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -90,10 +89,10 @@ pub(crate) mod test_helper;
 pub(crate) mod tree_cache;
 
 use crate::{Key, SMTObject, Value};
-use anyhow::{bail, ensure, format_err, Result};
+use anyhow::{Result, bail, ensure, format_err};
 use backtrace::Backtrace;
 use hash::{Hash, SMTHash, SMTNodeHash};
-use nibble_path::{skip_common_prefix, NibbleIterator, NibblePath};
+use nibble_path::{NibbleIterator, NibblePath, skip_common_prefix};
 use node_type::{Child, Children, InternalNode, LeafNode, Node, NodeKey};
 use primitive_types::H256;
 use proof::{SparseMerkleProof, SparseMerkleRangeProof};
@@ -667,11 +666,7 @@ where
             .zip(key_hash.iter_bits())
             .filter_map(|(sibling, bit)| {
                 // We only need to keep the siblings on the right.
-                if !bit {
-                    Some(*sibling)
-                } else {
-                    None
-                }
+                if !bit { Some(*sibling) } else { None }
             })
             .rev()
             .collect();

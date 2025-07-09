@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use move_core_types::gas_algebra::InternalGas;
-use move_vm_runtime::native_functions::{make_table_from_iter, NativeFunctionTable};
-use moveos_types::addresses::{MOVEOS_STD_ADDRESS, MOVE_STD_ADDRESS};
+use move_vm_runtime::native_functions::{NativeFunctionTable, make_table_from_iter};
+use moveos_types::addresses::{MOVE_STD_ADDRESS, MOVEOS_STD_ADDRESS};
 use once_cell::sync::Lazy;
 use std::collections::{BTreeMap, Bound};
 use std::sync::Arc;

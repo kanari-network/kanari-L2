@@ -3,7 +3,7 @@
 
 use crate::config::DataConfig;
 use crate::inscription::{
-    read_ord_tx_json, resolve_inscription_body, InscriptionBody, Transaction,
+    InscriptionBody, Transaction, read_ord_tx_json, resolve_inscription_body,
 };
 use crate::kanari_client;
 use anyhow::Result;
@@ -45,26 +45,30 @@ pub fn process_ord_data(
             let txid = &transaction.txid;
             let ord_inscription_body_result = resolve_inscription_body(config, txid);
             match ord_inscription_body_result {
-                Ok(inscription_body_opt) => {
-
-                    match inscription_body_opt {
-                        Some(inscription_body) => {
-                            let ord_inscription_info = OrdInscriptionInfo::new(transaction.clone(), inscription_body);
-                            let kanari_inscription_info_result = kanari_client::query_inscription(config, transaction.txid.clone(), transaction.index.clone());
-                            check_ord_data(&transaction, ord_inscription_info, kanari_inscription_info_result);
-                        },
-                        None => println!(
-                            "process_ord_data txid: {} is not inscription transaction, no need to process!",
-                            txid
-                        ),
+                Ok(inscription_body_opt) => match inscription_body_opt {
+                    Some(inscription_body) => {
+                        let ord_inscription_info =
+                            OrdInscriptionInfo::new(transaction.clone(), inscription_body);
+                        let kanari_inscription_info_result = kanari_client::query_inscription(
+                            config,
+                            transaction.txid.clone(),
+                            transaction.index.clone(),
+                        );
+                        check_ord_data(
+                            &transaction,
+                            ord_inscription_info,
+                            kanari_inscription_info_result,
+                        );
                     }
-                }
+                    None => println!(
+                        "process_ord_data txid: {} is not inscription transaction, no need to process!",
+                        txid
+                    ),
+                },
                 Err(err) => {
                     println!(
                         "[STAT] process_ord_data txid: {} index {} occurs error {}",
-                        transaction.txid,
-                        transaction.index,
-                        err
+                        transaction.txid, transaction.index, err
                     )
                 }
             }
@@ -84,7 +88,8 @@ pub fn check_ord_data(
     match kanari_inscription_info_result {
         Ok(kanari_inscription_info_opt) => match kanari_inscription_info_opt {
             Some(kanari_inscription_info) => {
-                let is_match = match_inscription_data(ord_inscription_info, kanari_inscription_info);
+                let is_match =
+                    match_inscription_data(ord_inscription_info, kanari_inscription_info);
                 if is_match {
                     println!(
                         "[STAT] check_ord_data match succ, txid: {} index {} ",

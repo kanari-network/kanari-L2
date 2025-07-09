@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{binding_test, tests::bitcoin_data::bitcoin_tx_from_hex};
+use kanari_types::bitcoin::bbn::{BBNGlobalParamV1, BBNGlobalParams, BBNStakingInfo};
 use moveos_types::{
     module_binding::MoveFunctionCaller, moveos_std::object::DynamicField, state::FieldKey,
     state_resolver::StateResolver,
 };
-use kanari_types::bitcoin::bbn::{BBNGlobalParamV1, BBNGlobalParams, BBNStakingInfo};
 use tracing::debug;
 
 //TODO FIXME

@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::service::metrics::{ServiceMetrics, TransportProtocol};
+use axum::Json;
 use axum::extract::{ConnectInfo, Query, State};
 use axum::http::HeaderMap;
-use axum::response::sse::{Event, KeepAlive, Sse};
 use axum::response::Response;
-use axum::Json;
+use axum::response::sse::{Event, KeepAlive, Sse};
 use futures::{Stream, StreamExt};
 use jsonrpsee::server::RandomIntegerIdProvider;
 use jsonrpsee::types::{ErrorCode, ErrorObject, Id, InvalidRequest, Params, Request};
 use jsonrpsee::{
-    core::server::Methods, BoundedSubscriptions, ConnectionId, MethodCallback, MethodKind,
-    MethodResponse, MethodSink,
+    BoundedSubscriptions, ConnectionId, MethodCallback, MethodKind, MethodResponse, MethodSink,
+    core::server::Methods,
 };
 use kanari_notify::subscription_handler::SubscriptionHandler;
 use kanari_rpc_api::jsonrpc_types::event_view::EventFilterView;
@@ -257,14 +257,14 @@ pub mod ws {
     use super::*;
     use axum::{
         extract::{
-            ws::{Message, WebSocket},
             WebSocketUpgrade,
+            ws::{Message, WebSocket},
         },
         response::Response,
     };
     use jsonrpsee::{
-        core::server::helpers::MethodSink, core::server::BoundedSubscriptions, server::IdProvider,
-        types::error::reject_too_many_subscriptions, SubscriptionState,
+        SubscriptionState, core::server::BoundedSubscriptions, core::server::helpers::MethodSink,
+        server::IdProvider, types::error::reject_too_many_subscriptions,
     };
     use tokio::sync::mpsc;
 
@@ -479,7 +479,6 @@ pub mod ws {
 pub struct SSEQuery {
     filter: String,
 }
-
 
 macro_rules! create_sse_handler {
     ($name:ident, $filter_type:ty, $subscribe_method:ident) => {

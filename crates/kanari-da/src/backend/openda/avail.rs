@@ -4,15 +4,15 @@
 use crate::backend::openda::adapter::{AdapterSubmitStat, OpenDAAdapter};
 use anyhow::anyhow;
 use async_trait::async_trait;
-use base64::engine::general_purpose;
 use base64::Engine;
-use reqwest::{Client, StatusCode};
+use base64::engine::general_purpose;
 use kanari_types::da::segment::SegmentID;
+use reqwest::{Client, StatusCode};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::collections::HashMap;
 use tokio::sync::Mutex;
-use tokio::time::{sleep, Duration, Instant};
+use tokio::time::{Duration, Instant, sleep};
 
 // small blob size for transaction to get included in a block quickly
 pub(crate) const DEFAULT_AVAIL_MAX_SEGMENT_SIZE: u64 = 256 * 1024;
@@ -240,12 +240,12 @@ impl AvailTurboClient {
             if response.status().is_server_error() {
                 if attempts < max_attempts {
                     tracing::warn!(
-                            "Failed to submit segment: {:?} to Avail Turbo: {}, attempts: {}，retrying after {}ms",
-                            segment_id,
-                            response.status(),
-                            attempts,
-                            retry_delay.as_millis(),
-                        );
+                        "Failed to submit segment: {:?} to Avail Turbo: {}, attempts: {}，retrying after {}ms",
+                        segment_id,
+                        response.status(),
+                        attempts,
+                        retry_delay.as_millis(),
+                    );
                     sleep(retry_delay).await;
                     retry_delay = std::cmp::min(retry_delay * 2, MAX_BACKOFF_DELAY);
                     continue;
@@ -331,7 +331,7 @@ impl AvailLightClient {
                 StatusCode::NOT_FOUND => {
                     return Err(anyhow!(
                         "App mode not active or signing key not configured for Avail."
-                    ))
+                    ));
                 }
                 _ => {
                     if attempts < max_attempts {

@@ -14,23 +14,23 @@ use clap::Parser;
 use rustc_hash::FxHashSet;
 use serde::{Deserialize, Serialize};
 
-use moveos_store::MoveOSStore;
-use moveos_types::h256::H256;
-use moveos_types::moveos_std::object::ObjectID;
-use moveos_types::state::FieldKey;
-use moveos_types::state_resolver::StatelessResolver;
 use kanari_config::R_OPT_NET_HELP;
 use kanari_types::bitcoin::ord::InscriptionStore;
 use kanari_types::bitcoin::utxo::BitcoinUTXOStore;
 use kanari_types::error::KanariResult;
 use kanari_types::framework::address_mapping::KanariToBitcoinAddressMapping;
 use kanari_types::kanari_network::KanariChainID;
+use moveos_store::MoveOSStore;
+use moveos_types::h256::H256;
+use moveos_types::moveos_std::object::ObjectID;
+use moveos_types::state::FieldKey;
+use moveos_types::state_resolver::StatelessResolver;
 
 use crate::commands::statedb::commands::inscription::{
-    gen_inscription_id_update, InscriptionSource,
+    InscriptionSource, gen_inscription_id_update,
 };
 use crate::commands::statedb::commands::utxo::UTXORawData;
-use crate::commands::statedb::commands::{init_job, ExportWriter, OutpointInscriptionsMap};
+use crate::commands::statedb::commands::{ExportWriter, OutpointInscriptionsMap, init_job};
 
 /// Export statedb
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Default)]
@@ -401,7 +401,10 @@ impl ExportCommand {
             if sequence_number % 1_000_000 == 0 {
                 println!(
                     "exporting top_level_fields of object_id: {:?}({}), exported count: {}. cost: {:?}",
-                    object_id, object_name, exported_count, loop_time.elapsed()
+                    object_id,
+                    object_name,
+                    exported_count,
+                    loop_time.elapsed()
                 );
                 loop_time = Instant::now();
             }
@@ -457,7 +460,10 @@ impl ExportCommand {
                     if count % 1_000_000 == 0 {
                         println!(
                             "exporting top_level_fields of object_id: {:?}({}), exported count: {}. cost: {:?}",
-                            object_id, object_name, count, loop_time.elapsed()
+                            object_id,
+                            object_name,
+                            count,
+                            loop_time.elapsed()
                         );
                         loop_time = Instant::now();
                     }
@@ -517,7 +523,10 @@ impl ExportCommand {
             if count % 1_000_000 == 0 {
                 println!(
                     "exporting top_level_fields of object_id: {:?}({}), exported count: {}. cost: {:?}",
-                    object_id, object_name, count, loop_time.elapsed()
+                    object_id,
+                    object_name,
+                    count,
+                    loop_time.elapsed()
                 );
                 loop_time = Instant::now();
             }
@@ -596,7 +605,10 @@ impl ExportCommand {
             if count % 1_000_000 == 0 {
                 println!(
                     "exporting top_level_fields of object_id: {:?}({}), exported count: {}. cost: {:?}",
-                    object_id, object_name, count, loop_time.elapsed()
+                    object_id,
+                    object_name,
+                    count,
+                    loop_time.elapsed()
                 );
                 loop_time = Instant::now();
             }

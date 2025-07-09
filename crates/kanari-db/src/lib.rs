@@ -4,12 +4,31 @@
 use std::collections::{HashMap, HashSet};
 
 use accumulator::accumulator_info::AccumulatorInfo;
-use anyhow::{anyhow, Error, Result};
+use anyhow::{Error, Result, anyhow};
+use kanari_anomalies::TxAnomalies;
+use kanari_config::store_config::StoreConfig;
+use kanari_indexer::store::traits::IndexerStoreTrait;
+use kanari_indexer::{IndexerStore, indexer_reader::IndexerReader, list_field_indexer_keys};
+use kanari_store::meta_store::{MetaStore, SEQUENCER_INFO_KEY};
+use kanari_store::state_store::StateStore;
+use kanari_store::transaction_store::TransactionStore;
+use kanari_store::{
+    KanariStore, META_SEQUENCER_INFO_COLUMN_FAMILY_NAME, STATE_CHANGE_SET_COLUMN_FAMILY_NAME,
+    TRANSACTION_COLUMN_FAMILY_NAME, TX_SEQUENCE_INFO_MAPPING_COLUMN_FAMILY_NAME,
+};
+use kanari_types::indexer::field::{
+    IndexerFieldChanges, collect_revert_field_change_ids, handle_revert_field_change,
+};
+use kanari_types::indexer::state::{
+    IndexerObjectStateChangeSet, IndexerObjectStatesIndexGenerator,
+    collect_revert_object_change_ids, handle_revert_object_change,
+};
+use kanari_types::sequencer::SequencerInfo;
 use moveos_common::utils::to_bytes;
 use moveos_store::config_store::STARTUP_INFO_KEY;
 use moveos_store::transaction_store::TransactionStore as TxExecutionInfoStore;
 use moveos_store::{
-    MoveOSStore, CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME,
+    CONFIG_STARTUP_INFO_COLUMN_FAMILY_NAME, MoveOSStore,
     TRANSACTION_EXECUTION_INFO_COLUMN_FAMILY_NAME,
 };
 use moveos_types::access_path::AccessPath;
@@ -22,26 +41,7 @@ use prometheus::Registry;
 use raw_store::metrics::DBMetrics;
 use raw_store::rocks::batch::WriteBatch;
 use raw_store::traits::DBStore;
-use raw_store::{rocks::RocksDB, StoreInstance};
-use kanari_anomalies::TxAnomalies;
-use kanari_config::store_config::StoreConfig;
-use kanari_indexer::store::traits::IndexerStoreTrait;
-use kanari_indexer::{indexer_reader::IndexerReader, list_field_indexer_keys, IndexerStore};
-use kanari_store::meta_store::{MetaStore, SEQUENCER_INFO_KEY};
-use kanari_store::state_store::StateStore;
-use kanari_store::transaction_store::TransactionStore;
-use kanari_store::{
-    KanariStore, META_SEQUENCER_INFO_COLUMN_FAMILY_NAME, STATE_CHANGE_SET_COLUMN_FAMILY_NAME,
-    TRANSACTION_COLUMN_FAMILY_NAME, TX_SEQUENCE_INFO_MAPPING_COLUMN_FAMILY_NAME,
-};
-use kanari_types::indexer::field::{
-    collect_revert_field_change_ids, handle_revert_field_change, IndexerFieldChanges,
-};
-use kanari_types::indexer::state::{
-    collect_revert_object_change_ids, handle_revert_object_change, IndexerObjectStateChangeSet,
-    IndexerObjectStatesIndexGenerator,
-};
-use kanari_types::sequencer::SequencerInfo;
+use raw_store::{StoreInstance, rocks::RocksDB};
 use tracing::{error, info, warn};
 
 #[derive(Clone)]
@@ -402,7 +402,11 @@ impl KanariDB {
         // backwards search for the last executed transaction
         let mut last_executed_tx_order = 0;
         for order in (1..=last_order).rev() {
-            let tx_hash = self.kanari_store.get_tx_hashes(vec![order])?.pop().flatten();
+            let tx_hash = self
+                .kanari_store
+                .get_tx_hashes(vec![order])?
+                .pop()
+                .flatten();
 
             if let Some(tx_hash) = tx_hash {
                 if let Some(tx_anomalies) = &tx_anomalies {
@@ -427,7 +431,11 @@ impl KanariDB {
 
         // forwards search for ensuring no gap
         for order in 1..=last_executed_tx_order {
-            let tx_hash = self.kanari_store.get_tx_hashes(vec![order])?.pop().flatten();
+            let tx_hash = self
+                .kanari_store
+                .get_tx_hashes(vec![order])?
+                .pop()
+                .flatten();
 
             if let Some(tx_hash) = tx_hash {
                 if let Some(tx_anomalies) = &tx_anomalies {

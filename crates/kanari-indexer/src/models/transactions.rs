@@ -4,9 +4,9 @@
 use crate::schema::transactions;
 use crate::utils::escape_sql_string;
 use diesel::prelude::*;
+use kanari_types::indexer::transaction::IndexerTransaction;
 use move_core_types::account_address::AccountAddress;
 use moveos_types::h256::H256;
-use kanari_types::indexer::transaction::IndexerTransaction;
 use std::str::FromStr;
 
 #[derive(Clone, Debug, Queryable, Insertable, QueryableByName)]

@@ -11,7 +11,7 @@ fn main() -> Result<()> {
         .add_instructions(&Git2Builder::all_git()?)?
         .add_instructions(&RustcBuilder::all_rustc()?)?
         .emit();
-    
+
     match result {
         Ok(_) => println!("cargo:warning=Build information generated successfully"),
         Err(e) => {
@@ -19,6 +19,6 @@ fn main() -> Result<()> {
             // Continue build even if version info fails
         }
     }
-    
+
     Ok(())
 }

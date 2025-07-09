@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use serde::{de, ser};
 use std::fmt;
 macro_rules! derive_code_try_from_repr {

@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::addresses::MOVEOS_STD_ADDRESS;
 use crate::module_binding::{ModuleBinding, MoveFunctionCaller};
 use crate::moveos_std::tx_context::TxContext;

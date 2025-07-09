@@ -1,16 +1,15 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::h256;
 use crate::move_std::string::MoveString;
 use crate::moveos_std::module_store::ModuleStore;
 use crate::moveos_std::object::{
-    AnnotatedObject, DynamicField, ObjectEntity, ObjectID, ObjectMeta, RawData, RawObject, Root,
-    GENESIS_STATE_ROOT,
+    AnnotatedObject, DynamicField, GENESIS_STATE_ROOT, ObjectEntity, ObjectID, ObjectMeta, RawData,
+    RawObject, Root,
 };
 use crate::moveos_std::timestamp::Timestamp;
-use anyhow::{bail, ensure, Result};
+use anyhow::{Result, bail, ensure};
 use core::str;
 use hex::FromHex;
 use move_core_types::{
@@ -27,7 +26,7 @@ use move_resource_viewer::{AnnotatedMoveStruct, MoveValueAnnotator};
 use move_vm_types::values::{Struct, Value};
 use primitive_types::H256;
 use serde::{
-    de::DeserializeOwned, de::Error as _, Deserialize, Deserializer, Serialize, Serializer,
+    Deserialize, Deserializer, Serialize, Serializer, de::DeserializeOwned, de::Error as _,
 };
 use std::collections::BTreeMap;
 use std::fmt;

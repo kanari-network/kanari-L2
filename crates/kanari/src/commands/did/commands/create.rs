@@ -4,17 +4,17 @@
 use crate::cli_types::{CommandAction, TransactionOptions, WalletContextOptions};
 use async_trait::async_trait;
 use clap::Parser;
+use kanari_key::keystore::account_keystore::AccountKeystore;
+use kanari_rpc_api::jsonrpc_types::{OpView, StateChangeSetView, TransactionExecutionInfoView};
+use kanari_types::error::KanariResult;
+use kanari_types::framework::did::{DID, DIDModule};
+use kanari_types::transaction::KanariTransaction;
+use kanari_types::transaction::authenticator::SessionAuthenticator;
+use kanari_types::{address::KanariAddress, framework::did::DIDDocument};
 use moveos_types::module_binding::MoveFunctionCaller;
 use moveos_types::move_std::string::MoveString;
 use moveos_types::moveos_std::object::ObjectID;
 use moveos_types::state::MoveType;
-use kanari_key::keystore::account_keystore::AccountKeystore;
-use kanari_rpc_api::jsonrpc_types::{OpView, StateChangeSetView, TransactionExecutionInfoView};
-use kanari_types::error::KanariResult;
-use kanari_types::framework::did::{DIDModule, DID};
-use kanari_types::transaction::authenticator::SessionAuthenticator;
-use kanari_types::transaction::KanariTransaction;
-use kanari_types::{address::KanariAddress, framework::did::DIDDocument};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -163,7 +163,8 @@ impl CommandAction<CreateOutput> for CadopCreateCommand {
             ));
         }
         let controller_did_struct: DID = controllers[0].clone();
-        let controller_address = KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
+        let controller_address =
+            KanariAddress::from_str(controller_did_struct.identifier.as_str())?;
 
         if !context.keystore.contains_address(&controller_address) {
             return Err(kanari_types::error::KanariError::CommandArgumentError(

@@ -6,7 +6,7 @@ use async_trait::async_trait;
 use clap::Parser;
 use kanari_rpc_api::jsonrpc_types::transaction_view::TransactionFilterView;
 use kanari_rpc_api::jsonrpc_types::{
-    H256View, QueryOptions, KanariAddressView, TransactionWithInfoPageView,
+    H256View, KanariAddressView, QueryOptions, TransactionWithInfoPageView,
 };
 use kanari_rpc_client::wallet_context::WalletContext;
 use kanari_types::error::{KanariError, KanariResult};

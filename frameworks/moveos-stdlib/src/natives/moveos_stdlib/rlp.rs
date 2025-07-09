@@ -14,7 +14,7 @@ use move_vm_types::{
     loaded_data::runtime_types::Type,
     natives::function::NativeResult,
     pop_arg,
-    values::{values_impl::Reference, Struct, Value},
+    values::{Struct, Value, values_impl::Reference},
 };
 use primitive_types::U256 as PrimitiveU256;
 use rlp::{self, Rlp, RlpStream};

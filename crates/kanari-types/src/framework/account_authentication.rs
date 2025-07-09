@@ -69,9 +69,11 @@ impl<'a> AuthenticationKeyModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::GET_AUTHENTICATION_KEY_FUNCTION_NAME),
             vec![V::type_tag()],
-            vec![MoveValue::Address(address)
-                .simple_serialize()
-                .expect("address should serialize")],
+            vec![
+                MoveValue::Address(address)
+                    .simple_serialize()
+                    .expect("address should serialize"),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(address);
         let auth_key = self

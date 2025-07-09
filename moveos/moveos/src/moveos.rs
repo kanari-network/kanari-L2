@@ -1,18 +1,17 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::gas::table::{
-    get_gas_schedule_entries, initial_cost_schedule, CostTable, MoveOSGasMeter,
+    CostTable, MoveOSGasMeter, get_gas_schedule_entries, initial_cost_schedule,
 };
 use crate::vm::data_cache::MoveosDataCache;
 use crate::vm::moveos_vm::{MoveOSSession, MoveOSVM};
-use anyhow::{bail, format_err, Error, Result};
+use anyhow::{Error, Result, bail, format_err};
+use move_binary_format::CompiledModule;
 use move_binary_format::binary_views::BinaryIndexedView;
 use move_binary_format::errors::VMError;
-use move_binary_format::errors::{vm_status_of_result, Location, PartialVMError, VMResult};
+use move_binary_format::errors::{Location, PartialVMError, VMResult, vm_status_of_result};
 use move_binary_format::file_format::FunctionDefinitionIndex;
-use move_binary_format::CompiledModule;
 use move_core_types::identifier::IdentStr;
 use move_core_types::language_storage::ModuleId;
 use move_core_types::value::MoveTypeLayout;
@@ -28,7 +27,7 @@ use moveos_store::config_store::ConfigDBStore;
 use moveos_store::event_store::EventDBStore;
 use moveos_store::state_store::statedb::StateDBStore;
 use moveos_store::transaction_store::TransactionDBStore;
-use moveos_store::{load_feature_store_object, MoveOSStore};
+use moveos_store::{MoveOSStore, load_feature_store_object};
 use moveos_types::addresses::MOVEOS_STD_ADDRESS;
 use moveos_types::function_return_value::FunctionResult;
 use moveos_types::moveos_std::gas_schedule::{GasScheduleConfig, GasScheduleUpdated};

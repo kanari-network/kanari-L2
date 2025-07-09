@@ -3,15 +3,22 @@
 
 use crate::commands::statedb::commands::export::ExportCommand;
 use crate::commands::statedb::commands::inscription::{
-    gen_inscription_id_update, InscriptionSource,
+    InscriptionSource, gen_inscription_id_update,
 };
 use crate::commands::statedb::commands::utxo::{AddressMappingData, UTXORawData};
 use crate::commands::statedb::commands::{
-    init_job, new_csv_writer, ExportWriter, ExportWriterPreprocessor, OutpointInscriptionsMap,
+    ExportWriter, ExportWriterPreprocessor, OutpointInscriptionsMap, init_job, new_csv_writer,
 };
 use bitcoin::OutPoint;
 use clap::Parser;
 use framework_types::addresses::BITCOIN_MOVE_ADDRESS;
+use kanari_config::R_OPT_NET_HELP;
+use kanari_types::address::BitcoinAddress;
+use kanari_types::bitcoin::ord::{Inscription, InscriptionID, InscriptionStore, MODULE_NAME};
+use kanari_types::bitcoin::utxo::{BitcoinUTXOStore, UTXO};
+use kanari_types::error::KanariResult;
+use kanari_types::framework::address_mapping::KanariToBitcoinAddressMapping;
+use kanari_types::kanari_network::KanariChainID;
 use move_core_types::account_address::AccountAddress;
 use move_core_types::ident_str;
 use move_core_types::identifier::IdentStr;
@@ -25,13 +32,6 @@ use moveos_types::state::{
     FieldKey, MoveState, MoveStructState, MoveStructType, MoveType, ObjectState,
 };
 use moveos_types::state_resolver::{RootObjectResolver, StatelessResolver};
-use kanari_config::R_OPT_NET_HELP;
-use kanari_types::address::BitcoinAddress;
-use kanari_types::bitcoin::ord::{Inscription, InscriptionID, InscriptionStore, MODULE_NAME};
-use kanari_types::bitcoin::utxo::{BitcoinUTXOStore, UTXO};
-use kanari_types::error::KanariResult;
-use kanari_types::framework::address_mapping::KanariToBitcoinAddressMapping;
-use kanari_types::kanari_network::KanariChainID;
 use rustc_hash::FxHashSet;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -836,7 +836,7 @@ impl UTXOCases {
             None => {
                 return Self {
                     cases: HashSet::new(),
-                }
+                };
             }
             Some(path) => path,
         };
@@ -876,7 +876,7 @@ impl OrdCases {
             None => {
                 return Self {
                     cases: HashSet::new(),
-                }
+                };
             }
             Some(path) => path,
         };
@@ -1084,13 +1084,13 @@ fn format_differences(differences: HashMap<String, String>) -> String {
 #[cfg(test)]
 mod tests {
     use crate::commands::statedb::commands::genesis_verify::{
-        compare_and_format, rune_from_json_value, to_commitment, InscriptionForComparison,
+        InscriptionForComparison, compare_and_format, rune_from_json_value, to_commitment,
     };
     use crate::commands::statedb::commands::inscription::InscriptionSource;
     use bitcoin::Txid;
-    use moveos_types::move_std::option::MoveOption;
     use kanari_types::bitcoin::ord::InscriptionID;
     use kanari_types::into_address::IntoAddress;
+    use moveos_types::move_std::option::MoveOption;
     use std::str::FromStr;
 
     #[test]

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Code from https://github.com/ordinals/ord/
 
-use anyhow::{anyhow, Error};
+use anyhow::{Error, anyhow};
 use brotli::enc::backward_references::BrotliEncoderMode::{
     self, BROTLI_MODE_FONT, BROTLI_MODE_GENERIC, BROTLI_MODE_TEXT,
 };

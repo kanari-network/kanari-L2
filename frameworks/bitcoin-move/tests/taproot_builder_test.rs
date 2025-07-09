@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use bitcoin::consensus::Encodable;
-use bitcoin::hashes::{sha256, Hash, HashEngine};
+use bitcoin::hashes::{Hash, HashEngine, sha256};
 use bitcoin::taproot::{LeafNode, LeafVersion, TaprootBuilder};
-use bitcoin::{opcodes, Script, ScriptBuf, TapNodeHash};
+use bitcoin::{Script, ScriptBuf, TapNodeHash, opcodes};
 use std::str::FromStr;
 
 struct TaprootBuilderWrapper(TaprootBuilder);

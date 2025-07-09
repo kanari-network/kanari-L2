@@ -8,8 +8,8 @@ use crate::cli_types::CommandAction;
 use crate::commands::move_cli::serialized_success;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::disassemble::Disassemble, Move};
 use kanari_types::error::KanariResult;
+use move_cli::{Move, base::disassemble::Disassemble};
 use serde_json::Value;
 
 /// Disassemble the Move bytecode pointed to

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use clap::Parser;
-use metrics::RegistryService;
 use kanari_config::{KanariOpt, R_OPT_NET_HELP};
 use kanari_db::KanariDB;
 use kanari_genesis::KanariGenesisV2;
@@ -10,6 +9,7 @@ use kanari_types::{
     error::{KanariError, KanariResult},
     kanari_network::KanariChainID,
 };
+use metrics::RegistryService;
 use std::path::PathBuf;
 
 /// Init genesis statedb

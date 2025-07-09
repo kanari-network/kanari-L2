@@ -3,8 +3,8 @@
 
 use crate::{App, FaucetRequest};
 use clap::Parser;
-use move_core_types::u256::U256;
 use kanari_rpc_api::jsonrpc_types::UnitedAddressView;
+use move_core_types::u256::U256;
 use serenity::all::{CommandDataOption, CommandDataOptionValue, CommandOptionType};
 use serenity::async_trait;
 use serenity::builder::{
@@ -19,7 +19,7 @@ use serenity::model::{
 use serenity::prelude::*;
 use std::{
     str::FromStr,
-    sync::{atomic::Ordering, Arc},
+    sync::{Arc, atomic::Ordering},
     time::Duration,
 };
 

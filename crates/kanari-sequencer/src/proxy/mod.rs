@@ -8,9 +8,9 @@ use crate::messages::{
 use crate::{actor::sequencer::SequencerActor, messages::TransactionSequenceMessage};
 use anyhow::Result;
 use coerce::actor::ActorRef;
-use moveos_types::h256::H256;
 use kanari_types::sequencer::SequencerInfo;
 use kanari_types::transaction::{LedgerTransaction, LedgerTxData};
+use moveos_types::h256::H256;
 
 #[derive(Clone)]
 pub struct SequencerProxy {

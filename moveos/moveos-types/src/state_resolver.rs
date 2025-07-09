@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use crate::move_std::string::MoveString;
 use crate::moveos_std::account::Account;
 use crate::moveos_std::module_store::Package;
@@ -11,7 +10,7 @@ use crate::state::{FieldKey, MoveType, ObjectState};
 use crate::{
     access_path::AccessPath, h256::H256, moveos_std::object::AnnotatedObject, state::AnnotatedState,
 };
-use anyhow::{ensure, Error, Result};
+use anyhow::{Error, Result, ensure};
 use move_core_types::metadata::Metadata;
 use move_core_types::{
     account_address::AccountAddress,

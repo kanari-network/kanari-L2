@@ -1,21 +1,20 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use std::collections::HashSet;
 use std::ffi::{c_double, c_int};
 use std::iter;
 use std::marker::PhantomData;
 use std::path::Path;
 
-use anyhow::{ensure, format_err, Error, Result};
+use anyhow::{Error, Result, ensure, format_err};
 use rocksdb::{
-    statistics, AsColumnFamilyRef, BlockBasedIndexType, BlockBasedOptions, CStrLike, Cache,
-    ColumnFamily, ColumnFamilyDescriptor, DBCompressionType, DBRawIterator, DBRecoveryMode,
-    Options, ReadOptions, WriteBatch as DBWriteBatch, WriteOptions, DB,
+    AsColumnFamilyRef, BlockBasedIndexType, BlockBasedOptions, CStrLike, Cache, ColumnFamily,
+    ColumnFamilyDescriptor, DB, DBCompressionType, DBRawIterator, DBRecoveryMode, Options,
+    ReadOptions, WriteBatch as DBWriteBatch, WriteOptions, statistics,
 };
-use serde::de::DeserializeOwned;
 use serde::Serialize;
+use serde::de::DeserializeOwned;
 
 use moveos_common::utils::{check_open_fds_limit, from_bytes};
 use moveos_config::store_config::RocksdbConfig;

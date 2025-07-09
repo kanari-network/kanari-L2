@@ -5,20 +5,20 @@
 use crate::natives::ord::envelope::Envelope;
 use crate::natives::ord::tag::Tag;
 use bitcoin::constants::MAX_SCRIPT_ELEMENT_SIZE;
-use bitcoin::{hashes::Hash, Txid, Witness};
-use moveos_types::move_std::string::MoveString;
+use bitcoin::{Txid, Witness, hashes::Hash};
 use kanari_types::bitcoin::ord::InscriptionID;
+use moveos_types::move_std::string::MoveString;
 use {
     super::envelope,
     super::inscription_id::InscriptionId,
     super::media::Media,
     axum::http::HeaderValue,
     bitcoin::{
+        ScriptBuf,
         blockdata::{
             opcodes,
             script::{self},
         },
-        ScriptBuf,
     },
     serde::{Deserialize, Serialize},
     std::str,
@@ -420,32 +420,38 @@ mod tests {
 
     #[test]
     fn inscription_with_no_parent_field_has_no_parent() {
-        assert!(Inscription {
-            parents: vec![],
-            ..Default::default()
-        }
-        .parents()
-        .is_empty());
+        assert!(
+            Inscription {
+                parents: vec![],
+                ..Default::default()
+            }
+            .parents()
+            .is_empty()
+        );
     }
 
     #[test]
     fn inscription_with_parent_field_shorter_than_txid_length_has_no_parents() {
-        assert!(Inscription {
-            parents: vec![],
-            ..Default::default()
-        }
-        .parents()
-        .is_empty());
+        assert!(
+            Inscription {
+                parents: vec![],
+                ..Default::default()
+            }
+            .parents()
+            .is_empty()
+        );
     }
 
     #[test]
     fn inscription_with_parent_field_longer_than_txid_and_index_has_no_parents() {
-        assert!(Inscription {
-            parents: vec![vec![1; 37]],
-            ..Default::default()
-        }
-        .parents()
-        .is_empty());
+        assert!(
+            Inscription {
+                parents: vec![vec![1; 37]],
+                ..Default::default()
+            }
+            .parents()
+            .is_empty()
+        );
     }
 
     #[test]
@@ -471,12 +477,14 @@ mod tests {
 
         parent[34] = 0;
 
-        assert!(Inscription {
-            parents: vec![parent],
-            ..Default::default()
-        }
-        .parents()
-        .is_empty());
+        assert!(
+            Inscription {
+                parents: vec![parent],
+                ..Default::default()
+            }
+            .parents()
+            .is_empty()
+        );
     }
 
     #[test]
@@ -741,11 +749,13 @@ mod tests {
         case(Some("text/plain"), Some(" {} "), true);
         case(Some("text/plain;charset=utf-8"), Some("foo.bitmap"), true);
 
-        assert!(!Inscription {
-            content_type: Some("text/plain".as_bytes().into()),
-            body: Some(b"{\xc3\x28}".as_slice().into()),
-            ..Default::default()
-        }
-        .hidden());
+        assert!(
+            !Inscription {
+                content_type: Some("text/plain".as_bytes().into()),
+                body: Some(b"{\xc3\x28}".as_slice().into()),
+                ..Default::default()
+            }
+            .hidden()
+        );
     }
 }

@@ -1,15 +1,14 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use super::data_cache::{into_change_set, MoveosDataCache};
+use super::data_cache::{MoveosDataCache, into_change_set};
 use move_binary_format::compatibility::Compatibility;
 use move_binary_format::file_format::CompiledScript;
 use move_binary_format::{
-    access::ModuleAccess,
-    errors::{verification_error, Location, PartialVMError, PartialVMResult, VMError, VMResult},
-    file_format::AbilitySet,
     CompiledModule, IndexKind,
+    access::ModuleAccess,
+    errors::{Location, PartialVMError, PartialVMResult, VMError, VMResult, verification_error},
+    file_format::AbilitySet,
 };
 use move_core_types::{
     account_address::AccountAddress,

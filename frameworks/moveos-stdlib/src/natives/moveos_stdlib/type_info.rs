@@ -13,7 +13,7 @@ use move_vm_types::{
     natives::function::NativeResult,
     values::{Struct, Value},
 };
-use smallvec::{smallvec, SmallVec};
+use smallvec::{SmallVec, smallvec};
 use std::{collections::VecDeque, fmt::Write, sync::Arc};
 
 const E_TYPE_MISMATCH: u64 = 1;
@@ -136,16 +136,22 @@ mod tests {
 
         let account_addr =
             AccountAddress::from_hex_literal(dummy_as_strings.next().unwrap()).unwrap();
-        assert!(Value::address(account_addr)
-            .equals(&dummy_as_type_of.next().unwrap())
-            .unwrap());
+        assert!(
+            Value::address(account_addr)
+                .equals(&dummy_as_type_of.next().unwrap())
+                .unwrap()
+        );
         let module = dummy_as_strings.next().unwrap().as_bytes().to_owned();
-        assert!(Value::vector_u8(module)
-            .equals(&dummy_as_type_of.next().unwrap())
-            .unwrap());
+        assert!(
+            Value::vector_u8(module)
+                .equals(&dummy_as_type_of.next().unwrap())
+                .unwrap()
+        );
         let name = dummy_as_strings.next().unwrap().as_bytes().to_owned();
-        assert!(Value::vector_u8(name)
-            .equals(&dummy_as_type_of.next().unwrap())
-            .unwrap());
+        assert!(
+            Value::vector_u8(name)
+                .equals(&dummy_as_type_of.next().unwrap())
+                .unwrap()
+        );
     }
 }

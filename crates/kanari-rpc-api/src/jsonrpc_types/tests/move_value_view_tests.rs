@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::jsonrpc_types::{
+    BytesView, StrView,
     decimal_value_view::DecimalValueView,
     move_types::{AnnotatedMoveValueView, SpecificStructView},
-    BytesView, StrView,
 };
 use move_binary_format::file_format::AbilitySet;
 use move_core_types::{
@@ -17,7 +17,7 @@ use move_resource_viewer::{AnnotatedMoveStruct, AnnotatedMoveValue};
 use moveos_types::{
     move_std::string::MoveString, moveos_std::decimal_value::DecimalValue, state::MoveStructType,
 };
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 
 #[test]
 fn test_annotated_move_value_view_primitives() {
@@ -328,12 +328,16 @@ fn test_annotated_move_value_view_struct_vector() {
         let struct_vector = *boxed;
 
         assert_eq!(struct_vector.abilities, 7); // COPY | DROP | STORE = 7
-        assert!(struct_vector
-            .field
-            .contains(&StrView(Identifier::new("id").unwrap())));
-        assert!(struct_vector
-            .field
-            .contains(&StrView(Identifier::new("value").unwrap())));
+        assert!(
+            struct_vector
+                .field
+                .contains(&StrView(Identifier::new("id").unwrap()))
+        );
+        assert!(
+            struct_vector
+                .field
+                .contains(&StrView(Identifier::new("value").unwrap()))
+        );
         assert_eq!(struct_vector.value.len(), 2);
 
         // First struct values

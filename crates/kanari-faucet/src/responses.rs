@@ -7,8 +7,8 @@ use axum::{
     http::StatusCode,
     response::{IntoResponse, Response},
 };
-use move_core_types::u256::U256;
 use kanari_rpc_api::jsonrpc_types::StrView;
+use move_core_types::u256::U256;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

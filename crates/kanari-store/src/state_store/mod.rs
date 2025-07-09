@@ -5,7 +5,7 @@ use crate::STATE_CHANGE_SET_COLUMN_FAMILY_NAME;
 use anyhow::Result;
 use moveos_types::state::StateChangeSetExt;
 use raw_store::CodecKVStore;
-use raw_store::{derive_store, StoreInstance};
+use raw_store::{StoreInstance, derive_store};
 
 derive_store!(
     StateChangeSetStore,

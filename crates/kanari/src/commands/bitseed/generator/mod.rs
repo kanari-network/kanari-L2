@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use super::sft::Content;
-use bitcoin::{hashes::Hash, Address, BlockHash};
-use moveos_types::h256::H256;
+use bitcoin::{Address, BlockHash, hashes::Hash};
 use kanari_types::bitcoin::ord::InscriptionID;
+use moveos_types::h256::H256;
 use serde::{Deserialize, Serialize};
 
 pub(crate) mod hash;

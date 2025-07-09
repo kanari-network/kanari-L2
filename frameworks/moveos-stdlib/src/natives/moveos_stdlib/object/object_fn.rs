@@ -18,7 +18,7 @@ use moveos_types::moveos_std::object::ObjectID;
 
 use crate::natives::moveos_stdlib::object::{pop_object_id, read_object_id};
 
-use super::{error_to_abort_code, CommonGasParameters, GasParameters};
+use super::{CommonGasParameters, GasParameters, error_to_abort_code};
 
 /***************************************************************************************************
  * native fun native_borrow_object<T: key>(object_id: ObjectID): &Object<T>;

@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 //! This module defines the miscellaneous gas parameters, currently only including the
 //! ones related to definition of abstract value size.
 

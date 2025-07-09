@@ -1,27 +1,27 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::{FaucetError, metrics::FaucetMetrics};
 use crate::{
     faucet_module, invitation_module, tweet_fetcher_module, tweet_v2_module, twitter_account_module,
 };
-use crate::{metrics::FaucetMetrics, FaucetError};
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use async_trait::async_trait;
 use clap::Parser;
+use coerce::actor::Actor;
 use coerce::actor::context::ActorContext;
 use coerce::actor::message::{Handler, Message};
-use coerce::actor::Actor;
+use kanari_rpc_api::jsonrpc_types::btc::utxo::UTXOFilterView;
+use kanari_rpc_api::jsonrpc_types::{KeptVMStatusView, UnitedAddressView, VMStatusView};
+use kanari_rpc_client::Client;
+use kanari_rpc_client::wallet_context::WalletContext;
+use kanari_types::address::{BitcoinAddress, KanariAddress, ParsedAddress};
 use move_core_types::account_address::AccountAddress;
 use move_core_types::u256::U256;
 use move_core_types::vm_status::AbortLocation;
 use moveos_types::moveos_std::object::ObjectID;
 use moveos_types::transaction::{FunctionCall, MoveAction};
 use prometheus::Registry;
-use kanari_rpc_api::jsonrpc_types::btc::utxo::UTXOFilterView;
-use kanari_rpc_api::jsonrpc_types::{KeptVMStatusView, UnitedAddressView, VMStatusView};
-use kanari_rpc_client::wallet_context::WalletContext;
-use kanari_rpc_client::Client;
-use kanari_types::address::{BitcoinAddress, ParsedAddress, KanariAddress};
 use serde::de::DeserializeOwned;
 use tokio::sync::mpsc::Sender;
 

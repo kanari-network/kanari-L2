@@ -17,9 +17,9 @@ use moveos_types::{
     transaction::{FunctionCall, MoveAction},
 };
 use serde::{Deserialize, Serialize};
+use serde_with::DisplayFromStr;
 use serde_with::hex::Hex;
 use serde_with::serde_as;
-use serde_with::DisplayFromStr;
 use std::fmt::Display;
 use std::str::FromStr;
 
@@ -233,9 +233,11 @@ impl<'a> SessionKeyModule<'a> {
         let call = FunctionCall::new(
             Self::function_id(Self::GET_SESSION_KEYS_HANDLE_FUNCTION_NAME),
             vec![],
-            vec![MoveValue::Address(account_address)
-                .simple_serialize()
-                .unwrap()],
+            vec![
+                MoveValue::Address(account_address)
+                    .simple_serialize()
+                    .unwrap(),
+            ],
         );
         let ctx = TxContext::new_readonly_ctx(account_address);
         let obj_id = self

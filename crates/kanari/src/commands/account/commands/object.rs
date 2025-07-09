@@ -6,16 +6,16 @@ use async_trait::async_trait;
 use bitcoin::hex::DisplayHex;
 use clap::Parser;
 use kanari_rpc_api::jsonrpc_types::{
-    IndexerObjectStateView, ObjectIDView, ObjectStateFilterView, KanariAddressView,
+    IndexerObjectStateView, KanariAddressView, ObjectIDView, ObjectStateFilterView,
     UnitedAddressView,
 };
 use kanari_types::{address::ParsedAddress, error::KanariResult};
 use std::collections::HashMap;
 use tabled::{
     builder::Builder,
-    settings::{peaker::PriorityRight, Height, Panel, Style, Width},
+    settings::{Height, Panel, Style, Width, peaker::PriorityRight},
 };
-use terminal_size::{terminal_size, Height as TerminalHeight, Width as TerminalWidth};
+use terminal_size::{Height as TerminalHeight, Width as TerminalWidth, terminal_size};
 
 /// List objects of a holding account on Kanari Network. Requires internet connection and works without kanari init.
 #[derive(Debug, Parser)]

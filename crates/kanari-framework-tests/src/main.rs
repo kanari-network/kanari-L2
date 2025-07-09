@@ -7,7 +7,7 @@ use anyhow::Result;
 use bitcoin_client::actor::client::BitcoinClientActor;
 use bitcoin_client::proxy::BitcoinClientProxy;
 use clap::Parser;
-use coerce::actor::{system::ActorSystem, IntoActor};
+use coerce::actor::{IntoActor, system::ActorSystem};
 use kanari_framework_tests::bitcoin_block_tester::TesterGenesisBuilder;
 
 #[derive(Parser)]

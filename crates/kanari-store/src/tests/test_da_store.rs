@@ -1,8 +1,8 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::da_store::{DAMetaDBStore, DAMetaStore, MAX_TXS_PER_BLOCK_IN_FIX};
 use crate::KanariStore;
+use crate::da_store::{DAMetaDBStore, DAMetaStore, MAX_TXS_PER_BLOCK_IN_FIX};
 use kanari_types::da::batch::BlockRange;
 
 #[tokio::test]
@@ -275,14 +275,8 @@ fn check_block_ranges(
         last_order
     };
     assert_eq!(
-        exp_txs,
-        total_txs,
+        exp_txs, total_txs,
         "Test case {}: total txs in new blocks mismatch, expected {}, got {}. last order: {}; origin tx order end: {:?}. block ranges: {:#?}",
-        test_case,
-        exp_txs,
-        total_txs,
-        last_order,
-        origin_tx_order_end,
-        block_ranges,
+        test_case, exp_txs, total_txs, last_order, origin_tx_order_end, block_ranges,
     );
 }

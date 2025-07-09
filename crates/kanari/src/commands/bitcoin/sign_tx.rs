@@ -6,23 +6,23 @@ use crate::{
     cli_types::{CommandAction, FileOrHexInput, WalletContextOptions},
     commands::bitcoin::{FileOutput, FileOutputData},
 };
-use anyhow::bail;
 use anyhow::Result;
+use anyhow::bail;
 use async_trait::async_trait;
 use bitcoin::{
+    Address, Network, Psbt, TapLeafHash, TapSighashType, Witness,
     key::{Keypair, Secp256k1, TapTweak},
     sighash::{Prevouts, SighashCache},
-    Address, Network, Psbt, TapLeafHash, TapSighashType, Witness,
 };
 use clap::Parser;
-use moveos_types::module_binding::MoveFunctionCaller;
 use kanari_key::keystore::account_keystore::AccountKeystore;
-use kanari_rpc_client::{wallet_context::WalletContext, Client};
+use kanari_rpc_client::{Client, wallet_context::WalletContext};
 use kanari_types::{
-    address::{BitcoinAddress, ParsedAddress, KanariAddress},
+    address::{BitcoinAddress, KanariAddress, ParsedAddress},
     bitcoin::multisign_account::MultisignAccountModule,
     error::{KanariError, KanariResult},
 };
+use moveos_types::module_binding::MoveFunctionCaller;
 use tracing::debug;
 
 #[derive(Debug, Parser)]
@@ -115,7 +115,10 @@ pub(crate) async fn sign_psbt(
             let addr = BitcoinAddress::from(&utxo.script_pubkey);
             let kanari_addr = addr.to_kanari_address();
             if multisign_account_module.is_multisign_account(kanari_addr.into())? {
-                let account_info = client.kanari.get_multisign_account_info(kanari_addr).await?;
+                let account_info = client
+                    .kanari
+                    .get_multisign_account_info(kanari_addr)
+                    .await?;
                 debug!("Account info: {:?}", account_info);
                 let (control_block, (multisig_script, leaf_version)) = input
                     .tap_scripts

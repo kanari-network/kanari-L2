@@ -2,10 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::binding_test;
-use move_core_types::u256::U256;
-use moveos_types::module_binding::MoveFunctionCaller;
-use moveos_types::state::MoveStructType;
-use moveos_types::transaction::{MoveAction, MoveOSTransaction};
 use kanari_types::bitcoin::bitcoin_multisign_validator::BitcoinMultisignValidatorModule;
 use kanari_types::bitcoin::multisign_account::{self, MultisignAccountModule};
 use kanari_types::crypto::{KanariKeyPair, KanariSignature};
@@ -16,6 +12,10 @@ use kanari_types::framework::gas_coin::KARI;
 use kanari_types::framework::transfer::TransferModule;
 use kanari_types::transaction::kanari::KanariTransactionData;
 use kanari_types::transaction::{Authenticator, KanariTransaction};
+use move_core_types::u256::U256;
+use moveos_types::module_binding::MoveFunctionCaller;
+use moveos_types::state::MoveStructType;
+use moveos_types::transaction::{MoveAction, MoveOSTransaction};
 
 #[tokio::test]
 async fn test_validate() {

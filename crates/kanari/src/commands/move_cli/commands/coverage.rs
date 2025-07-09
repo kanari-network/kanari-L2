@@ -8,8 +8,8 @@ use crate::cli_types::CommandAction;
 use crate::commands::move_cli::serialized_success;
 use async_trait::async_trait;
 use clap::Parser;
-use move_cli::{base::coverage::Coverage, Move};
 use kanari_types::error::KanariResult;
+use move_cli::{Move, base::coverage::Coverage};
 use serde_json::Value;
 
 /// Inspect test coverage for this package. A previous test run with the `--coverage` flag must

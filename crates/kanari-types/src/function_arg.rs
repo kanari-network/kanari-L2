@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{address::ParsedAddress, error::KanariError};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use move_command_line_common::{
     parser::Parser,
     types::ParsedStructType,
@@ -129,7 +129,10 @@ impl FromStr for FunctionArgType {
 
                     Ok(FunctionArgType::Vector(Box::new(arg)))
                 } else {
-                    Err(KanariError::CommandArgumentError(format!("Invalid arg type '{}'.  Must be one of: ['address','bool','object_id','string','u8','u16','u32','u64','u128','u256','vector<inner_type>']", str)))
+                    Err(KanariError::CommandArgumentError(format!(
+                        "Invalid arg type '{}'.  Must be one of: ['address','bool','object_id','string','u8','u16','u32','u64','u128','u256','vector<inner_type>']",
+                        str
+                    )))
                 }
             }
         }

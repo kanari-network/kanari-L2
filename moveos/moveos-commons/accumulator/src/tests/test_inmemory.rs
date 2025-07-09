@@ -1,16 +1,15 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
+use crate::LeafCount;
 use crate::inmemory::{InMemoryAccumulator, MerkleTreeInternalNode};
 use crate::node_index::{FrozenSubtreeSiblingIterator, NodeIndex};
 use crate::tree::AccumulatorTree;
 use crate::tree_store::mock::MockAccumulatorStore;
-use crate::LeafCount;
-use moveos_types::h256::{sha3_256_of, ACCUMULATOR_PLACEHOLDER_HASH, H256};
+use moveos_types::h256::{ACCUMULATOR_PLACEHOLDER_HASH, H256, sha3_256_of};
 use proptest::{collection::vec, prelude::*};
 use rand::Rng;
 use std::collections::HashMap;

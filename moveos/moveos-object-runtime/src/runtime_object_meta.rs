@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use move_binary_format::errors::{PartialVMError, PartialVMResult};
 use move_core_types::{
     account_address::AccountAddress, language_storage::TypeTag, value::MoveTypeLayout,
@@ -152,7 +151,7 @@ impl RuntimeObjectMeta {
         let meta_value = match self {
             RuntimeObjectMeta::None(id) => {
                 return Err(PartialVMError::new(StatusCode::MISSING_DATA)
-                    .with_message(format!("ObjectMeta of {} is None", id)))
+                    .with_message(format!("ObjectMeta of {} is None", id)));
             }
             RuntimeObjectMeta::Deleted(meta) => {
                 debug_assert!(false, "Deleted object should not be modified");

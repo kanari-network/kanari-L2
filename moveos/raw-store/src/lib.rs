@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 pub mod errors;
 pub mod metrics;
 pub mod rocks;
@@ -12,10 +11,10 @@ use crate::metrics::DBMetrics;
 use crate::rocks::batch::{WriteBatch, WriteBatchCF};
 use crate::rocks::{RocksDB, SchemaIterator};
 use crate::traits::{DBStore, KVStore};
-use anyhow::{bail, format_err, Result};
+use anyhow::{Result, bail, format_err};
 use moveos_common::utils::{from_bytes, to_bytes};
-use serde::de::DeserializeOwned;
 use serde::Serialize;
+use serde::de::DeserializeOwned;
 use std::convert::TryInto;
 use std::fmt::Debug;
 use std::marker::PhantomData;

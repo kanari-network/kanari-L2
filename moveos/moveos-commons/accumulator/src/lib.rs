@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -9,7 +8,7 @@ use crate::accumulator_info::AccumulatorInfo;
 use crate::node_index::NodeIndex;
 use crate::proof::AccumulatorProof;
 use crate::tree::AccumulatorTree;
-use anyhow::{format_err, Result};
+use anyhow::{Result, format_err};
 use moveos_types::h256::H256;
 pub use node::AccumulatorNode;
 use parking_lot::Mutex;

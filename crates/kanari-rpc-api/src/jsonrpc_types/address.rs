@@ -4,12 +4,12 @@
 use crate::jsonrpc_types::StrView;
 use anyhow::Result;
 use bitcoin::XOnlyPublicKey;
-use move_core_types::account_address::AccountAddress;
 use kanari_types::{
-    address::{BitcoinAddress, NostrPublicKey, KanariAddress},
+    address::{BitcoinAddress, KanariAddress, NostrPublicKey},
     bitcoin::network::Network,
     to_bech32::FromBech32,
 };
+use move_core_types::account_address::AccountAddress;
 use std::str::FromStr;
 
 pub type BitcoinAddressView = StrView<BitcoinAddress>;

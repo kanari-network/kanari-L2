@@ -1,8 +1,7 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
-use axum::{extract::Extension, http::StatusCode, routing::get, Router};
+use axum::{Router, extract::Extension, http::StatusCode, routing::get};
 use dashmap::DashMap;
 use std::future::Future;
 use std::net::SocketAddr;
@@ -12,7 +11,7 @@ use std::task::{Context, Poll};
 use std::time::Instant;
 
 use once_cell::sync::OnceCell;
-use prometheus::{register_int_gauge_vec_with_registry, IntGaugeVec, Registry, TextEncoder};
+use prometheus::{IntGaugeVec, Registry, TextEncoder, register_int_gauge_vec_with_registry};
 use tap::TapFallible;
 use tracing::warn;
 
@@ -122,9 +121,7 @@ pub fn get_metrics() -> Option<&'static Metrics> {
 
 #[macro_export]
 macro_rules! monitored_future {
-    ($fut: expr) => {{
-        monitored_future!(futures, $fut, "", INFO, false)
-    }};
+    ($fut: expr) => {{ monitored_future!(futures, $fut, "", INFO, false) }};
 
     ($metric: ident, $fut: expr, $name: expr, $logging_level: ident, $logging_enabled: expr) => {{
         let location: &str = if $name.is_empty() {

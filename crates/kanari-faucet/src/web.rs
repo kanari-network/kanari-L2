@@ -7,12 +7,12 @@ use crate::{
     VerifyAndBindingTwitterAccountWithInviter,
 };
 use axum::{
+    BoxError, Extension, Json, Router,
     error_handling::HandleErrorLayer,
     http::Method,
     http::StatusCode,
     response::IntoResponse,
     routing::{get, post},
-    BoxError, Extension, Json, Router,
 };
 use clap::Parser;
 use std::{
@@ -21,8 +21,8 @@ use std::{
     net::{IpAddr, Ipv4Addr, SocketAddr},
     time::Duration,
 };
-use tower::limit::RateLimitLayer;
 use tower::ServiceBuilder;
+use tower::limit::RateLimitLayer;
 use tower_http::cors::{Any, CorsLayer};
 
 use prometheus::{Registry, TextEncoder};

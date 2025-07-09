@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::binding_test;
-use moveos_types::{module_binding::MoveFunctionCaller, state_resolver::StateResolver};
 use kanari_types::{framework::chain_id::ChainID, kanari_network::BuiltinChainID};
+use moveos_types::{module_binding::MoveFunctionCaller, state_resolver::StateResolver};
 
 #[tokio::test]
 async fn test_chain_id() {

@@ -14,20 +14,20 @@ use crate::metrics::SequencerMetrics;
 use accumulator::{Accumulator, MerkleAccumulator};
 use anyhow::Result;
 use async_trait::async_trait;
-use coerce::actor::{context::ActorContext, message::Handler, Actor, LocalActorRef};
+use coerce::actor::{Actor, LocalActorRef, context::ActorContext, message::Handler};
 use function_name::named;
-use moveos_eventbus::bus::EventData;
-use moveos_types::h256::H256;
-use prometheus::Registry;
 use kanari_notify::actor::NotifyActor;
 use kanari_notify::event::ServiceStatusEvent;
 use kanari_notify::messages::NotifyActorSubscribeMessage;
-use kanari_store::transaction_store::TransactionStore;
 use kanari_store::KanariStore;
+use kanari_store::transaction_store::TransactionStore;
 use kanari_types::crypto::KanariKeyPair;
 use kanari_types::sequencer::SequencerInfo;
 use kanari_types::service_status::ServiceStatus;
 use kanari_types::transaction::{LedgerTransaction, LedgerTxData};
+use moveos_eventbus::bus::EventData;
+use moveos_types::h256::H256;
+use prometheus::Registry;
 use tracing::info;
 
 pub struct SequencerActor {
@@ -194,9 +194,10 @@ impl SequencerActor {
                 .fork(Some(self.last_sequencer_info.last_accumulator_info.clone()));
             self.service_status = ServiceStatus::Maintenance;
             tracing::error!(
-                        "Failed to save sequenced tx, tx_order: {}, error: {:?}, set sequencer to Maintenance mode. Please try to restart later",
-                        tx_order, e
-                    );
+                "Failed to save sequenced tx, tx_order: {}, error: {:?}, set sequencer to Maintenance mode. Please try to restart later",
+                tx_order,
+                e
+            );
             return Err(io::Error::new(
                 io::ErrorKind::Other,
                 format!("Save sequenced tx failed: {:?}", e),

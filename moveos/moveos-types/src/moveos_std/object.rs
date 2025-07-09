@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 use super::table::TablePlaceholder;
 use crate::h256;
 use crate::moveos_std::account::Account;
@@ -13,7 +12,7 @@ use crate::{
         PlaceholderStruct,
     },
 };
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use fastcrypto::encoding::Hex;
 use move_core_types::language_storage::ModuleId;
 use move_core_types::{
@@ -36,8 +35,8 @@ use std::fmt;
 use std::str::FromStr;
 
 pub use dynamic_field::{
-    construct_dynamic_field_struct_tag, get_bcs_slice, is_dynamic_field_type, is_field_struct_tag,
-    parse_dynamic_field_type_tags, DynamicField, RawField, DYNAMIC_FIELD_STRUCT_NAME,
+    DYNAMIC_FIELD_STRUCT_NAME, DynamicField, RawField, construct_dynamic_field_struct_tag,
+    get_bcs_slice, is_dynamic_field_type, is_field_struct_tag, parse_dynamic_field_type_tags,
 };
 
 mod dynamic_field;

@@ -11,18 +11,18 @@ use std::time::Instant;
 
 use anyhow::{Error, Result};
 use clap::Parser;
-use moveos_types::moveos_std::object::is_dynamic_field_type;
-use moveos_types::state::ObjectState;
 use kanari_config::R_OPT_NET_HELP;
+use kanari_indexer::IndexerStore;
 use kanari_indexer::indexer_reader::IndexerReader;
 use kanari_indexer::store::traits::IndexerStoreTrait;
-use kanari_indexer::IndexerStore;
 use kanari_types::error::{KanariError, KanariResult};
 use kanari_types::indexer::state::{
     IndexerObjectState, IndexerObjectStateChangeSet, IndexerObjectStatesIndexGenerator,
     ObjectStateType,
 };
 use kanari_types::kanari_network::KanariChainID;
+use moveos_types::moveos_std::object::is_dynamic_field_type;
+use moveos_types::state::ObjectState;
 
 use crate::commands::indexer::commands::init_indexer;
 use crate::commands::statedb::commands::parse_states_csv_fields;

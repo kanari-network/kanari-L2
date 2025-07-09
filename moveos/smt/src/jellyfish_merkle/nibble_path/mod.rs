@@ -1,7 +1,6 @@
 // Copyright (c) Kanari Network
 // SPDX-License-Identifier: Apache-2.0
 
-
 // Copyright (c) The Starcoin Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -14,8 +13,8 @@
 #[cfg(test)]
 mod nibble_path_test;
 
-use super::nibble::Nibble;
 use super::ROOT_NIBBLE_HEIGHT;
+use super::nibble::Nibble;
 #[cfg(any(test, feature = "fuzzing"))]
 use proptest::{collection::vec, prelude::*};
 use serde::{Deserialize, Serialize};

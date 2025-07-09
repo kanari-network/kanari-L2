@@ -6,7 +6,7 @@ use rand::Rng;
 use sha2::Sha256;
 use std::collections::HashMap;
 
-use testcontainers::{core::WaitFor, Image, ImageArgs};
+use testcontainers::{Image, ImageArgs, core::WaitFor};
 
 const NAME: &str = "lncm/bitcoind";
 const TAG: &str = "v25.1";

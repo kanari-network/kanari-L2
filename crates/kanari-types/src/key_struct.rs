@@ -4,10 +4,10 @@
 use crate::{address::KanariAddress, error::KanariError};
 use anyhow::Result;
 use argon2::Argon2;
-use chacha20poly1305::aead::Aead;
 use chacha20poly1305::AeadCore;
 use chacha20poly1305::ChaCha20Poly1305;
 use chacha20poly1305::KeyInit;
+use chacha20poly1305::aead::Aead;
 use fastcrypto::encoding::{Base64, Encoding};
 use rand::rngs::OsRng;
 use serde::de::DeserializeOwned;

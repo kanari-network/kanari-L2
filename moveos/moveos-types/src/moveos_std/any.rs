@@ -6,7 +6,7 @@ use crate::{
     move_std::string::MoveString,
     state::{MoveState, MoveStructState, MoveStructType},
 };
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use move_core_types::{
     account_address::AccountAddress,
     ident_str,

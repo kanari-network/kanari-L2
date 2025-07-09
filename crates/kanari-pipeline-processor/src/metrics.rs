@@ -3,8 +3,8 @@
 
 use metrics::metrics_util::LATENCY_SEC_BUCKETS;
 use prometheus::{
-    register_histogram_vec_with_registry, register_int_counter_with_registry, HistogramVec,
-    IntCounter, Registry,
+    HistogramVec, IntCounter, Registry, register_histogram_vec_with_registry,
+    register_int_counter_with_registry,
 };
 
 #[derive(Debug)]
