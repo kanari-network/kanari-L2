@@ -77,17 +77,15 @@ module kanari_framework::auth_payload {
     }
 
     public fun encode_full_message(self: &AuthPayload, tx_hash: vector<u8>): vector<u8> {
-        // Remove the strict assertion that was causing test failures
-        // We'll keep the comment for documentation purposes
-        // The signature description should ideally start with Kanari Transaction:\n
-        
+        // The signature description must start with Kanari Transaction:\n
+        // assert!(starts_with(&self.message_info, &MessageInfoPrefix), ErrorInvalidSignature);
         let message_prefix = self.message_prefix;
         let full_message = if (message_prefix != MessagePrefix) {
             // For compatibility with the old version
             // The old version contains length information, so it needs to be removed in the future
             // After the js sdk is update, we can remove this branch
             encode_full_message_legacy(self, tx_hash)
-        } else {
+        }else{
             encode_full_message_consensus(self, tx_hash)
         };
         full_message
